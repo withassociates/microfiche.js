@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Microfiche.js</title>
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      line-height 1.5;
+      width: 690px;
+      padding: 15px;
+      margin: 0 auto;
+    }
+
+    #example {
+      padding: 10px 5px;
+      box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.25);
+      background: #fafafa;
+    }
+      #example ul {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      #example li {
+        display: block;
+        float: left;
+        margin: 0px 5px;
+        padding: 0;
+      }
+  </style>
+</head>
+<body>
+
+  <div id="example">
+    <div>
+      <ul>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>01 Some words.</p></li>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>02 Some words.</p></li>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>03 Some words.</p></li>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>04 Some words.</p></li>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>05 Some words.</p></li>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>06 Some words.</p></li>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>07 Some words.</p></li>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>08 Some words.</p></li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>09 Some words.</p></li>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>10 Some words.</p></li>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>11 Some words.</p></li>
+        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>12 Some words.</p></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="test/vendor/jquery-1.7.1.js"></script>
+  <script src="microfiche.js"></script>
+  <script>$('#example').microfiche()</script>
+</body>
+</html>
+
