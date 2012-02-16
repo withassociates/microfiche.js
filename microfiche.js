@@ -12,15 +12,22 @@ Microfiche.VERSION = '0.0.0';
 
 $.extend(Microfiche.prototype, {
 
+  // The default options, which can be overridden by the initializer.
+  options: {
+    duration: 500
+  },
+
   // Rather than relying on the literal position of `this.film`,
   // we keep a tab on the current destination.
   x: 0,
 
-  // Build the microfiche in steps.
+  // Build microfiche in steps.
   initialize: function(options) {
+    this.options = $.extend({}, this.options, options);
     this.el = $(options.el);
     this.createFilm();
     this.createScreen();
+    this.calibrate();
     this.createControls();
   },
 
@@ -30,17 +37,31 @@ $.extend(Microfiche.prototype, {
   // nicely along the horizontal.
   createFilm: function() {
     this.film = $('<div class="microfiche-film">').
-    css({ position: 'absolute', whiteSpace: 'nowrap' });
+    css({ position: 'absolute', overflow: 'hidden', whiteSpace: 'nowrap' });
     this.el.children().appendTo(this.film).css({ float: 'left' });
+    this.prepareFilm && this.prepareFilm();
   },
 
   // The screen is created and appended to our element, then the film is
   // appended to the screen. Screen manually takes its height from film.
   createScreen: function() {
     this.screen = $('<div class="microfiche-screen">').
-    appendTo(this.el).append(this.film).
-    height(this.film.outerHeight()).
-    css({ position: 'relative', overflow: 'hidden' });
+    css({ position: 'relative', overflow: 'hidden' }).
+    appendTo(this.el).
+    append(this.film);
+  },
+
+
+  // This slightly strange process tries to ensure we don’t get any wrapping
+  // in `this.film`, then fixes the dimensions of `this.film` and `this.screen`.
+  calibrate: function() {
+    this.screen.width(100000);
+
+    var w = this.film.width(),
+        h = this.film.height();
+
+    this.film.width(w).height(h);
+    this.screen.width('auto').height(h);
   },
 
   // We keep controls in a Hash called `this.controls`. There’s a bit of
@@ -51,11 +72,13 @@ $.extend(Microfiche.prototype, {
     var self = this;
 
     this.controls = {
-      prev: $('<button class="microfiche-button prev">&larr;</button>').
+      prev: $('<button class="microfiche-prev-button">&larr;</button>').
             appendTo(this.el).on('click', function(e) { self.prev() }),
-      next: $('<button class="microfiche-button next">&rarr;</button>').
+      next: $('<button class="microfiche-next-button">&rarr;</button>').
             appendTo(this.el).on('click', function(e) { self.next() })
     };
+
+    this.updateControls();
   },
 
   // Slide to the previous screen’s-worth of slides.
@@ -82,7 +105,7 @@ $.extend(Microfiche.prototype, {
     var w = this.screen.width();
     this.x = this.constrain((Math.round(this.x / w) + direction) * w);
     this.updateControls();
-    this.film.animate({ left: -this.x + 'px' });
+    this.transition();
   },
 
   // Return `x` constrained between limits `this.min` and `this.max`.
@@ -99,9 +122,56 @@ $.extend(Microfiche.prototype, {
   // `this.screen`.
   max: function() {
     return this.film.width() - this.screen.width();
+  },
+
+  // Perform the actual animation to our new destination.
+  transition: function() {
+    this.film.animate({ left: -this.x + 'px' }, this.options.duration);
   }
 
 });
+
+// A bit of feature detection for webkit transition support.
+var wkt = document.documentElement.style.WebkitTransition;
+if (wkt !== undefined && wkt !== null) {
+  // If we have webkit transition support, then override `prepareFilm`
+  // and `transition` to take advantage of hardware acceleration.
+  $.extend(Microfiche.prototype, {
+
+    prepareFilm: function() {
+      this.film.css({
+        WebkitTransition: '-webkit-transform ' + this.options.duration + 'ms',
+        WebkitTransform: 'translate3d(0px, 0px, 0px)'
+      });
+    },
+
+    transition: function() {
+      this.film.css({ WebkitTransform: 'translate3d(' + -this.x + 'px, 0px, 0px)' });
+    }
+
+  });
+}
+
+// A bit of feature detection for moz transition support.
+var moz = document.documentElement.style.MozTransition;
+if (moz !== undefined && moz !== null) {
+  // If we have moz transition support, then override `prepareFilm`
+  // and `transition` to take advantage of hardware acceleration.
+  $.extend(Microfiche.prototype, {
+
+    prepareFilm: function() {
+      this.film.css({
+        MozTransition: '-moz-transform ' + this.options.duration + 'ms',
+        MozTransform: 'translate(0px, 0px)'
+      });
+    },
+
+    transition: function() {
+      this.film.css({ MozTransform: 'translate(' + -this.x + 'px, 0px)' });
+    }
+
+  });
+}
 
 // Turn selector-ed elements into Microfiche slideshows.
 jQuery.fn.microfiche = function() {
