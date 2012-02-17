@@ -16,6 +16,7 @@ $.extend(Microfiche.prototype, {
   options: {
     minDuration: 250,
     duration: 500,
+    maxDuration: 500,
     dragThreshold: 10
   },
 
@@ -76,9 +77,9 @@ $.extend(Microfiche.prototype, {
 
     this.controls = {
       prev: $('<button class="microfiche-prev-button">&larr;</button>').
-            appendTo(this.el).on('mousedown touchstart', function(e) { e.preventDefault(); self.prev() }),
+            appendTo(this.el).on('click touchstart', function(e) { e.preventDefault(); self.prev() }),
       next: $('<button class="microfiche-next-button">&rarr;</button>').
-            appendTo(this.el).on('mousedown touchstart', function(e) { e.preventDefault(); self.next() })
+            appendTo(this.el).on('click touchstart', function(e) { e.preventDefault(); self.next() })
     };
 
     this.updateControls();
@@ -183,7 +184,8 @@ $.extend(Microfiche.prototype, {
            w = this.screenWidth(),
            x = this.constrain(fx(cx / w) * w),
            d = x - cx,
-           t = Math.max(this.options.minDuration, Math.min(Math.abs(d / vx), this.options.duration));
+           t = this.constrain(Math.abs(d / vx), this.options.minDuration,
+                                                this.options.maxDuration);
 
       this.x = x;
 
@@ -226,9 +228,11 @@ $.extend(Microfiche.prototype, {
     this.transition();
   },
 
-  // Return `x` constrained between limits `this.min` and `this.max`.
-  constrain: function(x) {
-    return Math.max(this.min(), Math.min(x, this.max()));
+  // Return `x` constrained between limits `min` and `max`.
+  constrain: function(x, min, max) {
+    if (min === undefined) min = this.min();
+    if (max === undefined) max = this.max();
+    return Math.max(min, Math.min(x, max));
   },
 
   // Returns the lower limit - simply 0.
