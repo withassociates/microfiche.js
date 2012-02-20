@@ -31,6 +31,7 @@ $.extend(Microfiche.prototype, {
     this.createFilm();
     this.createScreen();
     this.calibrate();
+    if (this.film.width() < this.screen.width()) return;
     this.createControls();
     this.enableTouch();
   },
@@ -213,8 +214,8 @@ $.extend(Microfiche.prototype, {
 
   // Enable/disable controls based on current position.
   updateControls: function() {
-    this.controls.prev[0].disabled = this.x === this.min();
-    this.controls.next[0].disabled = this.x === this.max();
+    this.controls.prev[0].disabled = this.x <= this.min();
+    this.controls.next[0].disabled = this.x >= this.max();
   },
 
   // Microfiche shuttles by the screenful, so `direction` represents
