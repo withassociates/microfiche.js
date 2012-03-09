@@ -2,81 +2,60 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=800">
+
   <title>Microfiche.js</title>
-  <style type="text/css">
-    body {
-      font-family: Helvetica, Arial, sans-serif;
-      font-size: 12px;
-      line-height: 1.5;
-      width: 690px;
-      padding: 15px;
-      margin: 0 auto;
-    }
 
-    #example {
-      display: block;
-      position: relative;
-      padding: 10px 5px;
-      box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.25);
-      background: #fafafa;
-    }
-      #example ul {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-      #example li {
-        display: block;
-        float: left;
-        margin: 0px 5px;
-        padding: 0;
-      }
-
-    #example .microfiche-prev-button {
-      left: -44px;
-      margin-top: -9px;
-      position: absolute;
-      top: 50%;
-    }
-    #example .microfiche-next-button {
-      margin-top: -9px;
-      position: absolute;
-      right: -44px;
-      top: 50%;
-    }
-  </style>
+  <link rel="stylesheet" href="test/vendor/prettify.css">
+  <link rel="stylesheet" href="test/example.css">
 
   <script src="test/vendor/jquery-1.7.1.js"></script>
+  <script src="test/vendor/prettify.js"></script>
   <script src="microfiche.js"></script>
+
+  <script>
+    function example(id) {
+      document.write(
+        '<div class="example" id="' + id + '">' +
+          '<div>' +
+            '<ul>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>1. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>2. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>3. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>4. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>5. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>6. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>7. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>8. Some words</p></li>' +
+            '</ul>' +
+          '</div>' +
+          '<div>' +
+            '<ul>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>9. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>10. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>11. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>12. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>13. Some words</p></li>' +
+              '<li><img src="http://placehold.it/160x120" width="160" height="120"><p>14. Some words</p></li>' +
+            '</ul>' +
+          '</div>' +
+        '</div>'
+      );
+    }
+  </script>
 </head>
 <body>
 
-  <div id="example">
-    <div>
-      <ul>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>1. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>2. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>3. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>4. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>5. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>6. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>7. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>8. Some words</p></li>
-      </ul>
-    </div>
-    <div>
-      <ul>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>9. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>10. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>11. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>12. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>13. Some words</p></li>
-        <li><img src="http://placehold.it/160x120" width="160" height="120"><p>14. Some words</p></li>
-      </ul>
-    </div>
-  </div>
+  <pre class="prettyprint">$('#default').microfiche();</pre>
+  <script>example('default')</script>
+  <script>$('#default').microfiche()</script>
 
-  <script>$('#example').microfiche()</script>
+  <pre class="prettyprint">$('#cyclic').microfiche({ cyclic: true });</pre>
+  <script>example('cyclic')</script>
+  <script>$('#cyclic').microfiche({ cyclic: true })</script>
+
+  <script>prettyPrint()</script>
+
 </body>
 </html>
 
