@@ -156,13 +156,13 @@ $.extend(Microfiche.prototype, {
 
       if (this.touchState.cx < this.min()) {
         var bx = this.min() - this.touchState.cx;
-        bx = bx * 0.5;
+        bx = bx * 0.333;
         this.touchState.cx = this.min() - bx;
       }
 
       if (this.touchState.cx > this.max()) {
         var bx = this.touchState.cx - this.max();
-        bx = bx * 0.5;
+        bx = bx * 0.333;
         this.touchState.cx = this.max() + bx;
       }
 
@@ -214,6 +214,8 @@ $.extend(Microfiche.prototype, {
 
   // Enable/disable controls based on current position.
   updateControls: function() {
+    if (this.options.cyclic) return;
+
     this.controls.prev[0].disabled = this.x <= this.min();
     this.controls.next[0].disabled = this.x >= this.max();
   },
@@ -222,9 +224,15 @@ $.extend(Microfiche.prototype, {
   // screenfuls in either direction. Normally you’d use +/- 1, but larger
   // units should work fine too.
   shuttle: function(direction) {
-    this.film.stop();
-    var w = this.screenWidth();
-    this.x = this.constrain((Math.round(this.x / w) + direction) * w);
+    if (this.x >= this.max() && direction > 0) {
+      this.x = this.min();
+    } else if (this.x <= this.min() && direction < 0) {
+      this.x = this.max();
+    } else {
+      var w = this.screenWidth();
+      this.x = this.constrain((Math.round(this.x / w) + direction) * w);
+    }
+
     this.updateControls();
     this.transition();
   },
@@ -249,9 +257,20 @@ $.extend(Microfiche.prototype, {
 
   // Perform the actual animation to our new destination.
   transition: function() {
-    this.film.animate({ left: -this.x + 'px' }, this.options.duration);
+    var self = this;
+    this.film.stop().animate({ left: -this.x + 'px' }, this.options.duration);
   },
 
+  // Perform an instant transition to our new destination.
+  jump: function() {
+    this.film.css({ left: -this.x });
+  },
+
+  // Called after transition animation has completed.
+  afterTransition: function() {
+  },
+
+  // Returns the width of the containing element.
   screenWidth: function() {
     return this.el.width();
   }
