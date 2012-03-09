@@ -14,10 +14,10 @@ $.extend(Microfiche.prototype, {
 
   // The default options, which can be overridden by the initializer.
   options: {
-    minDuration: 250,
-    duration: 500,
-    maxDuration: 500,
-    dragThreshold: 10
+    minDuration   : 250,
+    duration      : 500,
+    maxDuration   : 500,
+    dragThreshold : 25
   },
 
   // Rather than relying on the literal position of `this.film`,
