@@ -17,7 +17,8 @@ $.extend(Microfiche.prototype, {
     minDuration   : 250,
     duration      : 500,
     maxDuration   : 500,
-    dragThreshold : 25
+    dragThreshold : 25,
+    elasticity    : 0.4
   },
 
   // Rather than relying on the literal position of `this.film`,
@@ -156,13 +157,13 @@ $.extend(Microfiche.prototype, {
 
       if (this.touchState.cx < this.min()) {
         var bx = this.min() - this.touchState.cx;
-        bx = bx * 0.333;
+        bx = bx * this.options.elasticity;
         this.touchState.cx = this.min() - bx;
       }
 
       if (this.touchState.cx > this.max()) {
         var bx = this.touchState.cx - this.max();
-        bx = bx * 0.333;
+        bx = bx * this.options.elasticity;
         this.touchState.cx = this.max() + bx;
       }
 
@@ -177,29 +178,24 @@ $.extend(Microfiche.prototype, {
   // to be a drag, we’ll deduce the new target value for x, ensure Microfiche
   // knows about it, and animate into place.
   touchend: function(e) {
-    if (this.touchState.isDrag) {
-      var dx = this.touchState.dx,
-          vx = this.touchState.vx,
-          cx = this.touchState.cx,
-          fx = dx < 0 ? Math.ceil : Math.floor,
-           w = this.screenWidth(),
-           x = this.constrain(fx(cx / w) * w),
-           d = x - cx,
-           t = this.constrain(Math.abs(d / vx), this.options.minDuration,
-                                                this.options.maxDuration);
-
-      this.x = x;
-
-      this.film.css({
-        WebkitTransition: '-webkit-transform ' + t + 'ms',
-        WebkitTransform: 'translate3d(' + -x + 'px, 0px, 0px)'
-      });
-
-      this.updateControls();
-    }
-
     $(document).off('touchmove', this.touchmove).
                 off('touchend', this.touchend);
+
+    if (this.touchState.isDrag) {
+      var dx = this.touchState.dx,
+           w = this.screenWidth(),
+          th = this.constrain(this.touchState.cx) === this.touchState.cx ? 0.125 : 0.75,
+          vx = this.touchState.vx;
+
+      if (dx <= -w * th) {
+        this.shuttle(1, vx);
+      } else if (dx >= w * th) {
+        this.shuttle(-1, vx);
+      } else {
+        this.shuttle(0);
+      }
+    }
+
   },
 
   // Slide to the previous screen’s-worth of slides.
@@ -223,18 +219,30 @@ $.extend(Microfiche.prototype, {
   // Microfiche shuttles by the screenful, so `direction` represents
   // screenfuls in either direction. Normally you’d use +/- 1, but larger
   // units should work fine too.
-  shuttle: function(direction) {
-    if (this.x >= this.max() && direction > 0) {
+  shuttle: function(direction, vx) {
+    var ox = this.x;
+
+    if (this.options.cyclic && this.x >= this.max() && direction > 0) {
       this.x = this.min();
-    } else if (this.x <= this.min() && direction < 0) {
+    } else if (this.options.cyclic && this.x <= this.min() && direction < 0) {
       this.x = this.max();
     } else {
       var w = this.screenWidth();
       this.x = this.constrain((Math.round(this.x / w) + direction) * w);
     }
 
+    if (vx) {
+      var duration = this.constrain(
+        Math.abs((this.x - ox) / vx),
+        this.options.minDuration,
+        this.options.maxDuration
+      );
+    } else {
+      var duration = this.options.duration;
+    }
+
     this.updateControls();
-    this.transition();
+    this.transition(duration);
   },
 
   // Return `x` constrained between limits `min` and `max`.
@@ -256,18 +264,14 @@ $.extend(Microfiche.prototype, {
   },
 
   // Perform the actual animation to our new destination.
-  transition: function() {
-    var self = this;
-    this.film.stop().animate({ left: -this.x + 'px' }, this.options.duration);
+  transition: function(duration) {
+    if (duration == null) duration = this.options.duration;
+    this.film.stop().animate({ left: -this.x + 'px' }, duration);
   },
 
   // Perform an instant transition to our new destination.
   jump: function() {
     this.film.css({ left: -this.x });
-  },
-
-  // Called after transition animation has completed.
-  afterTransition: function() {
   },
 
   // Returns the width of the containing element.
@@ -288,9 +292,11 @@ if (wkt !== undefined && wkt !== null) {
       this.film.css({ WebkitTransform: 'translate3d(0px, 0px, 0px)' });
     },
 
-    transition: function() {
+    transition: function(duration) {
+      if (duration == null) duration = this.options.duration;
+
       this.film.css({
-        WebkitTransition: '-webkit-transform ' + this.options.duration + 'ms',
+        WebkitTransition: '-webkit-transform ' + duration + 'ms',
         WebkitTransform: 'translate3d(' + -this.x + 'px, 0px, 0px)'
       });
     }
@@ -309,9 +315,11 @@ if (moz !== undefined && moz !== null) {
       this.film.css({ MozTransform: 'translate(0px, 0px)' });
     },
 
-    transition: function() {
+    transition: function(duration) {
+      if (duration == null) duration = this.options.duration;
+
       this.film.css({
-        MozTransition: '-moz-transform ' + this.options.duration + 'ms',
+        MozTransition: '-moz-transform ' + duration + 'ms',
         MozTransform: 'translate(' + -this.x + 'px, 0px)'
       });
     }
