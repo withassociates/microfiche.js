@@ -1,0 +1,5 @@
+docco microfiche.js
+git add --all
+git commit
+git push
+
