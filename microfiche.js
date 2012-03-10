@@ -14,12 +14,14 @@ $.extend(Microfiche.prototype, {
 
   // The default options, which can be overridden by the initializer.
   options: {
-    minDuration   : 250,
-    duration      : 500,
-    maxDuration   : 500,
-    dragThreshold : 25,
-    elasticity    : 0.4,
-    debounce      : 200
+    minDuration    : 250,
+    duration       : 500,
+    maxDuration    : 500,
+    dragThreshold  : 25,
+    elasticity     : 0.4,
+    debounce       : 200,
+    touchDragLower : 0.125,
+    touchDragUpper : 0.75
   },
 
   // Rather than relying on the literal position of `this.film`,
@@ -159,16 +161,18 @@ $.extend(Microfiche.prototype, {
 
       this.touchState.cx = this.x - dx;
 
-      if (this.touchState.cx < this.min()) {
-        var bx = this.min() - this.touchState.cx;
-        bx = bx * this.options.elasticity;
-        this.touchState.cx = this.min() - bx;
-      }
+      if (!this.options.cyclic) {
+        if (this.touchState.cx < this.min()) {
+          var bx = this.min() - this.touchState.cx;
+          bx = bx * this.options.elasticity;
+          this.touchState.cx = this.min() - bx;
+        }
 
-      if (this.touchState.cx > this.max()) {
-        var bx = this.touchState.cx - this.max();
-        bx = bx * this.options.elasticity;
-        this.touchState.cx = this.max() + bx;
+        if (this.touchState.cx > this.max()) {
+          var bx = this.touchState.cx - this.max();
+          bx = bx * this.options.elasticity;
+          this.touchState.cx = this.max() + bx;
+        }
       }
 
       this.film.css({
@@ -188,8 +192,15 @@ $.extend(Microfiche.prototype, {
     if (this.touchState.isDrag) {
       var dx = this.touchState.dx,
            w = this.screenWidth(),
-          th = this.constrain(this.touchState.cx) === this.touchState.cx ? 0.125 : 0.75,
           vx = this.touchState.vx;
+
+      // If we’re in cyclic mode, or the desired x point if within bounds,
+      // then the threshold for shuttling to the next point if lower.
+      if (this.options.cyclic || this.withinBounds(this.touchState.cx)) {
+        var th = this.options.touchDragLower;
+      } else {
+        var th = this.options.touchDragUpper;
+      }
 
       if (dx <= -w * th) {
         this.shuttle(1, vx);
@@ -250,6 +261,11 @@ $.extend(Microfiche.prototype, {
     if (min === undefined) min = this.min();
     if (max === undefined) max = this.max();
     return Math.max(min, Math.min(x, max));
+  },
+
+  // Returns true if the given point is within our upper/lower bounds.
+  withinBounds: function(x) {
+    return this.min() <= x && x <= this.max();
   },
 
   // Returns the lower limit - simply 0.
