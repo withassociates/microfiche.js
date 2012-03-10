@@ -1,5 +1,8 @@
 docco microfiche.js
 git add --all
 git commit
+git co gh-pages
+git merge master
+git co master
 git push
 
