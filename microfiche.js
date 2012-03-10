@@ -32,7 +32,7 @@ $.extend(Microfiche.prototype, {
     this.createFilm();
     this.createScreen();
     this.calibrate();
-    if (this.film.width() < this.screen.width()) return;
+    if (this.film.width() <= this.screen.width()) return;
     this.createControls();
     this.enableTouch();
   },
