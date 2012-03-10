@@ -18,7 +18,8 @@ $.extend(Microfiche.prototype, {
     duration      : 500,
     maxDuration   : 500,
     dragThreshold : 25,
-    elasticity    : 0.4
+    elasticity    : 0.4,
+    debounce      : 200
   },
 
   // Rather than relying on the literal position of `this.film`,
@@ -32,9 +33,12 @@ $.extend(Microfiche.prototype, {
     this.createFilm();
     this.createScreen();
     this.calibrate();
+
     if (this.film.width() <= this.screen.width()) return;
+
     this.createControls();
     this.enableTouch();
+    this.prepareCyclic();
   },
 
   // We create our film element, which we’ll slide back and forth in the screen.
@@ -220,16 +224,12 @@ $.extend(Microfiche.prototype, {
   // screenfuls in either direction. Normally you’d use +/- 1, but larger
   // units should work fine too.
   shuttle: function(direction, vx) {
-    var ox = this.x;
+    var ox = this.x,
+         w = this.screenWidth();
 
-    if (this.options.cyclic && this.x >= this.max() && direction > 0) {
-      this.x = this.min();
-    } else if (this.options.cyclic && this.x <= this.min() && direction < 0) {
-      this.x = this.max();
-    } else {
-      var w = this.screenWidth();
-      this.x = this.constrain((Math.round(this.x / w) + direction) * w);
-    }
+    this.x = this.constrain((Math.round(this.x / w) + direction) * w);
+
+    if (this.options.cyclic && this.x == ox) this.x += direction * w;
 
     if (vx) {
       var duration = this.constrain(
@@ -265,8 +265,15 @@ $.extend(Microfiche.prototype, {
 
   // Perform the actual animation to our new destination.
   transition: function(duration) {
+    var self = this;
+
     if (duration == null) duration = this.options.duration;
-    this.film.stop().animate({ left: -this.x + 'px' }, duration);
+
+    this.film.stop().animate(
+      { left: -this.x + 'px' },
+      duration,
+      function() { self.afterTransition() }
+    );
   },
 
   // Perform an instant transition to our new destination.
@@ -277,6 +284,29 @@ $.extend(Microfiche.prototype, {
   // Returns the width of the containing element.
   screenWidth: function() {
     return this.el.width();
+  },
+
+  // Prepare duplicate content at either end, for our cyclic behaviour.
+  prepareCyclic: function() {
+    if (!this.options.cyclic) return;
+
+    var cloneL = this.film.clone(),
+        cloneR = this.film.clone(),
+        w = this.film.width();
+
+    cloneL.prependTo(this.film).css({ position: 'absolute', left: -w + 'px' });
+    cloneR.appendTo(this.film).css({ position: 'absolute', left: w + 'px' });
+  },
+
+  // Called when a transition finishes.
+  afterTransition: function() {
+    if (this.x < this.min()) {
+      this.x = this.max();
+      this.jump();
+    } else if (this.x > this.max()) {
+      this.x = this.min();
+      this.jump();
+    }
   }
 
 });
@@ -293,10 +323,22 @@ if (wkt !== undefined && wkt !== null) {
     },
 
     transition: function(duration) {
+      var self = this;
+
       if (duration == null) duration = this.options.duration;
 
-      this.film.css({
+      this.film.one(
+        'webkitTransitionEnd',
+        function() { self.afterTransition() }
+      ).css({
         WebkitTransition: '-webkit-transform ' + duration + 'ms',
+        WebkitTransform: 'translate3d(' + -this.x + 'px, 0px, 0px)'
+      });
+    },
+
+    jump: function() {
+      this.film.css({
+        WebkitTransition: '-webkit-transform 0ms',
         WebkitTransform: 'translate3d(' + -this.x + 'px, 0px, 0px)'
       });
     }
@@ -316,10 +358,22 @@ if (moz !== undefined && moz !== null) {
     },
 
     transition: function(duration) {
+      var self = this;
+
       if (duration == null) duration = this.options.duration;
 
-      this.film.css({
+      this.film.one(
+        'mozTransitionEnd',
+        function() { self.afterTransition() }
+      ).css({
         MozTransition: '-moz-transform ' + duration + 'ms',
+        MozTransform: 'translate(' + -this.x + 'px, 0px)'
+      });
+    },
+
+    jump: function() {
+      this.film.css({
+        MozTransition: '-moz-transform 0ms',
         MozTransform: 'translate(' + -this.x + 'px, 0px)'
       });
     }
