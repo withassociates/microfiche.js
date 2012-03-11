@@ -56,13 +56,15 @@
 
   <h2>Installation</h2>
 
+  <p><a href="https://raw.github.com/jgwhite/microfiche.js/master/microfiche.js">Download microfiche.js here</a></p>
+
   <p>Microfiche requires <a href="http://jquery.com/">jQuery</a> ~&gt; 1.7</p>
 
   <p>You&rsquo;ll want to include the following at the appropriate point in your page:</p>
 
   <pre class="prettyprint">
-&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="https://raw.github.com/jgwhite/microfiche.js/master/microfiche.js"&gt;&lt;/script&gt;
+&lt;script src="path/to/jquery.js"&gt;&lt;/script&gt;
+&lt;script src="path/to/microfiche.js"&gt;&lt;/script&gt;
   </pre>
 
   <h2>Usage</h2>
@@ -73,13 +75,13 @@
   <p>Here&rsquo;s what we can do with jQuery + Microfiche&hellip;</p>
 
   <div class="demo">
-    <pre class="prettyprint">$('#default').microfiche();</pre>
+    <p><code class="prettyprint">$('#default').microfiche();</code></p>
     <script>example('default')</script>
     <script>$('#default').microfiche()</script>
   </div>
 
   <div class="demo">
-    <pre class="prettyprint">$('#cyclic').microfiche({ cyclic: true });</pre>
+    <p><code class="prettyprint">$('#cyclic').microfiche({ cyclic: true });</code></p>
     <script>example('cyclic')</script>
     <script>$('#cyclic').microfiche({ cyclic: true })</script>
   </div>

@@ -57,5 +57,7 @@ pre, code {
 pre.prettyprint {
   padding: 0;
   border: none;
+  max-width: 100%;
+  overflow: scroll;
 }
 

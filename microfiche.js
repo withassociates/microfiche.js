@@ -20,8 +20,7 @@ $.extend(Microfiche.prototype, {
     dragThreshold  : 25,
     elasticity     : 0.4,
     debounce       : 200,
-    touchDragLower : 0.125,
-    touchDragUpper : 0.75
+    swipeThreshold : 0.125
   },
 
   // Rather than relying on the literal position of `this.film`,
@@ -192,15 +191,8 @@ $.extend(Microfiche.prototype, {
     if (this.touchState.isDrag) {
       var dx = this.touchState.dx,
            w = this.screenWidth(),
-          vx = this.touchState.vx;
-
-      // If we’re in cyclic mode, or the desired x point if within bounds,
-      // then the threshold for shuttling to the next point if lower.
-      if (this.options.cyclic || this.withinBounds(this.touchState.cx)) {
-        var th = this.options.touchDragLower;
-      } else {
-        var th = this.options.touchDragUpper;
-      }
+          vx = this.touchState.vx,
+          th = this.options.swipeThreshold;
 
       if (dx <= -w * th) {
         this.shuttle(1, vx);
