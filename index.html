@@ -92,6 +92,21 @@
     <script>$('#buttons').microfiche({ buttons: false })</script>
   </div>
 
+  <div class="demo">
+    <p>Commands are passed to the microfiche method as options, and may be passed at any point.<br>
+    In this example, the <code class="prettyprint">shuttle(1)</code> command is performed immediately
+    after Microfiche has finished setting up.</p>
+    <p><code class="prettyprint">$('#commands').microfiche({ shuttle: 1 });</code></p>
+    <script>example('commands')</script>
+    <script>$('#commands').microfiche({ shuttle: 1 })</script>
+    <p>
+      <button onclick="$('#commands').microfiche({ shuttle: -1 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ shuttle: -1 })</code><br>
+      <button onclick="$('#commands').microfiche({ shuttle: 1 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ shuttle: 1 })</code><br>
+      <button onclick="$('#commands').microfiche({ slideTo: 0 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ slideTo: 0 })</code><br>
+      <button onclick="$('#commands').microfiche({ jumpTo: 0 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ jumpTo: 0 })</code>
+    </p>
+  </div>
+
   <script>prettyPrint()</script>
 
   <h2>License</h2>

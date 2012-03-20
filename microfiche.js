@@ -32,6 +32,7 @@ $.extend(Microfiche.prototype, {
   initialize: function(options) {
     this.options = $.extend({}, this.options, options);
     this.el = $(options.el);
+    this.el.data('microfiche', this);
     this.createFilm();
     this.createScreen();
     this.calibrate();
@@ -41,6 +42,8 @@ $.extend(Microfiche.prototype, {
     this.createControls();
     this.enableTouch();
     this.prepareCyclic();
+
+    this.run(this.options);
   },
 
   // We create our film element, which we’ll slide back and forth in the screen.
@@ -259,6 +262,17 @@ $.extend(Microfiche.prototype, {
     return Math.max(min, Math.min(x, max));
   },
 
+  // Round `x` to a factor of `screenWidth`.
+  round: function(x) {
+    var w = this.screenWidth();
+    return Math.round(x / w) * w;
+  },
+
+  // Round and constrain `x`.
+  roundAndConstrain: function(x, min, max) {
+    return this.constrain(this.round(x), min, max);
+  },
+
   // Returns true if the given point is within our upper/lower bounds.
   withinBounds: function(x) {
     return this.min() <= x && x <= this.max();
@@ -319,7 +333,30 @@ $.extend(Microfiche.prototype, {
       this.x = this.min();
       this.jump();
     }
+  },
+
+  // Run given commands.
+  run: function(options) {
+    for (var key in options) {
+      var property = this[key];
+      if ($.isFunction(property)) property.call(this, options[key]);
+    }
+  },
+
+  // Animate to the given point (constrained to an acceptable value).
+  slideTo: function(x) {
+    this.x = this.roundAndConstrain(x);
+    this.updateControls();
+    this.transition();
+  },
+
+  // Jump to the given point (constrained to an acceptable value).
+  jumpTo: function(x) {
+    this.x = this.roundAndConstrain(x);
+    this.updateControls();
+    this.jump();
   }
+
 
 });
 
@@ -396,7 +433,13 @@ if (moz !== undefined && moz !== null) {
 // Turn selector-ed elements into Microfiche slideshows.
 jQuery.fn.microfiche = function(options) {
   return this.each(function() {
-    new Microfiche($.extend({ el: this }, options));
+    var microfiche = $(this).data('microfiche');
+
+    if (microfiche) {
+      microfiche.run(options);
+    } else {
+      new Microfiche($.extend({ el: this }, options));
+    }
   });
 }
 
