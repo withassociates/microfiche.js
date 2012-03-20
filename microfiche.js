@@ -14,11 +14,12 @@ $.extend(Microfiche.prototype, {
 
   // The default options, which can be overridden by the initializer.
   options: {
+    buttons        : true,
     minDuration    : 250,
     duration       : 500,
     maxDuration    : 500,
     dragThreshold  : 25,
-    elasticity     : 0.4,
+    elasticity     : 0.5,
     debounce       : 200,
     swipeThreshold : 0.125
   },
@@ -80,6 +81,8 @@ $.extend(Microfiche.prototype, {
   // For the time being, we’re binding control elements directly to their
   // respective actions.
   createControls: function() {
+    if (!this.options.buttons) return;
+
     var self = this;
 
     this.controls = {
@@ -217,6 +220,7 @@ $.extend(Microfiche.prototype, {
 
   // Enable/disable controls based on current position.
   updateControls: function() {
+    if (!this.options.buttons) return;
     if (this.options.cyclic) return;
 
     this.controls.prev[0].disabled = this.x <= this.min();

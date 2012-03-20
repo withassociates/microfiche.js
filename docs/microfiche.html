@@ -8,11 +8,12 @@
 <span class="nx">Microfiche</span><span class="p">.</span><span class="nx">VERSION</span> <span class="o">=</span> <span class="s1">&#39;0.9.0&#39;</span><span class="p">;</span>
 
 <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Microfiche</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>The default options, which can be overridden by the initializer.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">buttons</span>        <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
     <span class="nx">minDuration</span>    <span class="o">:</span> <span class="mi">250</span><span class="p">,</span>
     <span class="nx">duration</span>       <span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
     <span class="nx">maxDuration</span>    <span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
     <span class="nx">dragThreshold</span>  <span class="o">:</span> <span class="mi">25</span><span class="p">,</span>
-    <span class="nx">elasticity</span>     <span class="o">:</span> <span class="mf">0.4</span><span class="p">,</span>
+    <span class="nx">elasticity</span>     <span class="o">:</span> <span class="mf">0.5</span><span class="p">,</span>
     <span class="nx">debounce</span>       <span class="o">:</span> <span class="mi">200</span><span class="p">,</span>
     <span class="nx">swipeThreshold</span> <span class="o">:</span> <span class="mf">0.125</span>
   <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Rather than relying on the literal position of <code>this.film</code>,
@@ -55,6 +56,8 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 jQuery chaining here, so look closesly when adding extra controls.
 For the time being, we’re binding control elements directly to their
 respective actions.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">createControls</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">buttons</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
     <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
     <span class="k">this</span><span class="p">.</span><span class="nx">controls</span> <span class="o">=</span> <span class="p">{</span>
@@ -171,6 +174,7 @@ knows about it, and animate into place.</p>             </td>             <td cl
   <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Slide to the next screen’s-worth of slides.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">next</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">shuttle</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
   <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>Enable/disable controls based on current position.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">updateControls</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">buttons</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
     <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cyclic</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
 
     <span class="k">this</span><span class="p">.</span><span class="nx">controls</span><span class="p">.</span><span class="nx">prev</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">disabled</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">&lt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">min</span><span class="p">();</span>
