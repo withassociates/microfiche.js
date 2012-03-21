@@ -335,17 +335,22 @@ $.extend(Microfiche.prototype, {
     return this.film.width() - this.screenWidth();
   },
 
-  // Perform the actual animation to our new destination.
+  // Sets up environment, but allows the real transition to be overridden.
   transition: function(duration) {
     var self = this;
 
     if (duration == null) duration = this.options.duration;
 
-    this.film.stop().animate(
-      { left: -this.x + 'px' },
-      duration,
-      function() { self.afterTransition() }
-    );
+    var callback = function() { self.afterTransition() };
+
+    this.el.trigger('microfiche:willMove');
+
+    this.performTransition(duration, callback);
+  },
+
+  // Default transition animation.
+  performTransition: function(duration, callback) {
+    this.film.stop().animate({ left: -this.x + 'px' }, duration, callback);
   },
 
   // Perform an instant transition to our new destination.
@@ -379,6 +384,8 @@ $.extend(Microfiche.prototype, {
       this.x = this.min();
       this.jump();
     }
+
+    this.el.trigger('microfiche:didMove');
   },
 
   // Run given commands.
@@ -401,8 +408,17 @@ $.extend(Microfiche.prototype, {
     this.x = this.roundAndConstrain(x);
     this.updateControls();
     this.jump();
-  }
+  },
 
+  // Returns the current page index.
+  currentPageIndex: function() {
+    return Math.floor(this.x / this.screenWidth());
+  },
+
+  // Returns the number of pages.
+  totalPageCount: function() {
+    return Math.ceil(this.film.width() / this.screenWidth());
+  }
 
 });
 
@@ -417,15 +433,8 @@ if (wkt !== undefined && wkt !== null) {
       this.film.css({ WebkitTransform: 'translate3d(0px, 0px, 0px)' });
     },
 
-    transition: function(duration) {
-      var self = this;
-
-      if (duration == null) duration = this.options.duration;
-
-      this.film.one(
-        'webkitTransitionEnd',
-        function() { self.afterTransition() }
-      ).css({
+    performTransition: function(duration, callback) {
+      this.film.one('webkitTransitionEnd', callback).css({
         WebkitTransition: '-webkit-transform ' + duration + 'ms',
         WebkitTransform: 'translate3d(' + -this.x + 'px, 0px, 0px)'
       });
@@ -452,15 +461,8 @@ if (moz !== undefined && moz !== null) {
       this.film.css({ MozTransform: 'translate(0px, 0px)' });
     },
 
-    transition: function(duration) {
-      var self = this;
-
-      if (duration == null) duration = this.options.duration;
-
-      this.film.one(
-        'mozTransitionEnd',
-        function() { self.afterTransition() }
-      ).css({
+    performTransition: function(duration, callback) {
+      this.film.one('mozTransitionEnd', callback).css({
         MozTransition: '-moz-transform ' + duration + 'ms',
         MozTransform: 'translate(' + -this.x + 'px, 0px)'
       });

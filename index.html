@@ -54,6 +54,8 @@
     <a href="http:/github.com/withassociates/microfiche.js">project page on GitHub</a>
     and the <a href="docs/microfiche.html">annotated source</a>.</p>
 
+  <hr>
+
   <h2>Installation</h2>
 
   <p><a href="https://raw.github.com/withassociates/microfiche.js/master/microfiche.js">Download microfiche.js here</a></p>
@@ -67,18 +69,19 @@
 &lt;script src="path/to/microfiche.js"&gt;&lt;/script&gt;
   </pre>
 
+  <hr>
+
   <h2>Usage</h2>
 
-  <p>Let&rsquo;s suppose we have the following element on our page:</p>
-  <script>example('original')</script>
-
-  <p>Here&rsquo;s what we can do with jQuery + Microfiche&hellip;</p>
+  <h3>Defaults</h3>
 
   <div class="demo">
     <p><code class="prettyprint">$('#default').microfiche();</code></p>
     <script>example('default')</script>
     <script>$('#default').microfiche()</script>
   </div>
+
+  <h3>Options</h3>
 
   <div class="demo">
     <p><code class="prettyprint">$('#cyclic').microfiche({ cyclic: true });</code></p>
@@ -92,10 +95,12 @@
     <script>$('#buttons').microfiche({ buttons: false })</script>
   </div>
 
+  <h3>Commands</h3>
+  <p>Commands are passed to the microfiche method as options, and may be passed at any point.<br>
+  In this example, the <code class="prettyprint">shuttle(1)</code> command is performed immediately
+  after Microfiche has finished setting up.</p>
+
   <div class="demo">
-    <p>Commands are passed to the microfiche method as options, and may be passed at any point.<br>
-    In this example, the <code class="prettyprint">shuttle(1)</code> command is performed immediately
-    after Microfiche has finished setting up.</p>
     <p><code class="prettyprint">$('#commands').microfiche({ shuttle: 1 });</code></p>
     <script>example('commands')</script>
     <script>$('#commands').microfiche({ shuttle: 1 })</script>
@@ -107,7 +112,63 @@
     </p>
   </div>
 
+  <h3>Events</h3>
+  <p>Microfiche emits the following events:</p>
+  <ul>
+    <li><code class="prettyprint">'microfiche:willMove'</code></li>
+    <li><code class="prettyprint">'microfiche:didMove'</code></li>
+  </ul>
+  <p>You can listen for them in the usual way:</p>
+
+  <div class="demo">
+    <p><pre class="prettyprint">
+$('#events').microfiche().on('microfiche:willMove microfiche:didMove', function(event) {
+  $('#events-console').html(event.type);
+});
+</pre></p>
+    <script>example('events')</script>
+    <script>
+      $('#events').microfiche().on('microfiche:willMove microfiche:didMove', function(event) {
+        $('#events-console').html(event.type);
+      });
+    </script>
+    <p><strong>Event received:</strong> <code id="events-console">-</code></p>
+  </div>
+
+  <h3>Talking to Microfiche Directly</h3>
+
+  <p>Microfiche has some useful methods that return values, and so cannot
+  be used through the aforementioned jQuery style syntax. The microfiche
+  object itself is available via jQuery&rsquo; <code>data</code> method.</p>
+
+  <p><code class="prettyprint">$('.my-element').data('microfiche');</code></p>
+
+  <h3>Methods</h3>
+
+<div class="demo">
+  <p><pre class="prettyprint">
+var m = $('#methods').microfiche().data('microfiche');
+m.currentPageIndex() // returns 0-index of the current page
+m.totalPageCount() // returns 0-index of the current page
+m.min() // returns the minimum (left-most) position
+m.max() // returns the maximum (right-most) position
+  </pre></p>
+  <script>example('methods')</script>
+  <script>
+    var m = $('#methods').microfiche().data('microfiche');
+    document.write('<pre class="prettyprint">' +
+      'currentPageIndex: ' + m.currentPageIndex() + '<br>' +
+      '  totalPageCount: ' + m.totalPageCount() + '<br>' +
+      '             min: ' + m.min() + '<br>' +
+      '             max: ' + m.max() +
+    '</pre>');
+  </script>
+</div>
+
+
   <script>prettyPrint()</script>
+
+  <hr>
 
   <h2>License</h2>
 
