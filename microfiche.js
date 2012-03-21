@@ -1,20 +1,66 @@
-(function() {
-
-// # Microfiche.js v0.9.0
+// # Microfiche.js v1.0.0
 //
 // ## Usage
 //
 //     $('.my-slideshow').microfiche();
+//     $('.my-slideshow').microfiche({ cyclic: true, button: false });
+//     $('.my-slideshow').microfiche({ shuttle: 1 });
 //
+// ## Options
+//
+// The following options can be passed the first time `microfiche` is called
+// on an element.
+//
+// ### cyclic
+//
+// If true, microfiche wraps around at front and beginning of the slideshow.
+// This option is false by default.
+//
+//     $('.my-slideshow').microfiche({ cyclic: true });
+//
+// ### buttons
+//
+// If true, microfiche will create previous/next buttons.
+// This options is true by default.
+//
+//     $('.my-slideshow').microfiche({ buttons: false });
+//
+// ## Commands
+//
+// The following commands can be run on a microfiche'd element at any point,
+// including in the first call.
+//
+// ### shuttle
+//
+// Slides `n` screenfuls (negative `n` goes backwards).
+//
+//     $('.my-slideshow').microfiche({ shuttle: n });
+//
+// ### slideTo
+//
+// Slides to point `x` (rounded and constrained appropriately).
+//
+//     $('.my-slideshow).microfiche({ slideTo: x });
+//
+// ### jumpTo
+//
+// Jumps with animation to point x (again, rounded and constrained).
+//
+//     $('.my-slideshow').microfiche({ jumpTo: x });
+//
+
+(function() {
+
 window.Microfiche = function(options) { this.initialize(options); return this; };
 
-Microfiche.VERSION = '0.9.0';
+Microfiche.VERSION = '1.0.0';
 
 $.extend(Microfiche.prototype, {
 
   // The default options, which can be overridden by the initializer.
   options: {
     buttons        : true,
+    cyclic         : false,
     minDuration    : 250,
     duration       : 500,
     maxDuration    : 500,
