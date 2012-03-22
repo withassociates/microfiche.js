@@ -355,6 +355,13 @@ $.extend(Microfiche.prototype, {
 
   // Perform an instant transition to our new destination.
   jump: function() {
+    this.el.trigger('microfiche:willMove');
+    this.performJump();
+    this.el.trigger('microfiche:didMove');
+  },
+
+  // Default jump transform.
+  performJump: function() {
     this.film.css({ left: -this.x });
   },
 
@@ -440,7 +447,7 @@ if (wkt !== undefined && wkt !== null) {
       });
     },
 
-    jump: function() {
+    performJump: function() {
       this.film.css({
         WebkitTransition: '-webkit-transform 0ms',
         WebkitTransform: 'translate3d(' + -this.x + 'px, 0px, 0px)'
@@ -468,7 +475,7 @@ if (moz !== undefined && moz !== null) {
       });
     },
 
-    jump: function() {
+    performJump: function() {
       this.film.css({
         MozTransition: '-moz-transform 0ms',
         MozTransform: 'translate(' + -this.x + 'px, 0px)'
