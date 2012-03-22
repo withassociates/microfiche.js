@@ -457,34 +457,6 @@ if (wkt !== undefined && wkt !== null) {
   });
 }
 
-// A bit of feature detection for moz transition support.
-var moz = document.documentElement.style.MozTransition;
-if (moz !== undefined && moz !== null) {
-  // If we have moz transition support, then override `prepareFilm`
-  // and `transition` to take advantage of hardware acceleration.
-  $.extend(Microfiche.prototype, {
-
-    prepareFilm: function() {
-      this.film.css({ MozTransform: 'translate(0px, 0px)' });
-    },
-
-    performTransition: function(duration, callback) {
-      this.film.one('mozTransitionEnd', callback).css({
-        MozTransition: '-moz-transform ' + duration + 'ms',
-        MozTransform: 'translate(' + -this.x + 'px, 0px)'
-      });
-    },
-
-    performJump: function() {
-      this.film.css({
-        MozTransition: '-moz-transform 0ms',
-        MozTransform: 'translate(' + -this.x + 'px, 0px)'
-      });
-    }
-
-  });
-}
-
 // Turn selector-ed elements into Microfiche slideshows.
 jQuery.fn.microfiche = function(options) {
   return this.each(function() {
