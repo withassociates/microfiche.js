@@ -4,7 +4,7 @@
 //
 //     $('.my-slideshow').microfiche();
 //     $('.my-slideshow').microfiche({ cyclic: true, button: false });
-//     $('.my-slideshow').microfiche({ shuttle: 1 });
+//     $('.my-slideshow').microfiche({ shuttleBy: 1 });
 //
 // ## Options
 //
@@ -30,11 +30,17 @@
 // The following commands can be run on a microfiche'd element at any point,
 // including in the first call.
 //
-// ### shuttle
+// ### shuttleBy
 //
-// Slides `n` screenfuls (negative `n` goes backwards).
+// Shuttles `n` screenfuls (negative `n` goes backwards).
 //
-//     $('.my-slideshow').microfiche({ shuttle: n });
+//     $('.my-slideshow').microfiche({ shuttleBy: n });
+//
+// ### shuttleTo
+//
+// Shuttles to the `nth` screenful.
+//
+//     $('.my-slideshow').microfiche({ shuttleTo: n });
 //
 // ### slideTo
 //
@@ -44,7 +50,7 @@
 //
 // ### jumpTo
 //
-// Jumps with animation to point x (again, rounded and constrained).
+// Jumps without animation to point x (again, rounded and constrained).
 //
 //     $('.my-slideshow').microfiche({ jumpTo: x });
 //
@@ -59,15 +65,18 @@ $.extend(Microfiche.prototype, {
 
   // The default options, which can be overridden by the initializer.
   options: {
-    buttons        : true,
-    cyclic         : false,
-    minDuration    : 250,
-    duration       : 500,
-    maxDuration    : 500,
-    dragThreshold  : 25,
-    elasticity     : 0.5,
-    debounce       : 200,
-    swipeThreshold : 0.125
+    buttons         : true,
+    bullets         : true,
+    cyclic          : false,
+    minDuration     : 250,
+    duration        : 500,
+    maxDuration     : 500,
+    dragThreshold   : 25,
+    elasticity      : 0.5,
+    debounce        : 200,
+    swipeThreshold  : 0.125,
+    prevButtonLabel : '&larr;',
+    nextButtonLabel : '&rarr;'
   },
 
   // Rather than relying on the literal position of `this.film`,
@@ -125,23 +134,60 @@ $.extend(Microfiche.prototype, {
     this.screen.width('auto').height(h);
   },
 
-  // We keep controls in a Hash called `this.controls`. There’s a bit of
-  // jQuery chaining here, so look closesly when adding extra controls.
-  // For the time being, we’re binding control elements directly to their
-  // respective actions.
+  // Create prev/next buttons and page bullets.
   createControls: function() {
-    if (!this.options.buttons) return;
-
     var self = this;
 
-    this.controls = {
-      prev: $('<button class="microfiche-prev-button">&larr;</button>').
-            appendTo(this.el).on('click touchstart', function(e) { e.preventDefault(); self.prev() }),
-      next: $('<button class="microfiche-next-button">&rarr;</button>').
-            appendTo(this.el).on('click touchstart', function(e) { e.preventDefault(); self.next() })
-    };
+    this.controls = $('<span class="microfiche-controls">').appendTo(this.el);
+    this.controls.on('click', 'a, button', function(e) { self.didClickControl(e) });
+
+    if (this.options.bullets) this.createBullets();
+    if (this.options.buttons) this.createButtons();
 
     this.updateControls();
+  },
+
+  // Create page bullets.
+  createBullets: function() {
+    for (var i = 0; i < this.totalPageCount(); i++) {
+      $('<button>')
+      .addClass('microfiche-bullet')
+      .attr('data-microfiche-page', i)
+      .data('action', 'shuttleTo')
+      .data('arguments', [i])
+      .html(i + 1)
+      .appendTo(this.controls);
+    }
+  },
+
+  // Create prev/next buttons.
+  createButtons: function() {
+    $('<button>')
+    .addClass('microfiche-button microfiche-prev-button')
+    .attr('rel', 'prev')
+    .data('action', 'shuttleBy')
+    .data('arguments', [-1])
+    .html(this.options.prevButtonLabel)
+    .prependTo(this.controls);
+
+    $('<button>')
+    .addClass('microfiche-button microfiche-next-button')
+    .attr('rel', 'next')
+    .data('action', 'shuttleBy')
+    .data('arguments', [1])
+    .html(this.options.nextButtonLabel)
+    .appendTo(this.controls);
+  },
+
+  // When anything in `this.controls` is clicked.
+  didClickControl: function(e) {
+    e.preventDefault();
+
+    var control = $(e.target),
+        action = control.data('action'),
+        args = control.data('arguments');
+
+    this[action].apply(this, args);
   },
 
   // Add in the appropriate touch events. This requires a bit of scope-locking.
@@ -247,11 +293,11 @@ $.extend(Microfiche.prototype, {
           th = this.options.swipeThreshold;
 
       if (dx <= -w * th) {
-        this.shuttle(1, vx);
+        this.shuttleBy(1, vx);
       } else if (dx >= w * th) {
-        this.shuttle(-1, vx);
+        this.shuttleBy(-1, vx);
       } else {
-        this.shuttle(0);
+        this.shuttleBy(0);
       }
     }
 
@@ -259,27 +305,37 @@ $.extend(Microfiche.prototype, {
 
   // Slide to the previous screen’s-worth of slides.
   prev: function() {
-    this.shuttle(-1);
+    this.shuttleBy(-1);
   },
 
   // Slide to the next screen’s-worth of slides.
   next: function() {
-    this.shuttle(1);
+    this.shuttleBy(1);
   },
 
   // Enable/disable controls based on current position.
   updateControls: function() {
-    if (!this.options.buttons) return;
-    if (this.options.cyclic) return;
+    if (this.options.bullets) this.updateBullets();
+    if (this.options.buttons) this.updateButtons();
+  },
 
-    this.controls.prev[0].disabled = this.x <= this.min();
-    this.controls.next[0].disabled = this.x >= this.max();
+  // Update selected state of bullets.
+  updateBullets: function() {
+    this.controls.find('.microfiche-bullet').removeClass('selected');
+    this.controls.find('[data-microfiche-page="' + this.currentPageIndex() + '"]').addClass('selected');
+  },
+
+  // Update enabled state of prev/next buttons.
+  updateButtons: function() {
+    if (this.options.cyclic) return;
+    this.controls.find('[rel="prev"]').attr('disabled', this.x <= this.min());
+    this.controls.find('[rel="next"]').attr('disabled', this.x >= this.max());
   },
 
   // Microfiche shuttles by the screenful, so `direction` represents
   // screenfuls in either direction. Normally you’d use +/- 1, but larger
   // units should work fine too.
-  shuttle: function(direction, vx) {
+  shuttleBy: function(direction, vx) {
     var ox = this.x,
          w = this.screenWidth();
 
@@ -299,6 +355,13 @@ $.extend(Microfiche.prototype, {
 
     this.updateControls();
     this.transition(duration);
+  },
+
+  // Shuttles Microfiche to a particular 'page'.
+  shuttleTo: function(page) {
+    this.x = this.constrain(page * this.screenWidth());
+    this.updateControls();
+    this.transition(this.options.duration);
   },
 
   // Return `x` constrained between limits `min` and `max`.
@@ -419,7 +482,7 @@ $.extend(Microfiche.prototype, {
 
   // Returns the current page index.
   currentPageIndex: function() {
-    return Math.floor(this.x / this.screenWidth());
+    return Math.round(this.x / this.screenWidth());
   },
 
   // Returns the number of pages.

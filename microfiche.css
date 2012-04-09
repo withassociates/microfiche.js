@@ -31,18 +31,33 @@ body {
       margin: 0;
     }
 
-  .example .microfiche-prev-button {
-    left: -44px;
-    margin-top: -9px;
-    position: absolute;
-    top: 50%;
-  }
-  .example .microfiche-next-button {
-    margin-top: -9px;
-    position: absolute;
-    right: -44px;
-    top: 50%;
-  }
+.microfiche-controls {
+  display: block;
+  text-align: center;
+  font-size: 10px;
+  padding: 5px 0px;
+}
+.microfiche-bullet {
+  display: inline-block;
+  cursor: pointer;
+  width: 10px; height: 10px;
+  border-radius: 6px;
+  background: #000;
+  overflow: hidden;
+  text-indent: -1000px;
+  margin: 0 5px;
+  opacity: 0.25;
+  appearance: none;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+.microfiche-bullet.selected {
+  opacity: 1;
+}
+.microfiche-button {
+  margin: 0 15px;
+}
 
 .demo {
   display: block;
