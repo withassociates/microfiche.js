@@ -172,6 +172,7 @@ $.extend(Microfiche.prototype, {
 
   // Create page bullets.
   createBullets: function() {
+    var container = $('<span class="microfiche-bullets" />').appendTo(this.controls);
     for (var i = 0; i < this.totalPageCount(); i++) {
       $('<button>')
       .addClass('microfiche-bullet')
@@ -179,7 +180,7 @@ $.extend(Microfiche.prototype, {
       .data('action', 'slideToPage')
       .data('arguments', [i])
       .html(i + 1)
-      .appendTo(this.controls);
+      .appendTo(container);
     }
   },
 
@@ -491,6 +492,13 @@ $.extend(Microfiche.prototype, {
     this.x = this.roundAndConstrain(x);
     this.updateControls();
     this.transition();
+  },
+
+  // Jump to the given `page`
+  jumpToPage: function(page) {
+    this.x = this.constrain(page * this.screenWidth());
+    this.updateControls();
+    this.jump();
   },
 
   // Jump to the given point (constrained to an acceptable value).
