@@ -494,6 +494,13 @@ $.extend(Microfiche.prototype, {
     this.transition();
   },
 
+  // Jump to the given `page`
+  jumpToPage: function(page) {
+    this.x = this.constrain(page * this.screenWidth());
+    this.updateControls();
+    this.jump();
+  },
+
   // Jump to the given point (constrained to an acceptable value).
   jumpToPoint: function(x) {
     this.x = this.roundAndConstrain(x);
