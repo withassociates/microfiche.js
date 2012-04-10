@@ -4,7 +4,7 @@
 //
 //     $('.my-slideshow').microfiche();
 //     $('.my-slideshow').microfiche({ cyclic: true, button: false });
-//     $('.my-slideshow').microfiche({ shuttleBy: 1 });
+//     $('.my-slideshow').microfiche({ slideByPages: 1 });
 //
 // ## Options
 //
@@ -21,38 +21,45 @@
 // ### buttons
 //
 // If true, microfiche will create previous/next buttons.
-// This options is true by default.
+// This option is true by default.
 //
 //     $('.my-slideshow').microfiche({ buttons: false });
+//
+// ### bullets
+//
+// If true, microfiche will create bullets for the pages available.
+// This option is also true by default.
+//
+//     $('.my-slideshow').microfiche({ bullets: false });
 //
 // ## Commands
 //
 // The following commands can be run on a microfiche'd element at any point,
 // including in the first call.
 //
-// ### shuttleBy
+// ### slideByPages
 //
-// Shuttles `n` screenfuls (negative `n` goes backwards).
+// Slides `n` screenfuls (negative `n` goes backwards).
 //
-//     $('.my-slideshow').microfiche({ shuttleBy: n });
+//     $('.my-slideshow').microfiche({ slideByPages: n });
 //
-// ### shuttleTo
+// ### slideToPage
 //
-// Shuttles to the `nth` screenful.
+// Slides to the `nth` screenful.
 //
-//     $('.my-slideshow').microfiche({ shuttleTo: n });
+//     $('.my-slideshow').microfiche({ slideToPage: n });
 //
-// ### slideTo
+// ### slideToPoint
 //
 // Slides to point `x` (rounded and constrained appropriately).
 //
-//     $('.my-slideshow).microfiche({ slideTo: x });
+//     $('.my-slideshow).microfiche({ slideToPoint: x });
 //
-// ### jumpTo
+// ### jumpToPoint
 //
 // Jumps without animation to point x (again, rounded and constrained).
 //
-//     $('.my-slideshow').microfiche({ jumpTo: x });
+//     $('.my-slideshow').microfiche({ jumpToPoint: x });
 //
 
 (function() {
@@ -63,7 +70,9 @@ Microfiche.VERSION = '1.0.0';
 
 $.extend(Microfiche.prototype, {
 
-  // The default options, which can be overridden by the initializer.
+  // ## Default Options ##
+  //
+  // These may be overridden in the initializer.
   options: {
     buttons         : true,
     bullets         : true,
@@ -82,6 +91,9 @@ $.extend(Microfiche.prototype, {
   // Rather than relying on the literal position of `this.film`,
   // we keep a tab on the current destination.
   x: 0,
+
+
+  // ## Setup ##
 
   // Build microfiche in steps.
   initialize: function(options) {
@@ -121,6 +133,17 @@ $.extend(Microfiche.prototype, {
     append(this.film);
   },
 
+  // Prepare duplicate content at either end, for our cyclic behaviour.
+  prepareCyclic: function() {
+    if (!this.options.cyclic) return;
+
+    var cloneL = this.film.clone(),
+        cloneR = this.film.clone(),
+        w = this.film.width();
+
+    cloneL.prependTo(this.film).css({ position: 'absolute', left: -w + 'px' });
+    cloneR.appendTo(this.film).css({ position: 'absolute', left: w + 'px' });
+  },
 
   // This slightly strange process tries to ensure we don’t get any wrapping
   // in `this.film`, then fixes the dimensions of `this.film` and `this.screen`.
@@ -153,7 +176,7 @@ $.extend(Microfiche.prototype, {
       $('<button>')
       .addClass('microfiche-bullet')
       .attr('data-microfiche-page', i)
-      .data('action', 'shuttleTo')
+      .data('action', 'slideToPage')
       .data('arguments', [i])
       .html(i + 1)
       .appendTo(this.controls);
@@ -165,29 +188,18 @@ $.extend(Microfiche.prototype, {
     $('<button>')
     .addClass('microfiche-button microfiche-prev-button')
     .attr('rel', 'prev')
-    .data('action', 'shuttleBy')
-    .data('arguments', [-1])
+    .data('action', 'prev')
+    .data('arguments', [])
     .html(this.options.prevButtonLabel)
     .prependTo(this.controls);
 
     $('<button>')
     .addClass('microfiche-button microfiche-next-button')
     .attr('rel', 'next')
-    .data('action', 'shuttleBy')
-    .data('arguments', [1])
+    .data('action', 'next')
+    .data('arguments', [])
     .html(this.options.nextButtonLabel)
     .appendTo(this.controls);
-  },
-
-  // When anything in `this.controls` is clicked.
-  didClickControl: function(e) {
-    e.preventDefault();
-
-    var control = $(e.target),
-        action = control.data('action'),
-        args = control.data('arguments');
-
-    this[action].apply(this, args);
   },
 
   // Add in the appropriate touch events. This requires a bit of scope-locking.
@@ -203,6 +215,20 @@ $.extend(Microfiche.prototype, {
     this.touchend = function() { thisTouchend.apply(self, arguments) };
 
     this.film.on('touchstart', this.touchstart);
+  },
+
+
+  // ## User Event Handling ##
+
+  // When anything in `this.controls` is clicked.
+  didClickControl: function(e) {
+    e.preventDefault();
+
+    var control = $(e.target),
+        action = control.data('action'),
+        args = control.data('arguments');
+
+    this[action].apply(this, args);
   },
 
   // When touch starts, record the origin point and time.
@@ -293,25 +319,18 @@ $.extend(Microfiche.prototype, {
           th = this.options.swipeThreshold;
 
       if (dx <= -w * th) {
-        this.shuttleBy(1, vx);
+        this.slideByPages(1, vx);
       } else if (dx >= w * th) {
-        this.shuttleBy(-1, vx);
+        this.slideByPages(-1, vx);
       } else {
-        this.shuttleBy(0);
+        this.slideByPages(0);
       }
     }
 
   },
 
-  // Slide to the previous screen’s-worth of slides.
-  prev: function() {
-    this.shuttleBy(-1);
-  },
 
-  // Slide to the next screen’s-worth of slides.
-  next: function() {
-    this.shuttleBy(1);
-  },
+  // ## State Update ##
 
   // Enable/disable controls based on current position.
   updateControls: function() {
@@ -332,36 +351,13 @@ $.extend(Microfiche.prototype, {
     this.controls.find('[rel="next"]').attr('disabled', this.x >= this.max());
   },
 
-  // Microfiche shuttles by the screenful, so `direction` represents
-  // screenfuls in either direction. Normally you’d use +/- 1, but larger
-  // units should work fine too.
-  shuttleBy: function(direction, vx) {
-    var ox = this.x,
-         w = this.screenWidth();
 
-    this.x = this.constrain((Math.round(this.x / w) + direction) * w);
+  // ## Helpers ##
 
-    if (this.options.cyclic && this.x == ox) this.x += direction * w;
-
-    if (vx) {
-      var duration = this.constrain(
-        Math.abs((this.x - ox) / vx),
-        this.options.minDuration,
-        this.options.maxDuration
-      );
-    } else {
-      var duration = this.options.duration;
-    }
-
-    this.updateControls();
-    this.transition(duration);
-  },
-
-  // Shuttles Microfiche to a particular 'page'.
-  shuttleTo: function(page) {
-    this.x = this.constrain(page * this.screenWidth());
-    this.updateControls();
-    this.transition(this.options.duration);
+  // Round `x` to a factor of `screenWidth`.
+  round: function(x) {
+    var w = this.screenWidth();
+    return Math.round(x / w) * w;
   },
 
   // Return `x` constrained between limits `min` and `max`.
@@ -369,12 +365,6 @@ $.extend(Microfiche.prototype, {
     if (min === undefined) min = this.min();
     if (max === undefined) max = this.max();
     return Math.max(min, Math.min(x, max));
-  },
-
-  // Round `x` to a factor of `screenWidth`.
-  round: function(x) {
-    var w = this.screenWidth();
-    return Math.round(x / w) * w;
   },
 
   // Round and constrain `x`.
@@ -398,6 +388,36 @@ $.extend(Microfiche.prototype, {
     return this.film.width() - this.screenWidth();
   },
 
+  // Returns the current page index.
+  currentPageIndex: function() {
+    return Math.round(this.x / this.screenWidth());
+  },
+
+  // Returns the number of pages.
+  totalPageCount: function() {
+    return Math.ceil(this.film.width() / this.screenWidth());
+  },
+
+  // Returns the width of the containing element.
+  screenWidth: function() {
+    return this.el.width();
+  },
+
+
+  // ## Internal Methods for Performing Transitions ##
+
+  // Perform an instant transition to our new destination.
+  jump: function() {
+    this.el.trigger('microfiche:willMove');
+    this.performJump();
+    this.el.trigger('microfiche:didMove');
+  },
+
+  // Default jump transform.
+  performJump: function() {
+    this.film.css({ left: -this.x });
+  },
+
   // Sets up environment, but allows the real transition to be overridden.
   transition: function(duration) {
     var self = this;
@@ -416,35 +436,6 @@ $.extend(Microfiche.prototype, {
     this.film.stop().animate({ left: -this.x + 'px' }, duration, callback);
   },
 
-  // Perform an instant transition to our new destination.
-  jump: function() {
-    this.el.trigger('microfiche:willMove');
-    this.performJump();
-    this.el.trigger('microfiche:didMove');
-  },
-
-  // Default jump transform.
-  performJump: function() {
-    this.film.css({ left: -this.x });
-  },
-
-  // Returns the width of the containing element.
-  screenWidth: function() {
-    return this.el.width();
-  },
-
-  // Prepare duplicate content at either end, for our cyclic behaviour.
-  prepareCyclic: function() {
-    if (!this.options.cyclic) return;
-
-    var cloneL = this.film.clone(),
-        cloneR = this.film.clone(),
-        w = this.film.width();
-
-    cloneL.prependTo(this.film).css({ position: 'absolute', left: -w + 'px' });
-    cloneR.appendTo(this.film).css({ position: 'absolute', left: w + 'px' });
-  },
-
   // Called when a transition finishes.
   afterTransition: function() {
     if (this.x < this.min()) {
@@ -458,40 +449,82 @@ $.extend(Microfiche.prototype, {
     this.el.trigger('microfiche:didMove');
   },
 
-  // Run given commands.
-  run: function(options) {
-    for (var key in options) {
-      var property = this[key];
-      if ($.isFunction(property)) property.call(this, options[key]);
+
+  // ## Public API ##
+
+  // Slides by `n` pages. If `n` is negative, it will slide in reverse.
+  //
+  // Also takes `vx`, which is the velocity on the x-axis. This is used
+  // internally by the touch event handlers, but can be used to perform
+  // a faster slide.
+  slideByPages: function(n, vx) {
+    var ox = this.x,
+         w = this.screenWidth();
+
+    this.x = this.constrain((Math.round(this.x / w) + n) * w);
+
+    if (this.options.cyclic && this.x == ox) this.x += n * w;
+
+    if (vx) {
+      var duration = this.constrain(
+        Math.abs((this.x - ox) / vx),
+        this.options.minDuration,
+        this.options.maxDuration
+      );
+    } else {
+      var duration = this.options.duration;
     }
+
+    this.updateControls();
+    this.transition(duration);
+  },
+
+  // Slides to the given `page`.
+  slideToPage: function(page) {
+    this.x = this.constrain(page * this.screenWidth());
+    this.updateControls();
+    this.transition();
   },
 
   // Animate to the given point (constrained to an acceptable value).
-  slideTo: function(x) {
+  slideToPoint: function(x) {
     this.x = this.roundAndConstrain(x);
     this.updateControls();
     this.transition();
   },
 
   // Jump to the given point (constrained to an acceptable value).
-  jumpTo: function(x) {
+  jumpToPoint: function(x) {
     this.x = this.roundAndConstrain(x);
     this.updateControls();
     this.jump();
   },
 
-  // Returns the current page index.
-  currentPageIndex: function() {
-    return Math.round(this.x / this.screenWidth());
+  // Slide to the previous screen’s-worth of slides.
+  prev: function() {
+    this.slideByPages(-1);
   },
 
-  // Returns the number of pages.
-  totalPageCount: function() {
-    return Math.ceil(this.film.width() / this.screenWidth());
+  // Slide to the next screen’s-worth of slides.
+  next: function() {
+    this.slideByPages(1);
+  },
+
+  // Run given commands, for example:
+  //
+  //     microfiche.run({ slideByPages: 1 });
+  //
+  run: function(options) {
+    for (var key in options) {
+      var property = this[key];
+      if ($.isFunction(property)) property.call(this, options[key]);
+    }
   }
 
 });
 
+// ## WebKit Optimization ##
+//
 // A bit of feature detection for webkit transition support.
 var wkt = document.documentElement.style.WebkitTransition;
 if (wkt !== undefined && wkt !== null) {
@@ -520,7 +553,9 @@ if (wkt !== undefined && wkt !== null) {
   });
 }
 
-// Turn selector-ed elements into Microfiche slideshows.
+// ## jQuery.fn.microfiche ##
+//
+// Creates microfiche elements and sends them commands.
 jQuery.fn.microfiche = function(options) {
   return this.each(function() {
     var microfiche = $(this).data('microfiche');
