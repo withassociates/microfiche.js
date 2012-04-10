@@ -180,7 +180,7 @@ $.extend(Microfiche.prototype, {
       .data('action', 'slideToPage')
       .data('arguments', [i])
       .html(i + 1)
-      .appendTo(this.controls);
+      .appendTo(container);
     }
   },
 
