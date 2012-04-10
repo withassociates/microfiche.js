@@ -172,6 +172,7 @@ $.extend(Microfiche.prototype, {
 
   // Create page bullets.
   createBullets: function() {
+    var container = $('<span class="microfiche-bullets" />').appendTo(this.controls);
     for (var i = 0; i < this.totalPageCount(); i++) {
       $('<button>')
       .addClass('microfiche-bullet')
