@@ -161,7 +161,7 @@ $.extend(Microfiche.prototype, {
   createControls: function() {
     var self = this;
 
-    this.controls = $('<span class="microfiche-controls">').appendTo(this.el);
+    this.controls = $('<span class="microfiche-controls" />').appendTo(this.el);
     this.controls.on('click', 'a, button', function(e) { self.didClickControl(e) });
 
     if (this.options.bullets) this.createBullets();
