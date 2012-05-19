@@ -411,6 +411,7 @@ $.extend(Microfiche.prototype, {
   jump: function() {
     this.el.trigger('microfiche:willMove');
     this.performJump();
+    this.updateControls();
     this.el.trigger('microfiche:didMove');
   },
 
@@ -423,6 +424,8 @@ $.extend(Microfiche.prototype, {
   transition: function(duration) {
     var self = this;
 
+    if (this.options.cyclic) this.handleWrappingTransition();
+
     if (duration == null) duration = this.options.duration;
 
     var callback = function() { self.afterTransition() };
@@ -432,6 +435,21 @@ $.extend(Microfiche.prototype, {
     this.performTransition(duration, callback);
   },
 
+  // Handle what happens in cyclic mode if we’ve slipped off at either end.
+  handleWrappingTransition: function() {
+    if (this.x > this.max()) {
+      this.x = this.min() - this.screenWidth();
+      this.jump();
+      this.x = this.min();
+      this.updateControls();
+    } else if (this.x < this.min()) {
+      this.x = this.max() + this.screenWidth();
+      this.jump();
+      this.x = this.max();
+      this.updateControls();
+    }
+  },
+
   // Default transition animation.
   performTransition: function(duration, callback) {
     this.film.stop().animate({ left: -this.x + 'px' }, duration, callback);
@@ -439,14 +457,6 @@ $.extend(Microfiche.prototype, {
 
   // Called when a transition finishes.
   afterTransition: function() {
-    if (this.x < this.min()) {
-      this.x = this.max();
-      this.jump();
-    } else if (this.x > this.max()) {
-      this.x = this.min();
-      this.jump();
-    }
-
     this.el.trigger('microfiche:didMove');
   },
 
