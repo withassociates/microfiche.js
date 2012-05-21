@@ -108,6 +108,7 @@ $.extend(Microfiche.prototype, {
 
     this.createControls();
     this.enableTouch();
+    this.enableKeyboard();
     this.prepareCyclic();
 
     this.run(this.options);
@@ -216,6 +217,16 @@ $.extend(Microfiche.prototype, {
     this.touchend = function() { thisTouchend.apply(self, arguments) };
 
     this.film.on('touchstart', this.touchstart);
+  },
+
+  // Add in left-right keyboard events.
+  enableKeyboard: function() {
+    var self = this;
+
+    var thisOnkeydown = this.onkeydown;
+    this.onkeydown = function() { thisOnkeydown.apply(self, arguments) };
+
+    $(document).on('keydown', this.onkeydown);
   },
 
 
@@ -330,6 +341,12 @@ $.extend(Microfiche.prototype, {
 
   },
 
+  // Slide centermost instance of microfiche left / right on key press.
+  onkeydown: function(e) {
+    if (e.keyCode !== 37 && e.keyCode !== 39 || !this.isCentral()) return;
+    if (e.keyCode === 37) this.slideByPages(-1);
+    else if (e.keyCode === 39) this.slideByPages(1);
+  },
 
   // ## State Update ##
 
@@ -404,6 +421,19 @@ $.extend(Microfiche.prototype, {
     return this.el.width();
   },
 
+  screenWidth: function() {
+    return this.el.width();
+  },
+
+  // Returns true if this microfiche instance is closest to the center of the screen
+  isCentral: function() {
+    var closest = $($('.microfiche-screen').sort(function(a,b){
+      return Math.abs(1 - (($(window).scrollTop()+$(window).height()/2-$(a).height()/2) / $(a).offset().top)) - 
+             Math.abs(1 - (($(window).scrollTop()+$(window).height()/2-$(b).height()/2) / $(b).offset().top))
+    })[0]).parent().data('microfiche');
+
+    return (closest === this);
+  },
 
   // ## Internal Methods for Performing Transitions ##
 
