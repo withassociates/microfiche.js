@@ -77,6 +77,7 @@ $.extend(Microfiche.prototype, {
     buttons         : true,
     bullets         : true,
     cyclic          : false,
+    keyboard        : false,
     minDuration     : 250,
     duration        : 500,
     maxDuration     : 500,
@@ -221,8 +222,11 @@ $.extend(Microfiche.prototype, {
 
   // Add in left-right keyboard events.
   enableKeyboard: function() {
+    if (!this.options.keyboard) return;
+
     var self = this;
 
+    this.el.attr('data-microfiche-keyboard', true);
     var thisOnkeydown = this.onkeydown;
     this.onkeydown = function() { thisOnkeydown.apply(self, arguments) };
 
@@ -427,10 +431,10 @@ $.extend(Microfiche.prototype, {
 
   // Returns true if this microfiche instance is closest to the center of the screen
   isCentral: function() {
-    var closest = $($('.microfiche-screen').sort(function(a,b){
+    var closest = $($('[data-microfiche-keyboard]').sort(function(a,b){
       return Math.abs(1 - (($(window).scrollTop()+$(window).height()/2-$(a).height()/2) / $(a).offset().top)) - 
              Math.abs(1 - (($(window).scrollTop()+$(window).height()/2-$(b).height()/2) / $(b).offset().top))
-    })[0]).parent().data('microfiche');
+    })[0]).data('microfiche');
 
     return (closest === this);
   },
