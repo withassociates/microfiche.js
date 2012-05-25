@@ -78,6 +78,7 @@ $.extend(Microfiche.prototype, {
     bullets         : true,
     cyclic          : false,
     keyboard        : false,
+    clickToAdvance  : true,
     minDuration     : 250,
     duration        : 500,
     maxDuration     : 500,
@@ -110,6 +111,7 @@ $.extend(Microfiche.prototype, {
     this.createControls();
     this.enableTouch();
     this.enableKeyboard();
+    this.enableClick();
     this.prepareCyclic();
 
     this.run(this.options);
@@ -233,6 +235,18 @@ $.extend(Microfiche.prototype, {
     $(document).on('keydown', this.onkeydown);
   },
 
+  // Add in mosuedown event.
+  enableClick: function() {
+    if (!this.options.clickToAdvance) return;
+
+    var self = this;
+
+    var thisOnmousedown = this.onmousedown;
+    this.onmousedown = function() { thisOnmousedown.apply(self, arguments) };
+
+    this.film.on('mousedown', this.onmousedown);
+  },
+
 
   // ## User Event Handling ##
 
@@ -350,6 +364,11 @@ $.extend(Microfiche.prototype, {
     if (e.keyCode !== 37 && e.keyCode !== 39 || !this.isCentral('[data-microfiche-keyboard]')) return;
     if (e.keyCode === 37) this.slideByPages(-1);
     else if (e.keyCode === 39) this.slideByPages(1);
+  },
+
+  // Advance microfiche on mousedown.
+  onmousedown: function(e) {
+    this.slideByPages(1);
   },
 
   // ## State Update ##
