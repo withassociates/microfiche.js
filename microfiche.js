@@ -78,7 +78,7 @@ $.extend(Microfiche.prototype, {
     bullets         : true,
     cyclic          : false,
     keyboard        : false,
-    clickToAdvance  : true,
+    clickToAdvance  : false,
     minDuration     : 250,
     duration        : 500,
     maxDuration     : 500,
