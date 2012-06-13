@@ -482,7 +482,9 @@ $.extend(Microfiche.prototype, {
 
     this.el.trigger('microfiche:willMove');
 
-    this.performTransition(duration, callback);
+    setTimeout(function() {
+      self.performTransition(duration, callback);
+    });
   },
 
   // Handle what happens in cyclic mode if we’ve slipped off at either end.
