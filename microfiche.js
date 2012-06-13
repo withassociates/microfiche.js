@@ -444,10 +444,6 @@ $.extend(Microfiche.prototype, {
     return this.el.width();
   },
 
-  screenWidth: function() {
-    return this.el.width();
-  },
-
   // Returns true if this microfiche instance is closest to the center of the screen
   isCentral: function(selector) {
 
