@@ -78,6 +78,7 @@ $.extend(Microfiche.prototype, {
     bullets         : true,
     cyclic          : false,
     keyboard        : false,
+    swipe           : true,
     clickToAdvance  : false,
     minDuration     : 250,
     duration        : 500,
@@ -209,6 +210,8 @@ $.extend(Microfiche.prototype, {
 
   // Add in the appropriate touch events. This requires a bit of scope-locking.
   enableTouch: function() {
+    if (!this.options.swipe) return;
+
     var self = this;
 
     var thisTouchstart = this.touchstart,
