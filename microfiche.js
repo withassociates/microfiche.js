@@ -61,6 +61,12 @@
 //
 //     $('.my-slideshow').microfiche({ jumpToPoint: x });
 //
+// ### autoplay
+//
+// Automatically advances every `n` seconds.
+//
+//     $('.my-slideshow').microfiche({ autoplay: n });
+//
 
 (function() {
 
@@ -74,6 +80,7 @@ $.extend(Microfiche.prototype, {
   //
   // These may be overridden in the initializer.
   options: {
+    autoplay        : false,
     buttons         : true,
     bullets         : true,
     cyclic          : false,
@@ -581,6 +588,21 @@ $.extend(Microfiche.prototype, {
   // Slide to the next screen’s-worth of slides.
   next: function() {
     this.slideByPages(1);
+  },
+
+  // Automatically call next every `n` seconds.
+  autoplay: function(n) {
+    if (this.autoplayInterval) clearInterval(this.autoplayInterval)
+
+    n = +n;
+
+    if (isNaN(n) || n <= 0) return;
+
+    var self = this;
+
+    this.autoplayInterval = setInterval(function() {
+      self.next();
+    }, n * 1000);
   },
 
   // Run given commands, for example:
