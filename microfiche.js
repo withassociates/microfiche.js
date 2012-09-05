@@ -1,4 +1,4 @@
-// # Microfiche.js v1.3.0
+// # Microfiche.js v1.3.1
 //
 // ## Usage
 //
@@ -72,7 +72,7 @@
 
 window.Microfiche = function(options) { this.initialize(options); return this; };
 
-Microfiche.VERSION = '1.3.0';
+Microfiche.VERSION = '1.3.1';
 
 $.extend(Microfiche.prototype, {
 
@@ -592,17 +592,18 @@ $.extend(Microfiche.prototype, {
 
   // Automatically call next every `n` seconds.
   autoplay: function(n) {
-    if (this.autoplayInterval) clearInterval(this.autoplayInterval)
+    if (this.autoplayTimeout) {
+      clearTimeout(this.autoplayTimeout)
+      delete this.autoplayTimeout;
+    }
 
     n = +n;
 
     if (isNaN(n) || n <= 0) return;
 
     var self = this;
-
-    this.autoplayInterval = setInterval(function() {
-      self.next();
-    }, n * 1000);
+    this.autoplayTimeout = setTimeout(function() { self.next() }, n * 1000);
+    this.el.one('microfiche:willMove', function() { self.autoplay(n) });
   },
 
   // Run given commands, for example:

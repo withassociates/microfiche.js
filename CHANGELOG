@@ -1,6 +1,18 @@
+*v1.3.1 (Sep 5, 2012)*
+
+* Improve `autoplay` behaviour
+
 *v1.3.0 (Aug 31, 2012)*
 
 * Add autoplay
+
+*v1.2.2 (Jul 30, 2012)*
+
+* Add `swipe` option
+
+*v1.2.1 (Jun 13, 2012)*
+
+* Fix cyclic bug
 
 *v1.2.0 (May 26, 2012)*
 
