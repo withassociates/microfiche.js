@@ -1,4 +1,4 @@
-// # Microfiche.js v1.3.1
+// # Microfiche.js v1.3.2
 //
 // ## Usage
 //
@@ -72,7 +72,7 @@
 
 window.Microfiche = function(options) { this.initialize(options); return this; };
 
-Microfiche.VERSION = '1.3.1';
+Microfiche.VERSION = '1.3.2';
 
 $.extend(Microfiche.prototype, {
 
@@ -92,7 +92,6 @@ $.extend(Microfiche.prototype, {
     maxDuration     : 500,
     dragThreshold   : 25,
     elasticity      : 0.5,
-    debounce        : 200,
     swipeThreshold  : 0.125,
     prevButtonLabel : '&larr;',
     nextButtonLabel : '&rarr;'
@@ -501,11 +500,13 @@ $.extend(Microfiche.prototype, {
   handleWrappingTransition: function() {
     if (this.x > this.max()) {
       this.x = this.min() - this.screenWidth();
+      if (this.touchState && this.touchState.dx) this.x -= this.touchState.dx;
       this.jump();
       this.x = this.min();
       this.updateControls();
     } else if (this.x < this.min()) {
       this.x = this.max() + this.screenWidth();
+      if (this.touchState && this.touchState.dx) this.x -= this.touchState.dx;
       this.jump();
       this.x = this.max();
       this.updateControls();
@@ -519,6 +520,7 @@ $.extend(Microfiche.prototype, {
 
   // Called when a transition finishes.
   afterTransition: function() {
+    delete this.touchState;
     this.el.trigger('microfiche:didMove');
   },
 
