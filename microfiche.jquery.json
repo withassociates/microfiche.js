@@ -1,0 +1,41 @@
+{
+  "name": "microfiche",
+  "title": "Microfiche",
+  "description": "jQuery plugin for creating performant, touch-friendly carousels.",
+  "keywords": [
+    "carousel",
+    "slider",
+    "touch",
+    "with-associates"
+  ],
+  "version": "1.3.3",
+  "author": {
+    "name": "With Associates",
+    "url": "http://withassociates.com/"
+  },
+  "maintainers": [
+    {
+      "name": "Jamie White",
+      "email": "jamie@withassociates.com",
+      "url": "http://withassociates.com/"
+    },
+    {
+      "name": "Tom Marshall",
+      "email": "thomas@withassociates.com",
+      "url": "http://withassociates.com/"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/withassociates/microfiche.js/blob/master/LICENSE"
+    }
+  ],
+  "bugs": "https://github.com/withassociates/microfiche.js/issues",
+  "homepage": "http://withassociates.github.com/microfiche.js/",
+  "docs": "http://withassociates.github.com/microfiche.js/",
+  "download": "http://withassociates.github.com/microfiche.js/",
+  "dependencies": {
+    "jquery": ">=1.7"
+  }
+}
