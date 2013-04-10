@@ -624,8 +624,7 @@ $.extend(Microfiche.prototype, {
 // ## WebKit Optimization ##
 //
 // A bit of feature detection for webkit transition support.
-var wkt = document.documentElement.style.WebkitTransition;
-if (wkt !== undefined && wkt !== null) {
+if (('WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix())) {
   // If we have webkit transition support, then override `prepareFilm`
   // and `transition` to take advantage of hardware acceleration.
   $.extend(Microfiche.prototype, {
