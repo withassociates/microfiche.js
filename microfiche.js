@@ -1,4 +1,4 @@
-// # Microfiche.js v1.3.4
+// # Microfiche.js v1.4.0
 //
 // ## Usage
 //
@@ -67,12 +67,18 @@
 //
 //     $('.my-slideshow').microfiche({ autoplay: n });
 //
+// ### autopause
+//
+// Automatically pause autoplay when the user hovers over the carousel.
+//
+//     $('.my-slideshow').microfiche({ autoplay: n, autopause: true });
+//
 
 (function() {
 
 window.Microfiche = function(options) { this.initialize(options); return this; };
 
-Microfiche.VERSION = '1.3.4';
+Microfiche.VERSION = '1.4.0';
 
 $.extend(Microfiche.prototype, {
 

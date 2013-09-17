@@ -1,511 +1,1281 @@
-<!DOCTYPE html>  <html> <head>   <title>microfiche.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               microfiche.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h1>Microfiche.js v1.3.4</h1>
+<!DOCTYPE html>
 
+<html>
+<head>
+  <title>Microfiche.js v1.4.0</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h1">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1>Microfiche.js v1.4.0</h1>
 <h2>Usage</h2>
-
-<pre><code>$('.my-slideshow').microfiche();
-$('.my-slideshow').microfiche({ cyclic: true, button: false });
-$('.my-slideshow').microfiche({ slideByPages: 1 });
-</code></pre>
-
+<pre><code>$(&#39;.my-slideshow&#39;).microfiche();
+$(&#39;.my-slideshow&#39;).microfiche({ cyclic: true, button: false });
+$(&#39;.my-slideshow&#39;).microfiche({ slideByPages: 1 });</code></pre>
 <h2>Options</h2>
-
 <p>The following options can be passed the first time <code>microfiche</code> is called
 on an element.</p>
-
 <h3>cyclic</h3>
-
 <p>If true, microfiche wraps around at front and beginning of the slideshow.
 This option is false by default.</p>
-
-<pre><code>$('.my-slideshow').microfiche({ cyclic: true });
-</code></pre>
-
+<pre><code>$(&#39;.my-slideshow&#39;).microfiche({ cyclic: true });</code></pre>
 <h3>buttons</h3>
-
 <p>If true, microfiche will create previous/next buttons.
 This option is true by default.</p>
-
-<pre><code>$('.my-slideshow').microfiche({ buttons: false });
-</code></pre>
-
+<pre><code>$(&#39;.my-slideshow&#39;).microfiche({ buttons: false });</code></pre>
 <h3>bullets</h3>
-
 <p>If true, microfiche will create bullets for the pages available.
 This option is also true by default.</p>
-
-<pre><code>$('.my-slideshow').microfiche({ bullets: false });
-</code></pre>
-
+<pre><code>$(&#39;.my-slideshow&#39;).microfiche({ bullets: false });</code></pre>
 <h2>Commands</h2>
-
-<p>The following commands can be run on a microfiche'd element at any point,
+<p>The following commands can be run on a microfiche&#39;d element at any point,
 including in the first call.</p>
-
 <h3>slideByPages</h3>
-
 <p>Slides <code>n</code> screenfuls (negative <code>n</code> goes backwards).</p>
-
-<pre><code>$('.my-slideshow').microfiche({ slideByPages: n });
-</code></pre>
-
+<pre><code>$(&#39;.my-slideshow&#39;).microfiche({ slideByPages: n });</code></pre>
 <h3>slideToPage</h3>
-
 <p>Slides to the <code>nth</code> screenful.</p>
-
-<pre><code>$('.my-slideshow').microfiche({ slideToPage: n });
-</code></pre>
-
+<pre><code>$(&#39;.my-slideshow&#39;).microfiche({ slideToPage: n });</code></pre>
 <h3>slideToPoint</h3>
-
 <p>Slides to point <code>x</code> (rounded and constrained appropriately).</p>
-
-<pre><code>$('.my-slideshow).microfiche({ slideToPoint: x });
-</code></pre>
-
+<pre><code>$(&#39;.my-slideshow).microfiche({ slideToPoint: x });</code></pre>
 <h3>jumpToPoint</h3>
-
 <p>Jumps without animation to point x (again, rounded and constrained).</p>
-
-<pre><code>$('.my-slideshow').microfiche({ jumpToPoint: x });
-</code></pre>
-
+<pre><code>$(&#39;.my-slideshow&#39;).microfiche({ jumpToPoint: x });</code></pre>
 <h3>autoplay</h3>
-
 <p>Automatically advances every <code>n</code> seconds.</p>
+<pre><code>$(&#39;.my-slideshow&#39;).microfiche({ autoplay: n });</code></pre>
+<h3>autopause</h3>
+<p>Automatically pause autoplay when the user hovers over the carousel.</p>
+<pre><code>$(&#39;.my-slideshow&#39;).microfiche({ autoplay: n, autopause: true });</code></pre>
 
-<pre><code>$('.my-slideshow').microfiche({ autoplay: n });
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="keyword">function</span>() {
 
-<span class="nb">window</span><span class="p">.</span><span class="nx">Microfiche</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span> <span class="k">return</span> <span class="k">this</span><span class="p">;</span> <span class="p">};</span>
+window.Microfiche = <span class="keyword">function</span>(options) { <span class="keyword">this</span>.initialize(options); <span class="keyword">return</span> <span class="keyword">this</span>; };
 
-<span class="nx">Microfiche</span><span class="p">.</span><span class="nx">VERSION</span> <span class="o">=</span> <span class="s1">&#39;1.3.4&#39;</span><span class="p">;</span>
+Microfiche.VERSION = <span class="string">'1.4.0'</span>;
 
-<span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Microfiche</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>Default Options</h2>
+$.extend(Microfiche.prototype, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2>Default Options</h2>
+<p>These may be overridden in the initializer.</p>
 
-<p>These may be overridden in the initializer.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">autoplay</span>        <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-    <span class="nx">buttons</span>         <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nx">bullets</span>         <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nx">cyclic</span>          <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-    <span class="nx">keyboard</span>        <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-    <span class="nx">swipe</span>           <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nx">clickToAdvance</span>  <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-    <span class="nx">minDuration</span>     <span class="o">:</span> <span class="mi">250</span><span class="p">,</span>
-    <span class="nx">duration</span>        <span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
-    <span class="nx">maxDuration</span>     <span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
-    <span class="nx">dragThreshold</span>   <span class="o">:</span> <span class="mi">25</span><span class="p">,</span>
-    <span class="nx">elasticity</span>      <span class="o">:</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="nx">swipeThreshold</span>  <span class="o">:</span> <span class="mf">0.125</span><span class="p">,</span>
-    <span class="nx">prevButtonLabel</span> <span class="o">:</span> <span class="s1">&#39;&amp;larr;&#39;</span><span class="p">,</span>
-    <span class="nx">nextButtonLabel</span> <span class="o">:</span> <span class="s1">&#39;&amp;rarr;&#39;</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Rather than relying on the literal position of <code>this.film</code>,
-we keep a tab on the current destination.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">x</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h2>Setup</h2>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Build microfiche in steps.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;microfiche&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">createFilm</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">createScreen</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">calibrate</span><span class="p">();</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  options: {
+    autoplay        : <span class="literal">false</span>,
+    autopause       : <span class="literal">false</span>,
+    buttons         : <span class="literal">true</span>,
+    bullets         : <span class="literal">true</span>,
+    cyclic          : <span class="literal">false</span>,
+    keyboard        : <span class="literal">false</span>,
+    swipe           : <span class="literal">true</span>,
+    clickToAdvance  : <span class="literal">false</span>,
+    minDuration     : <span class="number">250</span>,
+    duration        : <span class="number">500</span>,
+    maxDuration     : <span class="number">500</span>,
+    dragThreshold   : <span class="number">25</span>,
+    elasticity      : <span class="number">0.5</span>,
+    swipeThreshold  : <span class="number">0.125</span>,
+    prevButtonLabel : <span class="string">'&amp;larr;'</span>,
+    nextButtonLabel : <span class="string">'&amp;rarr;'</span>
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Rather than relying on the literal position of <code>this.film</code>,
+we keep a tab on the current destination.</p>
 
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">width</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">screen</span><span class="p">.</span><span class="nx">width</span><span class="p">())</span> <span class="k">return</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  x: <span class="number">0</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2>Setup</h2>
+<p>Build microfiche in steps.</p>
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">createControls</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">enableTouch</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">enableKeyboard</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">enableClick</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">prepareCyclic</span><span class="p">();</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  initialize: <span class="keyword">function</span>(options) {
+    <span class="keyword">this</span>.options = $.extend({}, <span class="keyword">this</span>.options, options);
+    <span class="keyword">this</span>.el = $(options.el);
+    <span class="keyword">this</span>.el.data(<span class="string">'microfiche'</span>, <span class="keyword">this</span>);
+    <span class="keyword">this</span>.createFilm();
+    <span class="keyword">this</span>.createScreen();
+    <span class="keyword">this</span>.calibrate();
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>We create our film element, which we’ll slide back and forth in the screen.
+    <span class="keyword">if</span> (<span class="keyword">this</span>.film.width() &lt;= <span class="keyword">this</span>.screen.width()) <span class="keyword">return</span>;
+
+    <span class="keyword">this</span>.createControls();
+    <span class="keyword">this</span>.enableTouch();
+    <span class="keyword">this</span>.enableKeyboard();
+    <span class="keyword">this</span>.enableClick();
+    <span class="keyword">this</span>.prepareCyclic();
+
+    <span class="keyword">this</span>.run(<span class="keyword">this</span>.options);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>We create our film element, which we’ll slide back and forth in the screen.
 Before appending any extra elements, we detach the existing children,
 append them to film, and tell them to float so they’ll (hopefully) lay-out
-nicely along the horizontal.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">createFilm</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">film</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div class=&quot;microfiche-film&quot;&gt;&#39;</span><span class="p">).</span>
-    <span class="nx">css</span><span class="p">({</span> <span class="nx">position</span><span class="o">:</span> <span class="s1">&#39;absolute&#39;</span> <span class="p">});</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">children</span><span class="p">().</span><span class="nx">appendTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span> <span class="kr">float</span><span class="o">:</span> <span class="s1">&#39;left&#39;</span> <span class="p">});</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">prepareFilm</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">prepareFilm</span><span class="p">();</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>The screen is created and appended to our element, then the film is
-appended to the screen. Screen manually takes its height from film.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">createScreen</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">screen</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div class=&quot;microfiche-screen&quot;&gt;&#39;</span><span class="p">).</span>
-    <span class="nx">css</span><span class="p">({</span> <span class="nx">position</span><span class="o">:</span> <span class="s1">&#39;relative&#39;</span><span class="p">,</span> <span class="nx">overflow</span><span class="o">:</span> <span class="s1">&#39;hidden&#39;</span> <span class="p">}).</span>
-    <span class="nx">appendTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span>
-    <span class="nx">append</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Prepare duplicate content at either end, for our cyclic behaviour.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">prepareCyclic</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cyclic</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+nicely along the horizontal.</p>
 
-    <span class="kd">var</span> <span class="nx">cloneL</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">clone</span><span class="p">(),</span>
-        <span class="nx">cloneR</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">clone</span><span class="p">(),</span>
-        <span class="nx">w</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">width</span><span class="p">();</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  createFilm: <span class="keyword">function</span>() {
+    <span class="keyword">this</span>.film = $(<span class="string">'&lt;div class="microfiche-film"&gt;'</span>).
+    css({ position: <span class="string">'absolute'</span> });
+    <span class="keyword">this</span>.el.children().appendTo(<span class="keyword">this</span>.film).css({ float: <span class="string">'left'</span> });
+    <span class="keyword">this</span>.prepareFilm &amp;&amp; <span class="keyword">this</span>.prepareFilm();
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>The screen is created and appended to our element, then the film is
+appended to the screen. Screen manually takes its height from film.</p>
 
-    <span class="nx">cloneL</span><span class="p">.</span><span class="nx">prependTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span> <span class="nx">position</span><span class="o">:</span> <span class="s1">&#39;absolute&#39;</span><span class="p">,</span> <span class="nx">left</span><span class="o">:</span> <span class="o">-</span><span class="nx">w</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span> <span class="p">});</span>
-    <span class="nx">cloneR</span><span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span> <span class="nx">position</span><span class="o">:</span> <span class="s1">&#39;absolute&#39;</span><span class="p">,</span> <span class="nx">left</span><span class="o">:</span> <span class="nx">w</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span> <span class="p">});</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>This slightly strange process tries to ensure we don’t get any wrapping
-in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> and <code>this.screen</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">calibrate</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">screen</span><span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="mi">100000</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  createScreen: <span class="keyword">function</span>() {
+    <span class="keyword">this</span>.screen = $(<span class="string">'&lt;div class="microfiche-screen"&gt;'</span>).
+    css({ position: <span class="string">'relative'</span>, overflow: <span class="string">'hidden'</span> }).
+    appendTo(<span class="keyword">this</span>.el).
+    append(<span class="keyword">this</span>.film);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Prepare duplicate content at either end, for our cyclic behaviour.</p>
 
-    <span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">width</span><span class="p">(),</span>
-        <span class="nx">h</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">height</span><span class="p">();</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  prepareCyclic: <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (!<span class="keyword">this</span>.options.cyclic) <span class="keyword">return</span>;
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="nx">w</span><span class="p">).</span><span class="nx">height</span><span class="p">(</span><span class="nx">h</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">screen</span><span class="p">.</span><span class="nx">width</span><span class="p">(</span><span class="s1">&#39;auto&#39;</span><span class="p">).</span><span class="nx">height</span><span class="p">(</span><span class="nx">h</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Create prev/next buttons and page bullets.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">createControls</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="keyword">var</span> cloneL = <span class="keyword">this</span>.film.clone(),
+        cloneR = <span class="keyword">this</span>.film.clone(),
+        w = <span class="keyword">this</span>.film.width();
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">controls</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;span class=&quot;microfiche-controls&quot; /&gt;&#39;</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">controls</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="s1">&#39;a, button&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nx">self</span><span class="p">.</span><span class="nx">didClickControl</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">});</span>
+    cloneL.prependTo(<span class="keyword">this</span>.film).css({ position: <span class="string">'absolute'</span>, left: -w + <span class="string">'px'</span> });
+    cloneR.appendTo(<span class="keyword">this</span>.film).css({ position: <span class="string">'absolute'</span>, left: w + <span class="string">'px'</span> });
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>This slightly strange process tries to ensure we don’t get any wrapping
+in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> and <code>this.screen</code>.</p>
 
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">bullets</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">createBullets</span><span class="p">();</span>
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">buttons</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">createButtons</span><span class="p">();</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  calibrate: <span class="keyword">function</span>() {
+    <span class="keyword">this</span>.screen.width(<span class="number">100000</span>);
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">updateControls</span><span class="p">();</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Create page bullets.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">createBullets</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">container</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;span class=&quot;microfiche-bullets&quot; /&gt;&#39;</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">controls</span><span class="p">);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">totalPageCount</span><span class="p">();</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;button&gt;&#39;</span><span class="p">)</span>
-      <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;microfiche-bullet&#39;</span><span class="p">)</span>
-      <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;data-microfiche-page&#39;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
-      <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;slideToPage&#39;</span><span class="p">)</span>
-      <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;arguments&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">i</span><span class="p">])</span>
-      <span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-      <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">container</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Create prev/next buttons.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">createButtons</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;button&gt;&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;microfiche-button microfiche-prev-button&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;rel&#39;</span><span class="p">,</span> <span class="s1">&#39;prev&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;prev&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;arguments&#39;</span><span class="p">,</span> <span class="p">[])</span>
-    <span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">prevButtonLabel</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">prependTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">controls</span><span class="p">);</span>
+    <span class="keyword">var</span> w = <span class="keyword">this</span>.film.width(),
+        h = <span class="keyword">this</span>.film.height();
 
-    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;button&gt;&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;microfiche-button microfiche-next-button&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;rel&#39;</span><span class="p">,</span> <span class="s1">&#39;next&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;next&#39;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;arguments&#39;</span><span class="p">,</span> <span class="p">[])</span>
-    <span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">nextButtonLabel</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">controls</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Add in the appropriate touch events. This requires a bit of scope-locking.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">enableTouch</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">swipe</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="keyword">this</span>.film.width(w).height(h);
+    <span class="keyword">this</span>.screen.width(<span class="string">'auto'</span>).height(h);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Create prev/next buttons and page bullets.</p>
 
-    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  createControls: <span class="keyword">function</span>() {
+    <span class="keyword">var</span> self = <span class="keyword">this</span>;
 
-    <span class="kd">var</span> <span class="nx">thisTouchstart</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchstart</span><span class="p">,</span>
-        <span class="nx">thisTouchmove</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchmove</span><span class="p">,</span>
-        <span class="nx">thisTouchend</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchend</span><span class="p">;</span>
+    <span class="keyword">this</span>.controls = $(<span class="string">'&lt;span class="microfiche-controls" /&gt;'</span>).appendTo(<span class="keyword">this</span>.el);
+    <span class="keyword">this</span>.controls.on(<span class="string">'click'</span>, <span class="string">'a, button'</span>, <span class="keyword">function</span>(e) { self.didClickControl(e) });
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">touchstart</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">thisTouchstart</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">)</span> <span class="p">};</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">touchmove</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">thisTouchmove</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">)</span> <span class="p">};</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">touchend</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">thisTouchend</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">)</span> <span class="p">};</span>
+    <span class="keyword">if</span> (<span class="keyword">this</span>.options.bullets) <span class="keyword">this</span>.createBullets();
+    <span class="keyword">if</span> (<span class="keyword">this</span>.options.buttons) <span class="keyword">this</span>.createButtons();
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;touchstart&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchstart</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Add in left-right keyboard events.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">enableKeyboard</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">keyboard</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="keyword">this</span>.updateControls();
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Create page bullets.</p>
 
-    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  createBullets: <span class="keyword">function</span>() {
+    <span class="keyword">var</span> container = $(<span class="string">'&lt;span class="microfiche-bullets" /&gt;'</span>).appendTo(<span class="keyword">this</span>.controls);
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.totalPageCount(); i++) {
+      $(<span class="string">'&lt;button&gt;'</span>)
+      .addClass(<span class="string">'microfiche-bullet'</span>)
+      .attr(<span class="string">'data-microfiche-page'</span>, i)
+      .data(<span class="string">'action'</span>, <span class="string">'slideToPage'</span>)
+      .data(<span class="string">'arguments'</span>, [i])
+      .html(i + <span class="number">1</span>)
+      .appendTo(container);
+    }
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Create prev/next buttons.</p>
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">screen</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;data-microfiche-keyboard&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="kd">var</span> <span class="nx">thisOnkeydown</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onkeydown</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">onkeydown</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">thisOnkeydown</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">)</span> <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  createButtons: <span class="keyword">function</span>() {
+    $(<span class="string">'&lt;button&gt;'</span>)
+    .addClass(<span class="string">'microfiche-button microfiche-prev-button'</span>)
+    .attr(<span class="string">'rel'</span>, <span class="string">'prev'</span>)
+    .data(<span class="string">'action'</span>, <span class="string">'prev'</span>)
+    .data(<span class="string">'arguments'</span>, [])
+    .html(<span class="keyword">this</span>.options.prevButtonLabel)
+    .prependTo(<span class="keyword">this</span>.controls);
 
-    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">onkeydown</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Add in mosuedown event.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">enableClick</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">clickToAdvance</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    $(<span class="string">'&lt;button&gt;'</span>)
+    .addClass(<span class="string">'microfiche-button microfiche-next-button'</span>)
+    .attr(<span class="string">'rel'</span>, <span class="string">'next'</span>)
+    .data(<span class="string">'action'</span>, <span class="string">'next'</span>)
+    .data(<span class="string">'arguments'</span>, [])
+    .html(<span class="keyword">this</span>.options.nextButtonLabel)
+    .appendTo(<span class="keyword">this</span>.controls);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Add in the appropriate touch events. This requires a bit of scope-locking.</p>
 
-    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  enableTouch: <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (!<span class="keyword">this</span>.options.swipe) <span class="keyword">return</span>;
 
-    <span class="kd">var</span> <span class="nx">thisOnmousedown</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onmousedown</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">onmousedown</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">thisOnmousedown</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">)</span> <span class="p">};</span>
+    <span class="keyword">var</span> self = <span class="keyword">this</span>;
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;mousedown&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">onmousedown</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <h2>User Event Handling</h2>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>When anything in <code>this.controls</code> is clicked.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">didClickControl</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="keyword">var</span> thisTouchstart = <span class="keyword">this</span>.touchstart,
+        thisTouchmove = <span class="keyword">this</span>.touchmove,
+        thisTouchend = <span class="keyword">this</span>.touchend;
 
-    <span class="kd">var</span> <span class="nx">control</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">),</span>
-        <span class="nx">action</span> <span class="o">=</span> <span class="nx">control</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">),</span>
-        <span class="nx">args</span> <span class="o">=</span> <span class="nx">control</span><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;arguments&#39;</span><span class="p">);</span>
+    <span class="keyword">this</span>.touchstart = <span class="keyword">function</span>() { thisTouchstart.apply(self, arguments) };
+    <span class="keyword">this</span>.touchmove = <span class="keyword">function</span>() { thisTouchmove.apply(self, arguments) };
+    <span class="keyword">this</span>.touchend = <span class="keyword">function</span>() { thisTouchend.apply(self, arguments) };
 
-    <span class="k">this</span><span class="p">[</span><span class="nx">action</span><span class="p">].</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>When touch starts, record the origin point and time.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">touchstart</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">touches</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">targetTouches</span><span class="p">;</span>
+    <span class="keyword">this</span>.film.on(<span class="string">'touchstart'</span>, <span class="keyword">this</span>.touchstart);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Add in left-right keyboard events.</p>
 
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">touches</span> <span class="o">||</span> <span class="nx">touches</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  enableKeyboard: <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (!<span class="keyword">this</span>.options.keyboard) <span class="keyword">return</span>;
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="nx">then</span>   <span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span>
-      <span class="nx">ox</span>     <span class="o">:</span> <span class="nx">touches</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">pageX</span><span class="p">,</span>
-      <span class="nx">oy</span>     <span class="o">:</span> <span class="nx">touches</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">pageY</span><span class="p">,</span>
-      <span class="nx">isDrag</span> <span class="o">:</span> <span class="kc">false</span>
-    <span class="p">}</span>
+    <span class="keyword">var</span> self = <span class="keyword">this</span>;
 
-    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;touchmove&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchmove</span><span class="p">).</span>
-                <span class="nx">on</span><span class="p">(</span><span class="s1">&#39;touchend&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchend</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Touchmove begins by getting the deltas on both axis.</p>
+    <span class="keyword">this</span>.screen.attr(<span class="string">'data-microfiche-keyboard'</span>, <span class="literal">true</span>);
+    <span class="keyword">var</span> thisOnkeydown = <span class="keyword">this</span>.onkeydown;
+    <span class="keyword">this</span>.onkeydown = <span class="keyword">function</span>() { thisOnkeydown.apply(self, arguments) };
 
+    $(document).on(<span class="string">'keydown'</span>, <span class="keyword">this</span>.onkeydown);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Add in mosuedown event.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  enableClick: <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (!<span class="keyword">this</span>.options.clickToAdvance) <span class="keyword">return</span>;
+
+    <span class="keyword">var</span> self = <span class="keyword">this</span>;
+
+    <span class="keyword">var</span> thisOnmousedown = <span class="keyword">this</span>.onmousedown;
+    <span class="keyword">this</span>.onmousedown = <span class="keyword">function</span>() { thisOnmousedown.apply(self, arguments) };
+
+    <span class="keyword">this</span>.film.on(<span class="string">'mousedown'</span>, <span class="keyword">this</span>.onmousedown);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <h2>User Event Handling</h2>
+<p>When anything in <code>this.controls</code> is clicked.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  didClickControl: <span class="keyword">function</span>(e) {
+    e.preventDefault();
+
+    <span class="keyword">var</span> control = $(e.target),
+        action = control.data(<span class="string">'action'</span>),
+        args = control.data(<span class="string">'arguments'</span>);
+
+    <span class="keyword">this</span>[action].apply(<span class="keyword">this</span>, args);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>When touch starts, record the origin point and time.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  touchstart: <span class="keyword">function</span>(e) {
+    <span class="keyword">var</span> touches = e.originalEvent.targetTouches;
+
+    <span class="keyword">if</span> (!touches || touches.length &gt; <span class="number">1</span>) <span class="keyword">return</span>;
+
+    <span class="keyword">this</span>.touchState = {
+      then   : <span class="keyword">new</span> Date(),
+      ox     : touches[<span class="number">0</span>].pageX,
+      oy     : touches[<span class="number">0</span>].pageY,
+      isDrag : <span class="literal">false</span>
+    }
+
+    $(document).on(<span class="string">'touchmove'</span>, <span class="keyword">this</span>.touchmove).
+                on(<span class="string">'touchend'</span>, <span class="keyword">this</span>.touchend);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Touchmove begins by getting the deltas on both axis.</p>
 <p>If we’re not already in drag-mode, we check to see if the horizontal
 delta is above the treshold. If the vertical delta crosses the threshold,
 we duck out altogether.</p>
-
 <p>After that, we ask <code>this.film</code> to follow the touch, and record a few
-details about position and velocity for good measure.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">touchmove</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">targetTouches</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-        <span class="nx">dx</span> <span class="o">=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">pageX</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">ox</span><span class="p">,</span>
-        <span class="nx">dy</span> <span class="o">=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">pageY</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">oy</span><span class="p">;</span>
+details about position and velocity for good measure.</p>
 
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">isDrag</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">dy</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">dragThreshold</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">touchend</span><span class="p">();</span>
-        <span class="k">return</span><span class="p">;</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">dx</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">dragThreshold</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">isDrag</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  touchmove: <span class="keyword">function</span>(e) {
+    <span class="keyword">var</span> t = e.originalEvent.targetTouches[<span class="number">0</span>],
+        dx = t.pageX - <span class="keyword">this</span>.touchState.ox,
+        dy = t.pageY - <span class="keyword">this</span>.touchState.oy;
 
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">isDrag</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="keyword">if</span> (!<span class="keyword">this</span>.touchState.isDrag) {
+      <span class="keyword">if</span> (Math.abs(dy) &gt;= <span class="keyword">this</span>.options.dragThreshold) {
+        <span class="keyword">this</span>.touchend();
+        <span class="keyword">return</span>;
+      } <span class="keyword">else</span> <span class="keyword">if</span> (Math.abs(dx) &gt;= <span class="keyword">this</span>.options.dragThreshold) {
+        <span class="keyword">this</span>.touchState.isDrag = <span class="literal">true</span>;
+      }
+    }
 
-      <span class="kd">var</span> <span class="nx">now</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span>
-          <span class="nx">t</span> <span class="o">=</span> <span class="nx">now</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">then</span><span class="p">;</span>
+    <span class="keyword">if</span> (<span class="keyword">this</span>.touchState.isDrag) {
+      e.preventDefault();
 
-      <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">vx</span> <span class="o">=</span> <span class="p">(</span><span class="nx">dx</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">dx</span><span class="p">)</span> <span class="o">/</span> <span class="nx">t</span><span class="p">;</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">vy</span> <span class="o">=</span> <span class="p">(</span><span class="nx">dy</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">dy</span><span class="p">)</span> <span class="o">/</span> <span class="nx">t</span><span class="p">;</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">dx</span> <span class="o">=</span> <span class="nx">dx</span><span class="p">;</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">dy</span> <span class="o">=</span> <span class="nx">dy</span><span class="p">;</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">then</span> <span class="o">=</span> <span class="nx">now</span><span class="p">;</span>
+      <span class="keyword">var</span> now = <span class="keyword">new</span> Date(),
+          t = now - <span class="keyword">this</span>.touchState.then;
 
-      <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">cx</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">-</span> <span class="nx">dx</span><span class="p">;</span>
+      <span class="keyword">this</span>.touchState.vx = (dx - <span class="keyword">this</span>.touchState.dx) / t;
+      <span class="keyword">this</span>.touchState.vy = (dy - <span class="keyword">this</span>.touchState.dy) / t;
+      <span class="keyword">this</span>.touchState.dx = dx;
+      <span class="keyword">this</span>.touchState.dy = dy;
+      <span class="keyword">this</span>.touchState.then = now;
 
-      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cyclic</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">cx</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">min</span><span class="p">())</span> <span class="p">{</span>
-          <span class="kd">var</span> <span class="nx">bx</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">min</span><span class="p">()</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">cx</span><span class="p">;</span>
-          <span class="nx">bx</span> <span class="o">=</span> <span class="nx">bx</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">elasticity</span><span class="p">;</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">cx</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">min</span><span class="p">()</span> <span class="o">-</span> <span class="nx">bx</span><span class="p">;</span>
-        <span class="p">}</span>
+      <span class="keyword">this</span>.touchState.cx = <span class="keyword">this</span>.x - dx;
 
-        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">cx</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">max</span><span class="p">())</span> <span class="p">{</span>
-          <span class="kd">var</span> <span class="nx">bx</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">cx</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">max</span><span class="p">();</span>
-          <span class="nx">bx</span> <span class="o">=</span> <span class="nx">bx</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">elasticity</span><span class="p">;</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">cx</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">max</span><span class="p">()</span> <span class="o">+</span> <span class="nx">bx</span><span class="p">;</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
+      <span class="keyword">if</span> (!<span class="keyword">this</span>.options.cyclic) {
+        <span class="keyword">if</span> (<span class="keyword">this</span>.touchState.cx &lt; <span class="keyword">this</span>.min()) {
+          <span class="keyword">var</span> bx = <span class="keyword">this</span>.min() - <span class="keyword">this</span>.touchState.cx;
+          bx = bx * <span class="keyword">this</span>.options.elasticity;
+          <span class="keyword">this</span>.touchState.cx = <span class="keyword">this</span>.min() - bx;
+        }
 
-      <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span>
-        <span class="nx">WebkitTransition</span><span class="o">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
-        <span class="nx">WebkitTransform</span><span class="o">:</span> <span class="s1">&#39;translate3d(&#39;</span> <span class="o">+</span> <span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">cx</span> <span class="o">+</span> <span class="s1">&#39;px, 0px, 0px)&#39;</span>
-      <span class="p">});</span>
-    <span class="p">}</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>When the touch is finished, we unbind events. If the touch was decided
+        <span class="keyword">if</span> (<span class="keyword">this</span>.touchState.cx &gt; <span class="keyword">this</span>.max()) {
+          <span class="keyword">var</span> bx = <span class="keyword">this</span>.touchState.cx - <span class="keyword">this</span>.max();
+          bx = bx * <span class="keyword">this</span>.options.elasticity;
+          <span class="keyword">this</span>.touchState.cx = <span class="keyword">this</span>.max() + bx;
+        }
+      }
+
+      <span class="keyword">this</span>.film.css({
+        WebkitTransition: <span class="string">'none'</span>,
+        WebkitTransform: <span class="string">'translate3d('</span> + -<span class="keyword">this</span>.touchState.cx + <span class="string">'px, 0px, 0px)'</span>
+      });
+    }
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>When the touch is finished, we unbind events. If the touch was decided
 to be a drag, we’ll deduce the new target value for x, ensure Microfiche
-knows about it, and animate into place.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">touchend</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">off</span><span class="p">(</span><span class="s1">&#39;touchmove&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchmove</span><span class="p">).</span>
-                <span class="nx">off</span><span class="p">(</span><span class="s1">&#39;touchend&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchend</span><span class="p">);</span>
+knows about it, and animate into place.</p>
 
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">isDrag</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">dx</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">dx</span><span class="p">,</span>
-           <span class="nx">w</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">screenWidth</span><span class="p">(),</span>
-          <span class="nx">vx</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">vx</span><span class="p">,</span>
-          <span class="nx">th</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">swipeThreshold</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  touchend: <span class="keyword">function</span>(e) {
+    $(document).off(<span class="string">'touchmove'</span>, <span class="keyword">this</span>.touchmove).
+                off(<span class="string">'touchend'</span>, <span class="keyword">this</span>.touchend);
 
-      <span class="k">if</span> <span class="p">(</span><span class="nx">dx</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="nx">w</span> <span class="o">*</span> <span class="nx">th</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">slideByPages</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">vx</span><span class="p">);</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">dx</span> <span class="o">&gt;=</span> <span class="nx">w</span> <span class="o">*</span> <span class="nx">th</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">slideByPages</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">vx</span><span class="p">);</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">slideByPages</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
+    <span class="keyword">if</span> (<span class="keyword">this</span>.touchState.isDrag) {
+      <span class="keyword">var</span> dx = <span class="keyword">this</span>.touchState.dx,
+           w = <span class="keyword">this</span>.screenWidth(),
+          vx = <span class="keyword">this</span>.touchState.vx,
+          th = <span class="keyword">this</span>.options.swipeThreshold;
 
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Slide centermost instance of microfiche left / right on key press.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">onkeydown</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">!==</span> <span class="mi">37</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">!==</span> <span class="mi">39</span> <span class="o">||</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">isCentral</span><span class="p">(</span><span class="s1">&#39;[data-microfiche-keyboard]&#39;</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">===</span> <span class="mi">37</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">slideByPages</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">===</span> <span class="mi">39</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">slideByPages</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>Advance microfiche on mousedown.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">onmousedown</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">slideByPages</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <h2>State Update</h2>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>Enable/disable controls based on current position.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">updateControls</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">bullets</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">updateBullets</span><span class="p">();</span>
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">buttons</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">updateButtons</span><span class="p">();</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>Update selected state of bullets.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">updateBullets</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">controls</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;.microfiche-bullet&#39;</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;selected&#39;</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">controls</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;[data-microfiche-page=&quot;&#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">currentPageIndex</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;&quot;]&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;selected&#39;</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Update enabled state of prev/next buttons.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">updateButtons</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cyclic</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">controls</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;[rel=&quot;prev&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">&lt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">min</span><span class="p">());</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">controls</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;[rel=&quot;next&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">&gt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">max</span><span class="p">());</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <h2>Helpers</h2>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>Round <code>x</code> to a factor of <code>screenWidth</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">round</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">w</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">screenWidth</span><span class="p">();</span>
-    <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">x</span> <span class="o">/</span> <span class="nx">w</span><span class="p">)</span> <span class="o">*</span> <span class="nx">w</span><span class="p">;</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Return <code>x</code> constrained between limits <code>min</code> and <code>max</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">constrain</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">min</span><span class="p">,</span> <span class="nx">max</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">min</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="nx">min</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">min</span><span class="p">();</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">max</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="nx">max</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">max</span><span class="p">();</span>
-    <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">min</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">max</span><span class="p">));</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>Round and constrain <code>x</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">roundAndConstrain</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">min</span><span class="p">,</span> <span class="nx">max</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">constrain</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">x</span><span class="p">),</span> <span class="nx">min</span><span class="p">,</span> <span class="nx">max</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>Returns true if the given point is within our upper/lower bounds.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">withinBounds</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">min</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="nx">x</span> <span class="o">&amp;&amp;</span> <span class="nx">x</span> <span class="o">&lt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">max</span><span class="p">();</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>Returns the lower limit - simply 0.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">min</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <p>Returns the upper limit - the width of <code>this.film</code> less the width of
-<code>this.screen</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">max</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">width</span><span class="p">()</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">screenWidth</span><span class="p">();</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Returns the current page index.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">currentPageIndex</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">/</span> <span class="k">this</span><span class="p">.</span><span class="nx">screenWidth</span><span class="p">());</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>Returns the number of pages.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">totalPageCount</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">width</span><span class="p">()</span> <span class="o">/</span> <span class="k">this</span><span class="p">.</span><span class="nx">screenWidth</span><span class="p">());</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-36">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-36">&#182;</a>               </div>               <p>Returns the width of the containing element.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">screenWidth</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">width</span><span class="p">();</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <p>Returns true if this microfiche instance is closest to the center of the screen</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">isCentral</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">selector</span><span class="p">)</span> <span class="p">{</span>
+      <span class="keyword">if</span> (dx &lt;= -w * th) {
+        <span class="keyword">this</span>.slideByPages(<span class="number">1</span>, vx);
+      } <span class="keyword">else</span> <span class="keyword">if</span> (dx &gt;= w * th) {
+        <span class="keyword">this</span>.slideByPages(-<span class="number">1</span>, vx);
+      } <span class="keyword">else</span> {
+        <span class="keyword">this</span>.slideByPages(<span class="number">0</span>);
+      }
+    }
 
-    <span class="kd">var</span> <span class="nx">closest</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">selector</span> <span class="o">||</span> <span class="s1">&#39;.microfiche-screen&#39;</span><span class="p">).</span><span class="nx">sort</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span>
-      <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">((</span><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">scrollTop</span><span class="p">()</span><span class="o">+</span><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">height</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="nx">$</span><span class="p">(</span><span class="nx">a</span><span class="p">).</span><span class="nx">height</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="nx">$</span><span class="p">(</span><span class="nx">a</span><span class="p">).</span><span class="nx">offset</span><span class="p">().</span><span class="nx">top</span><span class="p">))</span> <span class="o">-</span> 
-             <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">((</span><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">scrollTop</span><span class="p">()</span><span class="o">+</span><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">height</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="nx">$</span><span class="p">(</span><span class="nx">b</span><span class="p">).</span><span class="nx">height</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="nx">$</span><span class="p">(</span><span class="nx">b</span><span class="p">).</span><span class="nx">offset</span><span class="p">().</span><span class="nx">top</span><span class="p">))</span>
-    <span class="p">})[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;microfiche&#39;</span><span class="p">);</span>
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Slide centermost instance of microfiche left / right on key press.</p>
 
-    <span class="k">return</span> <span class="p">(</span><span class="nx">closest</span> <span class="o">===</span> <span class="k">this</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-38">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-38">&#182;</a>               </div>               <h2>Internal Methods for Performing Transitions</h2>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-39">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-39">&#182;</a>               </div>               <p>Perform an instant transition to our new destination.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">jump</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;microfiche:willMove&#39;</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">performJump</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">updateControls</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;microfiche:didMove&#39;</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>Default jump transform.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">performJump</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span> <span class="nx">left</span><span class="o">:</span> <span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="p">});</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>Sets up environment, but allows the real transition to be overridden.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">transition</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">duration</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  onkeydown: <span class="keyword">function</span>(e) {
+    <span class="keyword">if</span> (e.keyCode !== <span class="number">37</span> &amp;&amp; e.keyCode !== <span class="number">39</span> || !<span class="keyword">this</span>.isCentral(<span class="string">'[data-microfiche-keyboard]'</span>)) <span class="keyword">return</span>;
+    <span class="keyword">if</span> (e.keyCode === <span class="number">37</span>) <span class="keyword">this</span>.slideByPages(-<span class="number">1</span>);
+    <span class="keyword">else</span> <span class="keyword">if</span> (e.keyCode === <span class="number">39</span>) <span class="keyword">this</span>.slideByPages(<span class="number">1</span>);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Advance microfiche on mousedown.</p>
 
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cyclic</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleWrappingTransition</span><span class="p">();</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  onmousedown: <span class="keyword">function</span>(e) {
+    <span class="keyword">this</span>.slideByPages(<span class="number">1</span>);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <h2>State Update</h2>
+<p>Enable/disable controls based on current position.</p>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nx">duration</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="nx">duration</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">duration</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  updateControls: <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (<span class="keyword">this</span>.options.bullets) <span class="keyword">this</span>.updateBullets();
+    <span class="keyword">if</span> (<span class="keyword">this</span>.options.buttons) <span class="keyword">this</span>.updateButtons();
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Update selected state of bullets.</p>
 
-    <span class="kd">var</span> <span class="nx">callback</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">self</span><span class="p">.</span><span class="nx">afterTransition</span><span class="p">()</span> <span class="p">};</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  updateBullets: <span class="keyword">function</span>() {
+    <span class="keyword">this</span>.controls.find(<span class="string">'.microfiche-bullet'</span>).removeClass(<span class="string">'selected'</span>);
+    <span class="keyword">this</span>.controls.find(<span class="string">'[data-microfiche-page="'</span> + <span class="keyword">this</span>.currentPageIndex() + <span class="string">'"]'</span>).addClass(<span class="string">'selected'</span>);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Update enabled state of prev/next buttons.</p>
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;microfiche:willMove&#39;</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  updateButtons: <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (<span class="keyword">this</span>.options.cyclic) <span class="keyword">return</span>;
+    <span class="keyword">this</span>.controls.find(<span class="string">'[rel="prev"]'</span>).attr(<span class="string">'disabled'</span>, <span class="keyword">this</span>.x &lt;= <span class="keyword">this</span>.min());
+    <span class="keyword">this</span>.controls.find(<span class="string">'[rel="next"]'</span>).attr(<span class="string">'disabled'</span>, <span class="keyword">this</span>.x &gt;= <span class="keyword">this</span>.max());
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <h2>Helpers</h2>
+<p>Round <code>x</code> to a factor of <code>screenWidth</code>.</p>
 
-    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">self</span><span class="p">.</span><span class="nx">performTransition</span><span class="p">(</span><span class="nx">duration</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
-    <span class="p">});</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-42">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-42">&#182;</a>               </div>               <p>Handle what happens in cyclic mode if we’ve slipped off at either end.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">handleWrappingTransition</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">max</span><span class="p">())</span> <span class="p">{</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">min</span><span class="p">()</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">screenWidth</span><span class="p">();</span>
-      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">touchState</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">dx</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">-=</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">dx</span><span class="p">;</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">jump</span><span class="p">();</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">min</span><span class="p">();</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">updateControls</span><span class="p">();</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">min</span><span class="p">())</span> <span class="p">{</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">max</span><span class="p">()</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">screenWidth</span><span class="p">();</span>
-      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">touchState</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">dx</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">-=</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">.</span><span class="nx">dx</span><span class="p">;</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">jump</span><span class="p">();</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">max</span><span class="p">();</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">updateControls</span><span class="p">();</span>
-    <span class="p">}</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-43">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-43">&#182;</a>               </div>               <p>Default transition animation.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">performTransition</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">duration</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">stop</span><span class="p">().</span><span class="nx">animate</span><span class="p">({</span> <span class="nx">left</span><span class="o">:</span> <span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span> <span class="p">},</span> <span class="nx">duration</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-44">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-44">&#182;</a>               </div>               <p>Called when a transition finishes.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">afterTransition</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">delete</span> <span class="k">this</span><span class="p">.</span><span class="nx">touchState</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s1">&#39;microfiche:didMove&#39;</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-45">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-45">&#182;</a>               </div>               <h2>Public API</h2>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-46">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-46">&#182;</a>               </div>               <p>Slides by <code>n</code> pages. If <code>n</code> is negative, it will slide in reverse.</p>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  round: <span class="keyword">function</span>(x) {
+    <span class="keyword">var</span> w = <span class="keyword">this</span>.screenWidth();
+    <span class="keyword">return</span> Math.round(x / w) * w;
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Return <code>x</code> constrained between limits <code>min</code> and <code>max</code>.</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  constrain: <span class="keyword">function</span>(x, min, max) {
+    <span class="keyword">if</span> (min === <span class="literal">undefined</span>) min = <span class="keyword">this</span>.min();
+    <span class="keyword">if</span> (max === <span class="literal">undefined</span>) max = <span class="keyword">this</span>.max();
+    <span class="keyword">return</span> Math.max(min, Math.min(x, max));
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Round and constrain <code>x</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  roundAndConstrain: <span class="keyword">function</span>(x, min, max) {
+    <span class="keyword">return</span> <span class="keyword">this</span>.constrain(<span class="keyword">this</span>.round(x), min, max);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Returns true if the given point is within our upper/lower bounds.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  withinBounds: <span class="keyword">function</span>(x) {
+    <span class="keyword">return</span> <span class="keyword">this</span>.min() &lt;= x &amp;&amp; x &lt;= <span class="keyword">this</span>.max();
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Returns the lower limit - simply 0.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  min: <span class="keyword">function</span>() {
+    <span class="keyword">return</span> <span class="number">0</span>;
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Returns the upper limit - the width of <code>this.film</code> less the width of
+<code>this.screen</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  max: <span class="keyword">function</span>() {
+    <span class="keyword">return</span> <span class="keyword">this</span>.film.width() - <span class="keyword">this</span>.screenWidth();
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Returns the current page index.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  currentPageIndex: <span class="keyword">function</span>() {
+    <span class="keyword">return</span> Math.round(<span class="keyword">this</span>.x / <span class="keyword">this</span>.screenWidth());
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Returns the number of pages.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  totalPageCount: <span class="keyword">function</span>() {
+    <span class="keyword">return</span> Math.ceil(<span class="keyword">this</span>.film.width() / <span class="keyword">this</span>.screenWidth());
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Returns the width of the containing element.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  screenWidth: <span class="keyword">function</span>() {
+    <span class="keyword">return</span> <span class="keyword">this</span>.el.width();
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>Returns true if this microfiche instance is closest to the center of the screen</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  isCentral: <span class="keyword">function</span>(selector) {
+
+    <span class="keyword">var</span> closest = $($(selector || <span class="string">'.microfiche-screen'</span>).sort(<span class="keyword">function</span>(a,b){
+      <span class="keyword">return</span> Math.abs(<span class="number">1</span> - (($(window).scrollTop()+$(window).height()/<span class="number">2</span>-$(a).height()/<span class="number">2</span>) / $(a).offset().top)) - 
+             Math.abs(<span class="number">1</span> - (($(window).scrollTop()+$(window).height()/<span class="number">2</span>-$(b).height()/<span class="number">2</span>) / $(b).offset().top))
+    })[<span class="number">0</span>]).parent().data(<span class="string">'microfiche'</span>);
+
+    <span class="keyword">return</span> (closest === <span class="keyword">this</span>);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <h2>Internal Methods for Performing Transitions</h2>
+<p>Perform an instant transition to our new destination.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  jump: <span class="keyword">function</span>() {
+    <span class="keyword">this</span>.el.trigger(<span class="string">'microfiche:willMove'</span>);
+    <span class="keyword">this</span>.performJump();
+    <span class="keyword">this</span>.updateControls();
+    <span class="keyword">this</span>.el.trigger(<span class="string">'microfiche:didMove'</span>);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Default jump transform.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  performJump: <span class="keyword">function</span>() {
+    <span class="keyword">this</span>.film.css({ left: -<span class="keyword">this</span>.x });
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Sets up environment, but allows the real transition to be overridden.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  transition: <span class="keyword">function</span>(duration) {
+    <span class="keyword">var</span> self = <span class="keyword">this</span>;
+
+    <span class="keyword">if</span> (<span class="keyword">this</span>.options.cyclic) <span class="keyword">this</span>.handleWrappingTransition();
+
+    <span class="keyword">if</span> (duration == <span class="literal">null</span>) duration = <span class="keyword">this</span>.options.duration;
+
+    <span class="keyword">var</span> callback = <span class="keyword">function</span>() { self.afterTransition() };
+
+    <span class="keyword">this</span>.el.trigger(<span class="string">'microfiche:willMove'</span>);
+
+    setTimeout(<span class="keyword">function</span>() {
+      self.performTransition(duration, callback);
+    });
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Handle what happens in cyclic mode if we’ve slipped off at either end.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  handleWrappingTransition: <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (<span class="keyword">this</span>.x &gt; <span class="keyword">this</span>.max()) {
+      <span class="keyword">this</span>.x = <span class="keyword">this</span>.min() - <span class="keyword">this</span>.screenWidth();
+      <span class="keyword">if</span> (<span class="keyword">this</span>.touchState &amp;&amp; <span class="keyword">this</span>.touchState.dx) <span class="keyword">this</span>.x -= <span class="keyword">this</span>.touchState.dx;
+      <span class="keyword">this</span>.jump();
+      <span class="keyword">this</span>.x = <span class="keyword">this</span>.min();
+      <span class="keyword">this</span>.updateControls();
+    } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.x &lt; <span class="keyword">this</span>.min()) {
+      <span class="keyword">this</span>.x = <span class="keyword">this</span>.max() + <span class="keyword">this</span>.screenWidth();
+      <span class="keyword">if</span> (<span class="keyword">this</span>.touchState &amp;&amp; <span class="keyword">this</span>.touchState.dx) <span class="keyword">this</span>.x -= <span class="keyword">this</span>.touchState.dx;
+      <span class="keyword">this</span>.jump();
+      <span class="keyword">this</span>.x = <span class="keyword">this</span>.max();
+      <span class="keyword">this</span>.updateControls();
+    }
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Default transition animation.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  performTransition: <span class="keyword">function</span>(duration, callback) {
+    <span class="keyword">this</span>.film.stop().animate({ left: -<span class="keyword">this</span>.x + <span class="string">'px'</span> }, duration, callback);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Called when a transition finishes.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  afterTransition: <span class="keyword">function</span>() {
+    <span class="keyword">delete</span> <span class="keyword">this</span>.touchState;
+    <span class="keyword">this</span>.el.trigger(<span class="string">'microfiche:didMove'</span>);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <h2>Public API</h2>
+<p>Slides by <code>n</code> pages. If <code>n</code> is negative, it will slide in reverse.</p>
 <p>Also takes <code>vx</code>, which is the velocity on the x-axis. This is used
 internally by the touch event handlers, but can be used to perform
-a faster slide.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">slideByPages</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">vx</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">ox</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span>
-         <span class="nx">w</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">screenWidth</span><span class="p">();</span>
+a faster slide.</p>
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">constrain</span><span class="p">((</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">/</span> <span class="nx">w</span><span class="p">)</span> <span class="o">+</span> <span class="nx">n</span><span class="p">)</span> <span class="o">*</span> <span class="nx">w</span><span class="p">);</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  slideByPages: <span class="keyword">function</span>(n, vx) {
+    <span class="keyword">var</span> ox = <span class="keyword">this</span>.x,
+         w = <span class="keyword">this</span>.screenWidth();
 
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cyclic</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">==</span> <span class="nx">ox</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">+=</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">w</span><span class="p">;</span>
+    <span class="keyword">this</span>.x = <span class="keyword">this</span>.constrain((Math.round(<span class="keyword">this</span>.x / w) + n) * w);
 
-    <span class="k">if</span> <span class="p">(</span><span class="nx">vx</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">duration</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">constrain</span><span class="p">(</span>
-        <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">((</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">-</span> <span class="nx">ox</span><span class="p">)</span> <span class="o">/</span> <span class="nx">vx</span><span class="p">),</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">minDuration</span><span class="p">,</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">maxDuration</span>
-      <span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">duration</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">duration</span><span class="p">;</span>
-    <span class="p">}</span>
+    <span class="keyword">if</span> (<span class="keyword">this</span>.options.cyclic &amp;&amp; <span class="keyword">this</span>.x == ox) <span class="keyword">this</span>.x += n * w;
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">updateControls</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">transition</span><span class="p">(</span><span class="nx">duration</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-47">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-47">&#182;</a>               </div>               <p>Slides to the given <code>page</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">slideToPage</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">page</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">constrain</span><span class="p">(</span><span class="nx">page</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">screenWidth</span><span class="p">());</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">updateControls</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">transition</span><span class="p">();</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-48">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-48">&#182;</a>               </div>               <p>Animate to the given point (constrained to an acceptable value).</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">slideToPoint</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">roundAndConstrain</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">updateControls</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">transition</span><span class="p">();</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-49">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-49">&#182;</a>               </div>               <p>Jump to the given <code>page</code></p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">jumpToPage</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">page</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">constrain</span><span class="p">(</span><span class="nx">page</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">screenWidth</span><span class="p">());</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">updateControls</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">jump</span><span class="p">();</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-50">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-50">&#182;</a>               </div>               <p>Jump to the given point (constrained to an acceptable value).</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">jumpToPoint</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">roundAndConstrain</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">updateControls</span><span class="p">();</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">jump</span><span class="p">();</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-51">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-51">&#182;</a>               </div>               <p>Slide to the previous screen’s-worth of slides.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">prev</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">slideByPages</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-52">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-52">&#182;</a>               </div>               <p>Slide to the next screen’s-worth of slides.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">next</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">slideByPages</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-53">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-53">&#182;</a>               </div>               <p>Automatically call next every <code>n</code> seconds.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">autoplay</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">autoplayTimeout</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">clearTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">autoplayTimeout</span><span class="p">)</span>
-      <span class="k">delete</span> <span class="k">this</span><span class="p">.</span><span class="nx">autoplayTimeout</span><span class="p">;</span>
-    <span class="p">}</span>
+    <span class="keyword">if</span> (vx) {
+      <span class="keyword">var</span> duration = <span class="keyword">this</span>.constrain(
+        Math.abs((<span class="keyword">this</span>.x - ox) / vx),
+        <span class="keyword">this</span>.options.minDuration,
+        <span class="keyword">this</span>.options.maxDuration
+      );
+    } <span class="keyword">else</span> {
+      <span class="keyword">var</span> duration = <span class="keyword">this</span>.options.duration;
+    }
 
-    <span class="nx">n</span> <span class="o">=</span> <span class="o">+</span><span class="nx">n</span><span class="p">;</span>
+    <span class="keyword">this</span>.updateControls();
+    <span class="keyword">this</span>.transition(duration);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>Slides to the given <code>page</code>.</p>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">||</span> <span class="nx">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  slideToPage: <span class="keyword">function</span>(page) {
+    <span class="keyword">this</span>.x = <span class="keyword">this</span>.constrain(page * <span class="keyword">this</span>.screenWidth());
+    <span class="keyword">this</span>.updateControls();
+    <span class="keyword">this</span>.transition();
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>Animate to the given point (constrained to an acceptable value).</p>
 
-    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">autoplayTimeout</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">self</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span> <span class="p">},</span> <span class="nx">n</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="s1">&#39;microfiche:willMove&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">self</span><span class="p">.</span><span class="nx">autoplay</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">});</span>
-  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-54">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-54">&#182;</a>               </div>               <p>Run given commands, for example:</p>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  slideToPoint: <span class="keyword">function</span>(x) {
+    <span class="keyword">this</span>.x = <span class="keyword">this</span>.roundAndConstrain(x);
+    <span class="keyword">this</span>.updateControls();
+    <span class="keyword">this</span>.transition();
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>Jump to the given <code>page</code></p>
 
-<pre><code>microfiche.run({ slideByPages: 1 });
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">run</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">property</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span><span class="nx">property</span><span class="p">))</span> <span class="nx">property</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">options</span><span class="p">[</span><span class="nx">key</span><span class="p">]);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  jumpToPage: <span class="keyword">function</span>(page) {
+    <span class="keyword">this</span>.x = <span class="keyword">this</span>.constrain(page * <span class="keyword">this</span>.screenWidth());
+    <span class="keyword">this</span>.updateControls();
+    <span class="keyword">this</span>.jump();
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>Jump to the given point (constrained to an acceptable value).</p>
 
-<span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-55">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-55">&#182;</a>               </div>               <h2>WebKit Optimization</h2>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  jumpToPoint: <span class="keyword">function</span>(x) {
+    <span class="keyword">this</span>.x = <span class="keyword">this</span>.roundAndConstrain(x);
+    <span class="keyword">this</span>.updateControls();
+    <span class="keyword">this</span>.jump();
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Slide to the previous screen’s-worth of slides.</p>
 
-<p>A bit of feature detection for webkit transition support.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">if</span> <span class="p">((</span><span class="s1">&#39;WebKitCSSMatrix&#39;</span> <span class="k">in</span> <span class="nb">window</span> <span class="o">&amp;&amp;</span> <span class="s1">&#39;m11&#39;</span> <span class="k">in</span> <span class="k">new</span> <span class="nx">WebKitCSSMatrix</span><span class="p">()))</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-56">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-56">&#182;</a>               </div>               <p>If we have webkit transition support, then override <code>prepareFilm</code>
-and <code>transition</code> to take advantage of hardware acceleration.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Microfiche</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  prev: <span class="keyword">function</span>() {
+    <span class="keyword">this</span>.slideByPages(-<span class="number">1</span>);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>Slide to the next screen’s-worth of slides.</p>
 
-    <span class="nx">prepareFilm</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span> <span class="nx">WebkitTransform</span><span class="o">:</span> <span class="s1">&#39;translate3d(0px, 0px, 0px)&#39;</span> <span class="p">});</span>
-    <span class="p">},</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  next: <span class="keyword">function</span>() {
+    <span class="keyword">this</span>.slideByPages(<span class="number">1</span>);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>Automatically call next every <code>n</code> seconds.</p>
 
-    <span class="nx">performTransition</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">duration</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="s1">&#39;webkitTransitionEnd&#39;</span><span class="p">,</span> <span class="nx">callback</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span>
-        <span class="nx">WebkitTransition</span><span class="o">:</span> <span class="s1">&#39;-webkit-transform &#39;</span> <span class="o">+</span> <span class="nx">duration</span> <span class="o">+</span> <span class="s1">&#39;ms&#39;</span><span class="p">,</span>
-        <span class="nx">WebkitTransform</span><span class="o">:</span> <span class="s1">&#39;translate3d(&#39;</span> <span class="o">+</span> <span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="s1">&#39;px, 0px, 0px)&#39;</span>
-      <span class="p">});</span>
-    <span class="p">},</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  autoplay: <span class="keyword">function</span>(n) {
+    <span class="keyword">if</span> (<span class="keyword">this</span>.autoplayTimeout) {
+      clearInterval(<span class="keyword">this</span>.autoplayTimeout);
+      <span class="keyword">delete</span> <span class="keyword">this</span>.autoplayTimeout;
+    }
 
-    <span class="nx">performJump</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">film</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span>
-        <span class="nx">WebkitTransition</span><span class="o">:</span> <span class="s1">&#39;-webkit-transform 0ms&#39;</span><span class="p">,</span>
-        <span class="nx">WebkitTransform</span><span class="o">:</span> <span class="s1">&#39;translate3d(&#39;</span> <span class="o">+</span> <span class="o">-</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="s1">&#39;px, 0px, 0px)&#39;</span>
-      <span class="p">});</span>
-    <span class="p">}</span>
+    n = +n;
 
-  <span class="p">});</span>
-<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-57">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-57">&#182;</a>               </div>               <h2>jQuery.fn.microfiche </h2>
+    <span class="keyword">if</span> (isNaN(n) || n &lt;= <span class="number">0</span>) <span class="keyword">return</span>;
 
-<p>Creates microfiche elements and sends them commands.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">jQuery</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">microfiche</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">microfiche</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;microfiche&#39;</span><span class="p">);</span>
+    <span class="keyword">var</span> self = <span class="keyword">this</span>;
+    <span class="keyword">this</span>.autoplayTimeout = setInterval(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">if</span> (!self.pause) {
+        self.next();
+      }
+    }, n * <span class="number">1000</span>);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>Pause autoplay when hovering over carousel</p>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nx">microfiche</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">microfiche</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="k">new</span> <span class="nx">Microfiche</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span> <span class="nx">el</span><span class="o">:</span> <span class="k">this</span> <span class="p">},</span> <span class="nx">options</span><span class="p">));</span>
-    <span class="p">}</span>
-  <span class="p">});</span>
-<span class="p">}</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  autopause: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+    <span class="keyword">var</span> self = <span class="keyword">this</span>;
+    <span class="keyword">this</span>.el.hover(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      self.pause = <span class="literal">true</span>;
+    }, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      self.pause = <span class="literal">false</span>;
+    });
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>Run given commands, for example:</p>
+<pre><code>microfiche.run({ slideByPages: 1 });</code></pre>
 
-<span class="p">})();</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  run: <span class="keyword">function</span>(options) {
+    <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> options) {
+      <span class="keyword">var</span> property = <span class="keyword">this</span>[key];
+      <span class="keyword">if</span> ($.isFunction(property)) property.call(<span class="keyword">this</span>, options[key]);
+    }
+  }
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <h2>WebKit Optimization</h2>
+<p>A bit of feature detection for webkit transition support.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="keyword">if</span> ((<span class="string">'WebKitCSSMatrix'</span> <span class="keyword">in</span> window &amp;&amp; <span class="string">'m11'</span> <span class="keyword">in</span> <span class="keyword">new</span> WebKitCSSMatrix())) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <p>If we have webkit transition support, then override <code>prepareFilm</code>
+and <code>transition</code> to take advantage of hardware acceleration.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  $.extend(Microfiche.prototype, {
+
+    prepareFilm: <span class="keyword">function</span>() {
+      <span class="keyword">this</span>.film.css({ WebkitTransform: <span class="string">'translate3d(0px, 0px, 0px)'</span> });
+    },
+
+    performTransition: <span class="keyword">function</span>(duration, callback) {
+      <span class="keyword">this</span>.film.one(<span class="string">'webkitTransitionEnd'</span>, callback).css({
+        WebkitTransition: <span class="string">'-webkit-transform '</span> + duration + <span class="string">'ms'</span>,
+        WebkitTransform: <span class="string">'translate3d('</span> + -<span class="keyword">this</span>.x + <span class="string">'px, 0px, 0px)'</span>
+      });
+    },
+
+    performJump: <span class="keyword">function</span>() {
+      <span class="keyword">this</span>.film.css({
+        WebkitTransition: <span class="string">'-webkit-transform 0ms'</span>,
+        WebkitTransform: <span class="string">'translate3d('</span> + -<span class="keyword">this</span>.x + <span class="string">'px, 0px, 0px)'</span>
+      });
+    }
+
+  });
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <h2>jQuery.fn.microfiche</h2>
+<p>Creates microfiche elements and sends them commands.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>jQuery.fn.microfiche = <span class="keyword">function</span>(options) {
+  <span class="keyword">return</span> <span class="keyword">this</span>.each(<span class="keyword">function</span>() {
+    <span class="keyword">var</span> microfiche = $(<span class="keyword">this</span>).data(<span class="string">'microfiche'</span>);
+
+    <span class="keyword">if</span> (microfiche) {
+      microfiche.run(options);
+    } <span class="keyword">else</span> {
+      <span class="keyword">new</span> Microfiche($.extend({ el: <span class="keyword">this</span> }, options));
+    }
+  });
+}
+
+})();</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
