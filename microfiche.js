@@ -81,6 +81,7 @@ $.extend(Microfiche.prototype, {
   // These may be overridden in the initializer.
   options: {
     autoplay        : false,
+    autopause       : false,
     buttons         : true,
     bullets         : true,
     cyclic          : false,
@@ -595,7 +596,7 @@ $.extend(Microfiche.prototype, {
   // Automatically call next every `n` seconds.
   autoplay: function(n) {
     if (this.autoplayTimeout) {
-      clearTimeout(this.autoplayTimeout)
+      clearInterval(this.autoplayTimeout);
       delete this.autoplayTimeout;
     }
 
@@ -604,8 +605,21 @@ $.extend(Microfiche.prototype, {
     if (isNaN(n) || n <= 0) return;
 
     var self = this;
-    this.autoplayTimeout = setTimeout(function() { self.next() }, n * 1000);
-    this.el.one('microfiche:willMove', function() { self.autoplay(n) });
+    this.autoplayTimeout = setInterval(function () {
+      if (!self.pause) {
+        self.next();
+      }
+    }, n * 1000);
+  },
+
+  // Pause autoplay when hovering over carousel
+  autopause: function () {
+    var self = this;
+    this.el.hover(function () {
+      self.pause = true;
+    }, function () {
+      self.pause = false;
+    });
   },
 
   // Run given commands, for example:
