@@ -1,4 +1,5 @@
 docco microfiche.js
+curl --data-urlencode "js_code=$(cat $(git rev-parse --show-toplevel)/microfiche.js)" http://marijnhaverbeke.nl/uglifyjs > $(git rev-parse --show-toplevel)/microfiche.min.js
 git add --all
 git commit
 git co gh-pages
