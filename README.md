@@ -3,7 +3,7 @@
 A carousel library made With Associates, focusing on performance, simplicity
 and touch.
 
-Check out our [project page on GitHub](http://github.com/withassociates/microfiche.js)
+Check out our [project page on GitHub](http://withassociates.github.io/microfiche.js/)
 and the [annotated source](http://withassociates.github.com/microfiche.js/docs/microfiche.html).
 
 ## Dependencies
