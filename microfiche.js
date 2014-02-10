@@ -115,6 +115,9 @@ $.extend(Microfiche.prototype, {
   initialize: function(options) {
     this.options = $.extend({}, this.options, options);
     this.el = $(options.el);
+
+    this.initialContents = this.el.contents();
+
     this.el.data('microfiche', this);
     this.createFilm();
     this.createScreen();
@@ -626,6 +629,28 @@ $.extend(Microfiche.prototype, {
     }, function () {
       self.pause = false;
     });
+  },
+
+  // Refresh the microfiche instance by deleting the contents and associated data,
+  // then restoring the original contents, and re-initializing them. This is particularly
+  // useful for refreshing microfiche on page or container element resize, as it will
+  // redraw the controls if needed.
+  refresh: function() {
+    var options = this.el.data('microfiche').options;
+    var contents = this.el.data('microfiche').initialContents;
+
+    this.cleanContainerForRefresh();
+
+    this.el.append(contents);
+    new Microfiche($.extend({ el: this.el }, options));
+
+    return this.el;
+  },
+
+  cleanContainerForRefresh: function() {
+    this.el.empty();
+    this.el.off();
+    this.el.removeData('microfiche');
   },
 
   // Run given commands, for example:

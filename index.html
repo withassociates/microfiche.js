@@ -208,6 +208,29 @@ $('#autoplay').microfiche({
 
   <script>prettyPrint()</script>
 
+
+  <h3>Refresh</h3>
+
+  <p>To refresh an existing Microfiche's controls and content to adjust to a new container size,
+  call the <code>refresh</code> method directly.</p>
+
+  <div class="demo">
+    <p><pre class="prettyprint">$('#refresher').microfiche().data('microfiche').refresh();</pre></p>
+
+    <script>example('refresher')</script>
+    <script>
+      $('#refresher').microfiche({ cyclic: true });
+    </script>
+    <p>
+      <button onclick="$('#refresher').css('width', '360px'); return false;">Resize Parent &rarr;</button>
+      <code class="prettyprint"> $('#refresher').css('width', '360px');</code>
+      <br />
+      <button onclick="$('#refresher').microfiche().data('microfiche').refresh(); return false;">Refresh &rarr;</button>
+      <code class="prettyprint">$('#refresher').microfiche().data('microfiche').refresh();</code>
+    </p>
+  </div>
+
+
   <hr>
 
   <h2>Changelog</h2>
