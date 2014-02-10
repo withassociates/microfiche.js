@@ -45,7 +45,7 @@
 	<section id="heading">
 	  <h1>Microfiche.js</h1>
 	  <h3>With Associates</h3>
-	  <h2>v1.4.0</h2>
+	  <h2>v1.5.0</h2>
 	</section>
   <a href="http://github.com/withassociates/microfiche.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 
@@ -211,22 +211,22 @@ $('#autoplay').microfiche({
 
   <h3>Refresh</h3>
 
-  <p>To refresh an existing Microfiche's controls and content to adjust to a new container size,
-  call the <code>refresh</code> method directly.</p>
+  <p>To refresh an existing Microfiche’s controls and content to adjust to a new container size,
+  call the <code>refresh</code> method.</p>
 
   <div class="demo">
-    <p><pre class="prettyprint">$('#refresher').microfiche().data('microfiche').refresh();</pre></p>
+    <p><pre class="prettyprint">$('#refresher').microfiche({ refresh: true });</pre></p>
 
     <script>example('refresher')</script>
     <script>
       $('#refresher').microfiche({ cyclic: true });
     </script>
     <p>
-      <button onclick="$('#refresher').css('width', '360px'); return false;">Resize Parent &rarr;</button>
-      <code class="prettyprint"> $('#refresher').css('width', '360px');</code>
+      <button onclick="$('#refresher').css('width', '340px'); return false;">Resize Parent &rarr;</button>
+      <code class="prettyprint"> $('#refresher').css('width', '340px');</code>
       <br />
-      <button onclick="$('#refresher').microfiche().data('microfiche').refresh(); return false;">Refresh &rarr;</button>
-      <code class="prettyprint">$('#refresher').microfiche().data('microfiche').refresh();</code>
+      <button onclick="$('#refresher').microfiche({ refresh: true }); return false;">Refresh &rarr;</button>
+      <code class="prettyprint">$('#refresher').microfiche({ refresh: true });</code>
     </p>
   </div>
 
@@ -235,10 +235,16 @@ $('#autoplay').microfiche({
 
   <h2>Changelog</h2>
 
+  <h3>v1.5.0 (Feb 10, 2014)</h3>
+
+  <ul>
+    <li>Add refresh (thanks to <a href="https://github.com/bbakersmith">@bbakersmith</a>)</li>
+  </ul>
+
   <h3>v1.4.0 (Sep 17, 2013)</h3>
 
   <ul>
-    <li>Add autopause (thanks to <a href="https://github.com/davemcdermid">@davemcdermid</a></li>
+    <li>Add autopause (thanks to <a href="https://github.com/davemcdermid">@davemcdermid</a>)</li>
   </ul>
 
   <h3>v1.3.4 (Apr 10, 2013)</h3>

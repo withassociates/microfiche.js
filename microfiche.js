@@ -1,4 +1,4 @@
-// # Microfiche.js v1.4.0
+// # Microfiche.js v1.5.0
 //
 // ## Usage
 //
@@ -73,12 +73,19 @@
 //
 //     $('.my-slideshow').microfiche({ autoplay: n, autopause: true });
 //
+// ### refresh
+//
+// To refresh an existing Microfiche’s controls and content to adjust
+// to a new container size, call the `refresh` method.
+//
+//     $('.my-slideshow').microfiche({ refresh: true });
+//
 
 (function() {
 
 window.Microfiche = function(options) { this.initialize(options); return this; };
 
-Microfiche.VERSION = '1.4.0';
+Microfiche.VERSION = '1.5.0';
 
 $.extend(Microfiche.prototype, {
 
