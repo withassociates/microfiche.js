@@ -99,6 +99,7 @@ $.extend(Microfiche.prototype, {
     bullets         : true,
     cyclic          : false,
     keyboard        : false,
+    refreshOnResize : false,
     swipe           : true,
     clickToAdvance  : false,
     minDuration     : 250,
@@ -658,6 +659,28 @@ $.extend(Microfiche.prototype, {
     this.el.empty();
     this.el.off();
     this.el.removeData('microfiche');
+  },
+
+  refreshOnResize: function(bool) {
+    if(bool === true) {
+      var self = this;
+
+      // resize with debounce so Microfiche will only refresh once for each time
+      // a visitor resizes the window
+      $(window).resize(function() {
+        if(self.el.data('resizeTimeout')) {
+          clearTimeout(self.el.data('resizeTimeout'));
+        }
+
+        self.el.data('resizeTimeout', setTimeout(function() {
+          self.refresh();
+        }, 250));
+      });
+    } else {
+      if(this.refreshOnResizeTimeout) {
+        clearTimeout(this.refreshOnResizeTimeout);
+      }
+    }
   },
 
   // Run given commands, for example:

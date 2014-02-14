@@ -3,10 +3,8 @@ body {
   font-size: 16px;
   line-height: 1.5;
   color: #3C4348;
-  width: 690px;
-  padding: 30px 60px;
-  margin: 0 auto;
   font-weight: normal;
+  padding: 30px 60px;
 }
 
 h1 {
@@ -108,3 +106,13 @@ hr {
   margin: 50px 0;
 }
 
+.body-subcontainer {
+  width: 690px;
+  margin: 0 auto;
+}
+
+.body-subcontainer.responsive-width-demo {
+  width: auto;
+  max-width: 980px;
+  min-width: 315px;
+}

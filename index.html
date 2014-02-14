@@ -42,298 +42,323 @@
   </script>
 </head>
 <body>
-	<section id="heading">
-	  <h1>Microfiche.js</h1>
-	  <h3>With Associates</h3>
-	  <h2>v1.5.0</h2>
-	</section>
-  <a href="http://github.com/withassociates/microfiche.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+  <div class="body-subcontainer">
 
-  <p>A carousel library made
-    <a href="http://withassociates.com/">With Associates</a>
-    focusing on performance, simplicity and touch.</p>
+    <section id="heading">
+      <h1>Microfiche.js</h1>
+      <h3>With Associates</h3>
+      <h2>v1.5.0</h2>
+    </section>
+    <a href="http://github.com/withassociates/microfiche.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 
-  <p>Check out our
-    <a href="http://github.com/withassociates/microfiche.js">project page on GitHub</a>
-    and the <a href="docs/microfiche.html">annotated source</a>.</p>
+    <p>A carousel library made
+      <a href="http://withassociates.com/">With Associates</a>
+      focusing on performance, simplicity and touch.</p>
 
-  <hr>
+    <p>Check out our
+      <a href="http://github.com/withassociates/microfiche.js">project page on GitHub</a>
+      and the <a href="docs/microfiche.html">annotated source</a>.</p>
 
-  <h2>Installation</h2>
+    <hr>
 
-  <p><a href="https://raw.github.com/withassociates/microfiche.js/master/microfiche.js">Download microfiche.js here</a></p>
+    <h2>Installation</h2>
 
-  <p>Microfiche requires <a href="http://jquery.com/">jQuery</a> ~&gt; 1.7</p>
+    <p><a href="https://raw.github.com/withassociates/microfiche.js/master/microfiche.js">Download microfiche.js here</a></p>
 
-  <p>You&rsquo;ll want to include the following at the appropriate point in your page:</p>
+    <p>Microfiche requires <a href="http://jquery.com/">jQuery</a> ~&gt; 1.7</p>
 
-  <pre class="prettyprint">
-&lt;script src="path/to/jquery.js"&gt;&lt;/script&gt;
-&lt;script src="path/to/microfiche.js"&gt;&lt;/script&gt;
-  </pre>
+    <p>You&rsquo;ll want to include the following at the appropriate point in your page:</p>
 
-  <hr>
+    <pre class="prettyprint">
+  &lt;script src="path/to/jquery.js"&gt;&lt;/script&gt;
+  &lt;script src="path/to/microfiche.js"&gt;&lt;/script&gt;
+    </pre>
 
-  <h2>Usage</h2>
+    <hr>
 
-  <h3>Defaults</h3>
+    <h2>Usage</h2>
 
-  <div class="demo">
-    <p><code class="prettyprint">$('#default').microfiche();</code></p>
-    <script>example('default')</script>
-    <script>$('#default').microfiche()</script>
-  </div>
+    <h3>Defaults</h3>
 
-  <h3>Options</h3>
+    <div class="demo">
+      <p><code class="prettyprint">$('#default').microfiche();</code></p>
+      <script>example('default')</script>
+      <script>$('#default').microfiche()</script>
+    </div>
 
-  <div class="demo">
-    <p><code class="prettyprint">$('#cyclic').microfiche({ cyclic: true });</code></p>
-    <script>example('cyclic')</script>
-    <script>$('#cyclic').microfiche({ cyclic: true })</script>
-  </div>
+    <h3>Options</h3>
 
-  <div class="demo">
-    <p><code class="prettyprint">$('#buttons').microfiche({ buttons: false });</code></p>
-    <script>example('buttons')</script>
-    <script>$('#buttons').microfiche({ buttons: false })</script>
-  </div>
+    <div class="demo">
+      <p><code class="prettyprint">$('#cyclic').microfiche({ cyclic: true });</code></p>
+      <script>example('cyclic')</script>
+      <script>$('#cyclic').microfiche({ cyclic: true })</script>
+    </div>
 
-  <div class="demo">
-    <p><code class="prettyprint">$('#bullets').microfiche({ bullets: false });</code></p>
-    <script>example('bullets')</script>
-    <script>$('#bullets').microfiche({ bullets: false })</script>
-  </div>
+    <div class="demo">
+      <p><code class="prettyprint">$('#buttons').microfiche({ buttons: false });</code></p>
+      <script>example('buttons')</script>
+      <script>$('#buttons').microfiche({ buttons: false })</script>
+    </div>
 
-  <div class="demo">
-    <p><code class="prettyprint">$('#keyboard').microfiche({ keyboard: true });</code></p>
-    <script>example('keyboard')</script>
-    <script>$('#keyboard').microfiche({ keyboard: true })</script>
-  </div>
+    <div class="demo">
+      <p><code class="prettyprint">$('#bullets').microfiche({ bullets: false });</code></p>
+      <script>example('bullets')</script>
+      <script>$('#bullets').microfiche({ bullets: false })</script>
+    </div>
 
-  <div class="demo">
-    <p><code class="prettyprint">$('#click').microfiche({ clickToAdvance: true });</code></p>
-    <script>example('click')</script>
-    <script>$('#click').microfiche({ clickToAdvance: true })</script>
-  </div>
+    <div class="demo">
+      <p><code class="prettyprint">$('#keyboard').microfiche({ keyboard: true });</code></p>
+      <script>example('keyboard')</script>
+      <script>$('#keyboard').microfiche({ keyboard: true })</script>
+    </div>
 
-  <h3>Commands</h3>
-  <p>Commands are passed to the microfiche method as options, and may be passed at any point.<br>
-  In this example, the <code class="prettyprint">slideByPages(1)</code> command is performed immediately
-  after Microfiche has finished setting up.</p>
+    <div class="demo">
+      <p><code class="prettyprint">$('#click').microfiche({ clickToAdvance: true });</code></p>
+      <script>example('click')</script>
+      <script>$('#click').microfiche({ clickToAdvance: true })</script>
+    </div>
 
-  <div class="demo">
-    <p><code class="prettyprint">$('#commands').microfiche({ slideByPages: 1 });</code></p>
-    <script>example('commands')</script>
-    <script>$('#commands').microfiche({ slideByPages: 1 })</script>
-    <p>
-      <button onclick="$('#commands').microfiche({ slideByPages: -1 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ slideByPages: -1 })</code><br>
-      <button onclick="$('#commands').microfiche({ slideByPages: 1 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ slideByPages: 1 })</code><br>
-      <button onclick="$('#commands').microfiche({ slideToPoint: 0 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ slideToPoint: 0 })</code><br>
-      <button onclick="$('#commands').microfiche({ jumpToPoint: 0 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ jumpToPoint: 0 })</code><br>
-      <button onclick="$('#commands').microfiche({ jumpToPage: 2 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ jumpToPage: 2 })</code>
-    </p>
-  </div>
+    <h3>Commands</h3>
+    <p>Commands are passed to the microfiche method as options, and may be passed at any point.<br>
+    In this example, the <code class="prettyprint">slideByPages(1)</code> command is performed immediately
+    after Microfiche has finished setting up.</p>
 
-  <h3>Events</h3>
-  <p>Microfiche emits the following events:</p>
-  <ul>
-    <li><code class="prettyprint">'microfiche:willMove'</code></li>
-    <li><code class="prettyprint">'microfiche:didMove'</code></li>
-  </ul>
-  <p>You can listen for them in the usual way:</p>
+    <div class="demo">
+      <p><code class="prettyprint">$('#commands').microfiche({ slideByPages: 1 });</code></p>
+      <script>example('commands')</script>
+      <script>$('#commands').microfiche({ slideByPages: 1 })</script>
+      <p>
+        <button onclick="$('#commands').microfiche({ slideByPages: -1 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ slideByPages: -1 })</code><br>
+        <button onclick="$('#commands').microfiche({ slideByPages: 1 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ slideByPages: 1 })</code><br>
+        <button onclick="$('#commands').microfiche({ slideToPoint: 0 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ slideToPoint: 0 })</code><br>
+        <button onclick="$('#commands').microfiche({ jumpToPoint: 0 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ jumpToPoint: 0 })</code><br>
+        <button onclick="$('#commands').microfiche({ jumpToPage: 2 }); return false;">Run &rarr;</button> <code class="prettyprint">$('#commands').microfiche({ jumpToPage: 2 })</code>
+      </p>
+    </div>
 
-  <div class="demo">
-    <p><pre class="prettyprint">
-$('#events').microfiche().on('microfiche:willMove microfiche:didMove', function(event) {
-  $('#events-console').html(event.type);
-});
-</pre></p>
-    <script>example('events')</script>
-    <script>
-      $('#events').microfiche().on('microfiche:willMove microfiche:didMove', function(event) {
-        $('#events-console').html(event.type);
-      });
-    </script>
-    <p><strong>Event received:</strong> <code id="events-console">-</code></p>
-  </div>
+    <h3>Events</h3>
+    <p>Microfiche emits the following events:</p>
+    <ul>
+      <li><code class="prettyprint">'microfiche:willMove'</code></li>
+      <li><code class="prettyprint">'microfiche:didMove'</code></li>
+    </ul>
+    <p>You can listen for them in the usual way:</p>
 
-  <h3>Talking to Microfiche Directly</h3>
-
-  <p>Microfiche has some useful methods that return values, and so cannot
-  be used through the aforementioned jQuery style syntax. The microfiche
-  object itself is available via jQuery&rsquo; <code>data</code> method.</p>
-
-  <p><code class="prettyprint">$('.my-element').data('microfiche');</code></p>
-
-  <h3>Methods</h3>
-
-<div class="demo">
-  <p><pre class="prettyprint">
-var m = $('#methods').microfiche().data('microfiche');
-m.currentPageIndex() // returns 0-index of the current page
-m.totalPageCount() // returns the number of pages as an integer
-m.min() // returns the minimum (left-most) position
-m.max() // returns the maximum (right-most) position
+    <div class="demo">
+      <p><pre class="prettyprint">
+  $('#events').microfiche().on('microfiche:willMove microfiche:didMove', function(event) {
+    $('#events-console').html(event.type);
+  });
   </pre></p>
-  <script>example('methods')</script>
-  <script>
-    var m = $('#methods').microfiche().data('microfiche');
-    document.write('<pre class="prettyprint">' +
-      'currentPageIndex: ' + m.currentPageIndex() + '<br>' +
-      '  totalPageCount: ' + m.totalPageCount() + '<br>' +
-      '             min: ' + m.min() + '<br>' +
-      '             max: ' + m.max() +
-    '</pre>');
-  </script>
-</div>
+      <script>example('events')</script>
+      <script>
+        $('#events').microfiche().on('microfiche:willMove microfiche:didMove', function(event) {
+          $('#events-console').html(event.type);
+        });
+      </script>
+      <p><strong>Event received:</strong> <code id="events-console">-</code></p>
+    </div>
 
-  <h3>Autoplay</h3>
+    <h3>Talking to Microfiche Directly</h3>
 
-  <p>To have Microfiche pause rotation when the user hovers over the
-  carousel, set <code>autopause</code> to <code>true</code>.</p>
+    <p>Microfiche has some useful methods that return values, and so cannot
+    be used through the aforementioned jQuery style syntax. The microfiche
+    object itself is available via jQuery&rsquo; <code>data</code> method.</p>
+
+    <p><code class="prettyprint">$('.my-element').data('microfiche');</code></p>
+
+    <h3>Methods</h3>
 
   <div class="demo">
     <p><pre class="prettyprint">
-$('#autoplay').microfiche({
-  cyclic: true,
-  autoplay: 3,
-  autopause: true
+  var m = $('#methods').microfiche().data('microfiche');
+  m.currentPageIndex() // returns 0-index of the current page
+  m.totalPageCount() // returns the number of pages as an integer
+  m.min() // returns the minimum (left-most) position
+  m.max() // returns the maximum (right-most) position
+    </pre></p>
+    <script>example('methods')</script>
+    <script>
+      var m = $('#methods').microfiche().data('microfiche');
+      document.write('<pre class="prettyprint">' +
+        'currentPageIndex: ' + m.currentPageIndex() + '<br>' +
+        '  totalPageCount: ' + m.totalPageCount() + '<br>' +
+        '             min: ' + m.min() + '<br>' +
+        '             max: ' + m.max() +
+      '</pre>');
+    </script>
+  </div>
+
+    <h3>Autoplay</h3>
+
+    <p>To have Microfiche pause rotation when the user hovers over the
+    carousel, set <code>autopause</code> to <code>true</code>.</p>
+
+    <div class="demo">
+      <p><pre class="prettyprint">
+  $('#autoplay').microfiche({
+    cyclic: true,
+    autoplay: 3,
+    autopause: true
+  });
+      </pre></p>
+      <script>example('autoplay')</script>
+      <script>
+        $('#autoplay').microfiche({ cyclic: true, autoplay: 3, autopause: true });
+      </script>
+    </div>
+
+    <script>prettyPrint()</script>
+
+
+    <h3>Refresh</h3>
+
+    <p>To refresh an existing Microfiche’s controls and content to adjust to a new container size,
+    call the <code>refresh</code> method.</p>
+
+    <div class="demo">
+      <p><pre class="prettyprint">$('#refresher').microfiche({ cyclic: true });</pre></p>
+
+      <script>example('refresher')</script>
+      <script>
+        $('#refresher').microfiche({ cyclic: true });
+      </script>
+      <p>
+        <button onclick="$('#refresher').css('width', '340px'); return false;">Resize Parent &rarr;</button>
+        <code class="prettyprint"> $('#refresher').css('width', '340px');</code>
+        <br />
+        <button onclick="$('#refresher').microfiche({ refresh: true }); return false;">Refresh &rarr;</button>
+        <code class="prettyprint">$('#refresher').microfiche({ refresh: true });</code>
+      </p>
+    </div>
+
+    <h3>RefreshOnResize</h3>
+
+    <p>To have Microfiche automatically refresh when a <code>resize</code> event is fired (ex. the browser window is resized), set <code>refreshOnResize</code> to <code>true</code>.</p>
+
+    <p><pre class="prettyprint">
+$('#refreshonresize').microfiche({ 
+  cyclic: true, 
+  refreshOnResize: true 
 });
     </pre></p>
-    <script>example('autoplay')</script>
+
+    <p>Resize your browser window until it's narrower than the example carousel below to see the carousel refresh.</p>
+
+  </div> <!-- .body-subcontainer -->
+
+  <div class="body-subcontainer responsive-width-demo">
+    <script>example('refreshonresize')</script>
     <script>
-      $('#autoplay').microfiche({ cyclic: true, autoplay: 3, autopause: true });
+      $('#refreshonresize').microfiche({ cyclic: true, refreshOnResize: true });
     </script>
   </div>
 
-  <script>prettyPrint()</script>
+  <div class="body-subcontainer">
 
+    <hr>
 
-  <h3>Refresh</h3>
+    <h2>Changelog</h2>
 
-  <p>To refresh an existing Microfiche’s controls and content to adjust to a new container size,
-  call the <code>refresh</code> method.</p>
+    <h3>v1.5.0 (Feb 10, 2014)</h3>
 
-  <div class="demo">
-    <p><pre class="prettyprint">$('#refresher').microfiche({ cyclic: true });</pre></p>
+    <ul>
+      <li>Add refresh (thanks to <a href="https://github.com/bbakersmith">@bbakersmith</a>)</li>
+    </ul>
 
-    <script>example('refresher')</script>
-    <script>
-      $('#refresher').microfiche({ cyclic: true });
-    </script>
-    <p>
-      <button onclick="$('#refresher').css('width', '340px'); return false;">Resize Parent &rarr;</button>
-      <code class="prettyprint"> $('#refresher').css('width', '340px');</code>
-      <br />
-      <button onclick="$('#refresher').microfiche({ refresh: true }); return false;">Refresh &rarr;</button>
-      <code class="prettyprint">$('#refresher').microfiche({ refresh: true });</code>
-    </p>
-  </div>
+    <h3>v1.4.0 (Sep 17, 2013)</h3>
 
+    <ul>
+      <li>Add autopause (thanks to <a href="https://github.com/davemcdermid">@davemcdermid</a>)</li>
+    </ul>
 
-  <hr>
+    <h3>v1.3.4 (Apr 10, 2013)</h3>
 
-  <h2>Changelog</h2>
+    <ul>
+      <li>Stricter feature detection</li>
+    </ul>
 
-  <h3>v1.5.0 (Feb 10, 2014)</h3>
+    <h3>v1.3.3 (Jan 18, 2013)</h3>
 
-  <ul>
-    <li>Add refresh (thanks to <a href="https://github.com/bbakersmith">@bbakersmith</a>)</li>
-  </ul>
+    <ul>
+      <li>jQuery Plugin Manifest</li>
+    </ul>
 
-  <h3>v1.4.0 (Sep 17, 2013)</h3>
+    <h3>v1.3.2 (Sep 5, 2012)</h3>
 
-  <ul>
-    <li>Add autopause (thanks to <a href="https://github.com/davemcdermid">@davemcdermid</a>)</li>
-  </ul>
+    <ul>
+      <li>Improve cyclic for touch</li>
+    </ul>
 
-  <h3>v1.3.4 (Apr 10, 2013)</h3>
+    <h3>v1.3.1 (Sep 5, 2012)</h3>
 
-  <ul>
-    <li>Stricter feature detection</li>
-  </ul>
+    <ul>
+      <li>Improve `autoplay` behaviour</li>
+    </ul>
 
-  <h3>v1.3.3 (Jan 18, 2013)</h3>
+    <h3>v1.3.0 (Aug 31, 2012)</h3>
 
-  <ul>
-    <li>jQuery Plugin Manifest</li>
-  </ul>
+    <ul>
+      <li>Add `autoplay` option</li>
+    </ul>
 
-  <h3>v1.3.2 (Sep 5, 2012)</h3>
+    <h3>v1.2.2 (Jul 30, 2012)</h3>
 
-  <ul>
-    <li>Improve cyclic for touch</li>
-  </ul>
+    <ul>
+      <li>Add `swipe` option</li>
+    </ul>
 
-  <h3>v1.3.1 (Sep 5, 2012)</h3>
+    <h3>v1.2.1 (Jun 13, 2012)</h3>
 
-  <ul>
-    <li>Improve `autoplay` behaviour</li>
-  </ul>
+    <ul>
+      <li>Fix cyclic bug</li>
+    </ul>
 
-  <h3>v1.3.0 (Aug 31, 2012)</h3>
+    <h3>v1.2.0 (May 26, 2012)</h3>
 
-  <ul>
-    <li>Add `autoplay` option</li>
-  </ul>
+    <ul>
+      <li>Add clickToAdvance</li>
+    </ul>
 
-  <h3>v1.2.2 (Jul 30, 2012)</h3>
+    <h3>v1.1.0 (May 21, 2012)</h3>
 
-  <ul>
-    <li>Add `swipe` option</li>
-  </ul>
+    <ul>
+      <li>Add keyboard controls</li>
+    </ul>
 
-  <h3>v1.2.1 (Jun 13, 2012)</h3>
+    <h3>v1.0.0 (May 21, 2012)</h3>
 
-  <ul>
-    <li>Fix cyclic bug</li>
-  </ul>
+    <ul>
+      <li>First stable release</li>
+    </ul>
 
-  <h3>v1.2.0 (May 26, 2012)</h3>
+    <hr>
 
-  <ul>
-    <li>Add clickToAdvance</li>
-  </ul>
+    <h2>License</h2>
 
-  <h3>v1.1.0 (May 21, 2012)</h3>
+    <p>Copyright (c) 2012-2014 With Associates</p>
 
-  <ul>
-    <li>Add keyboard controls</li>
-  </ul>
+    <p>Permission is hereby granted, free of charge, to any person
+    obtaining a copy of this software and associated documentation
+    files (the "Software"), to deal in the Software without
+    restriction, including without limitation the rights to use,
+    copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following
+    conditions:</p>
 
-  <h3>v1.0.0 (May 21, 2012)</h3>
+    <p>The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.</p>
 
-  <ul>
-    <li>First stable release</li>
-  </ul>
+    <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+    HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+    OTHER DEALINGS IN THE SOFTWARE.</p>
 
-  <hr>
-
-  <h2>License</h2>
-
-  <p>Copyright (c) 2012-2014 With Associates</p>
-
-  <p>Permission is hereby granted, free of charge, to any person
-  obtaining a copy of this software and associated documentation
-  files (the "Software"), to deal in the Software without
-  restriction, including without limitation the rights to use,
-  copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the
-  Software is furnished to do so, subject to the following
-  conditions:</p>
-
-  <p>The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.</p>
-
-  <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-  OTHER DEALINGS IN THE SOFTWARE.</p>
-
+  </div> <!-- .body-subcontainer -->
 </body>
 </html>
-
