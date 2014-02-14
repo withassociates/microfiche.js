@@ -25,5 +25,6 @@
   "bugs": {
     "url": "https://github.com/withassociates/microfiche.js/issues"
   },
-  "homepage": "http://withassociates.github.io/microfiche.js/"
+  "homepage": "http://withassociates.github.io/microfiche.js/",
+  "license": "MIT"
 }
