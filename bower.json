@@ -12,7 +12,7 @@
     "touch",
     "minimalist"
   ],
-  "license": "./LICENSE",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
