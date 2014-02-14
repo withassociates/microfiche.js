@@ -677,8 +677,8 @@ $.extend(Microfiche.prototype, {
         }, 250));
       });
     } else {
-      if(this.refreshOnResizeTimeout) {
-        clearTimeout(this.refreshOnResizeTimeout);
+      if(this.el.data('resizeTimeout')) {
+        clearTimeout(this.el.data('resizeTimeout'));
       }
     }
   },
