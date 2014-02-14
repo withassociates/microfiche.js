@@ -1,0 +1,29 @@
+{
+  "name": "microfiche",
+  "version": "1.5.0",
+  "description": "A carousel library made With Associates, focusing on performance, simplicity and touch.",
+  "main": "microfiche.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/withassociates/microfiche.js.git"
+  },
+  "keywords": [
+    "carousel",
+    "touch",
+    "minimalist"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7.1"
+  },
+  "author": "With Associates <hello@withassociates.com> (http://www.withassociates.com)",
+  "bugs": {
+    "url": "https://github.com/withassociates/microfiche.js/issues"
+  },
+  "homepage": "http://withassociates.github.io/microfiche.js/"
+}
