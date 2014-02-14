@@ -22,7 +22,7 @@ $('#my-element').microfiche();
 
 ## Copyright
 
-Copyright (c) 2012 With Associates
+Copyright (c) 2012-2014 With Associates
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
