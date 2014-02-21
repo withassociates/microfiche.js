@@ -95,6 +95,14 @@
 //    $('my-slideshow').microfiche({ destroy: true });
 //    // or
 //    $('my-slideshow').data('microfiche').destroy();
+//
+// ### noScrollAlign
+//
+// Defines left, right, or center filmstrip alignment in the event that
+// all items are visible on screen and no scrolling is required.
+//
+//    $('.my-slideshow').microfiche({ noScrollAlign: 'left' });
+//
 
 (function() {
 
@@ -124,7 +132,8 @@ $.extend(Microfiche.prototype, {
     swipeThreshold  : 0.125,
     refreshOnResize : false,
     prevButtonLabel : '&larr;',
-    nextButtonLabel : '&rarr;'
+    nextButtonLabel : '&rarr;',
+    noScrollAlign   : 'left'
   },
 
   // Rather than relying on the literal position of `this.film`,
@@ -146,7 +155,10 @@ $.extend(Microfiche.prototype, {
     this.createScreen();
     this.calibrate();
 
-    if (this.film.width() <= this.screen.width()) return;
+    if (this.film.width() <= this.screen.width()) {
+      this.noScrollAlign(this.options.noScrollAlign);
+      return;
+    }
 
     this.createControls();
     this.enableTouch();
@@ -718,6 +730,36 @@ $.extend(Microfiche.prototype, {
 
   clearResizeHandler: function() {
     $(window).off('resize', this.resizeHandler);
+  },
+
+  noScrollAlign: function(alignment) {
+    if(this.film.width() > this.screen.width()) return;
+
+    switch(alignment) {
+      case 'center':
+        this.film.css({ 
+          left: '50%',
+          marginLeft: (this.film.width() / 2 * -1) + 'px', 
+          right: 'auto'
+        });
+        break;
+
+      case 'right':
+        this.film.css({ 
+          left: 'auto',
+          marginLeft: 'auto',
+          right: 0 
+        });
+        break;
+
+      default:
+        this.film.css({ 
+          left: 0,
+          marginLeft: 'auto',
+          right: 'auto' 
+        });
+    }
+
   },
 
   // Run given commands, for example:
