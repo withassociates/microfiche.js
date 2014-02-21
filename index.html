@@ -39,6 +39,19 @@
         '</div>'
       );
     }
+
+    function example_short(id) {
+      document.write(
+        '<div class="example" id="' + id + '">' +
+          '<div>' +
+            '<ul>' +
+              '<li><img src="images/1.jpg" width="160" height="160"></li>' +
+              '<li><img src="images/2.jpg" width="160" height="160"></li>' +
+            '</ul>' +
+          '</div>' +
+        '</div>'
+      );
+    }
   </script>
 </head>
 <body>
@@ -266,6 +279,28 @@ $('.my-slideshow').microfiche({ destroy: true });
 // or
 $('.my-slideshow').data('microfiche').destroy();
     </pre></p>
+
+    <h3>NoScroll Align</h3>
+
+    <p>To define the filmstrip alignment in the event that all items are visible on screen and no scrolling is required, set <code>noScrollAlign</code> to <code>left</code>, <code>center</code>, or <code>right</code>. The default value is <code>left</code>.</p>
+
+    <div class="demo">
+      <p><pre class="prettyprint">
+$('#noscroll').microfiche({ noScrollAlign: 'center' });
+      </pre></p>
+
+      <script>example_short('noscroll')</script>
+      <script>
+        $('#noscroll').microfiche({ noScrollAlign: 'center' });
+      </script>
+
+      <p>
+        <button onclick="$('#noscroll').microfiche({ noScrollAlign: 'left' }); return false;">Run &rarr;</button> <code class="prettyprint">$('#noscroll').microfiche({ noScrollAlign: 'left' })</code><br>
+        <button onclick="$('#noscroll').microfiche({ noScrollAlign: 'center' }); return false;">Run &rarr;</button> <code class="prettyprint">$('#noscroll').microfiche({ noScrollAlign: 'center' })</code><br>
+        <button onclick="$('#noscroll').microfiche({ noScrollAlign: 'right' }); return false;">Run &rarr;</button> <code class="prettyprint">$('#noscroll').microfiche({ noScrollAlign: 'right' })</code><br>
+      </p>
+
+    </div>
 
     <hr>
 
