@@ -32,6 +32,14 @@
 //
 //     $('.my-slideshow').microfiche({ bullets: false });
 //
+// ### refreshOnResize
+//
+// If true, microfiche will refresh automatically on page resize,
+// ensuring that the buttons are properly formatted and the right
+// number of bullets are displayed. This option is false by default.
+//
+//    $('.my-slideshow').microfiche({ refreshOnResize: true });
+//
 // ## Commands
 //
 // The following commands can be run on a microfiche'd element at any point,
@@ -661,11 +669,12 @@ $.extend(Microfiche.prototype, {
     this.el.removeData('microfiche');
   },
 
+  // Refresh microfiche automatically on window resize
   refreshOnResize: function(bool) {
     if(bool === true) {
       var self = this;
 
-      // resize with debounce so Microfiche will only refresh once for each time
+      // debounce so microfiche will only refresh once for each time
       // a visitor resizes the window
       $(window).resize(function() {
         if(self.el.data('resizeTimeout')) {
@@ -676,10 +685,6 @@ $.extend(Microfiche.prototype, {
           self.refresh();
         }, 250));
       });
-    } else {
-      if(this.el.data('resizeTimeout')) {
-        clearTimeout(this.el.data('resizeTimeout'));
-      }
     }
   },
 
