@@ -130,7 +130,11 @@ $.extend(Microfiche.prototype, {
     this.createScreen();
     this.calibrate();
 
-    if (this.film.width() <= this.screen.width()) return;
+    if (this.film.width() <= this.screen.width()) {
+      // add class to filmstrip if fully visible in its container
+      this.film.addClass('microfiche-no-scroll');
+      return;
+    }
 
     this.createControls();
     this.enableTouch();
