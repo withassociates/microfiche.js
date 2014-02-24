@@ -234,12 +234,11 @@
 
     <h3>RefreshOnResize</h3>
 
-    <p>To have Microfiche automatically refresh when a <code>resize</code> event is fired (ex. the browser window is resized), set <code>refreshOnResize</code> to <code>true</code>.</p>
+    <p>To have Microfiche automatically refresh when a <code>resize</code> event is fired (ex. the browser window is resized), set a debounce rate in ms for <code>refreshOnResize</code>.</p>
 
     <p><pre class="prettyprint">
 $('#refreshonresize').microfiche({ 
-  cyclic: true, 
-  refreshOnResize: true 
+  refreshOnResize: 250
 });
     </pre></p>
 
@@ -250,7 +249,7 @@ $('#refreshonresize').microfiche({
   <div class="body-subcontainer responsive-width-demo">
     <script>example('refreshonresize')</script>
     <script>
-      $('#refreshonresize').microfiche({ cyclic: true, refreshOnResize: true });
+      $('#refreshonresize').microfiche({ refreshOnResize: 250 });
     </script>
   </div>
 

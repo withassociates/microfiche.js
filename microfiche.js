@@ -34,11 +34,12 @@
 //
 // ### refreshOnResize
 //
-// If true, microfiche will refresh automatically on page resize,
+// If not false, microfiche will refresh automatically on page resize,
 // ensuring that the buttons are properly formatted and the right
-// number of bullets are displayed. This option is false by default.
+// number of bullets are displayed. refreshOnResize takes as an argument
+// the debounce threshold in ms. This option is false by default.
 //
-//    $('.my-slideshow').microfiche({ refreshOnResize: true });
+//    $('.my-slideshow').microfiche({ refreshOnResize: 250 });
 //
 // ## Commands
 //
@@ -107,7 +108,6 @@ $.extend(Microfiche.prototype, {
     bullets         : true,
     cyclic          : false,
     keyboard        : false,
-    refreshOnResize : false,
     swipe           : true,
     clickToAdvance  : false,
     minDuration     : 250,
@@ -116,6 +116,7 @@ $.extend(Microfiche.prototype, {
     dragThreshold   : 25,
     elasticity      : 0.5,
     swipeThreshold  : 0.125,
+    refreshOnResize : false,
     prevButtonLabel : '&larr;',
     nextButtonLabel : '&rarr;'
   },
@@ -670,22 +671,23 @@ $.extend(Microfiche.prototype, {
   },
 
   // Refresh microfiche automatically on window resize
-  refreshOnResize: function(bool) {
-    if(bool === true) {
-      var self = this;
+  refreshOnResize: function(delay) {
+    if(delay === false) return;
+    var self = this,
+               timeout;
 
-      // debounce so microfiche will only refresh once for each time
-      // a visitor resizes the window
-      $(window).resize(function() {
-        if(self.el.data('resizeTimeout')) {
-          clearTimeout(self.el.data('resizeTimeout'));
-        }
+    // debounce so microfiche will only refresh once for each time
+    // a visitor resizes the window
+    function handler() {
+      if(timeout) clearTimeout(timeout);
 
-        self.el.data('resizeTimeout', setTimeout(function() {
-          self.refresh();
-        }, 250));
-      });
-    }
+      timeout = setTimeout(function() {
+        $(window).off('resize', handler);
+        self.refresh();
+      }, delay);
+    };
+
+    $(window).on('resize', handler);
   },
 
   // Run given commands, for example:
