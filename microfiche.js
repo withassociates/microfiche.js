@@ -132,7 +132,7 @@ $.extend(Microfiche.prototype, {
 
     if (this.film.width() <= this.screen.width()) {
       // add class to filmstrip if fully visible in its container
-      this.el.find('.microfiche-film').addClass('microfiche-no-scroll');
+      this.film.addClass('microfiche-no-scroll');
       return;
     }
 
