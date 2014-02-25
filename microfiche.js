@@ -1,4 +1,4 @@
-// # Microfiche.js v1.5.0
+// # Microfiche.js v1.6.0
 //
 // ## Usage
 //
@@ -93,7 +93,7 @@
 
 window.Microfiche = function(options) { this.initialize(options); return this; };
 
-Microfiche.VERSION = '1.5.0';
+Microfiche.VERSION = '1.6.0';
 
 $.extend(Microfiche.prototype, {
 
@@ -671,13 +671,12 @@ $.extend(Microfiche.prototype, {
 
   // Refresh microfiche automatically on window resize
   refreshOnResize: function(delay) {
-
     // Overwrite previous settings
     this.options.refreshOnResize = delay;
-    if(this.resizeHandler) this.clearResizeHandler();
-    
-    if(delay === false) return;
-    if(delay === true) delay = 250;
+    if (this.resizeHandler) this.clearResizeHandler();
+
+    if (delay === false) return;
+    if (delay === true) delay = 250;
 
     var self = this,
                timeout;
@@ -685,7 +684,7 @@ $.extend(Microfiche.prototype, {
     // Debounce so microfiche will only refresh once for each time
     // a visitor resizes the window
     self.resizeHandler = function() {
-      if(timeout) clearTimeout(timeout);
+      if (timeout) clearTimeout(timeout);
 
       timeout = setTimeout(function() {
         self.clearResizeHandler();

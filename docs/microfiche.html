@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>Microfiche.js v1.5.0</title>
+  <title>Microfiche.js v1.6.0</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -21,7 +21,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="microfiche-js-v1-5-0">Microfiche.js v1.5.0</h1>
+              <h1 id="microfiche-js-v1-6-0">Microfiche.js v1.6.0</h1>
 <h2 id="usage">Usage</h2>
 <pre><code>$(<span class="hljs-string">'.my-slideshow'</span>).microfiche();
 $(<span class="hljs-string">'.my-slideshow'</span>).microfiche({ cyclic: <span class="hljs-literal">true</span>, button: <span class="hljs-literal">false</span> });
@@ -66,7 +66,12 @@ including in the first call.</p>
 <p>To refresh an existing Microfiche’s controls and content to adjust
 to a new container size, call the <code>refresh</code> method.</p>
 <pre><code>$(<span class="hljs-string">'.my-slideshow'</span>).microfiche({ refresh: <span class="hljs-literal">true</span> });
-</code></pre>
+</code></pre><h3 id="refreshonresize">refreshOnResize</h3>
+<p>Automatically refresh microfiche filmstrip and controls on window 
+resize event. Set <code>true</code> to refresh with a 250ms debounce, or specify 
+a custom debounce rate in ms. The default value is false.</p>
+<p>   $(‘.my-slideshow’).microfiche({ refreshOnResize: 100 });</p>
+
             </div>
             
             <div class="content"><div class='highlight'><pre>
@@ -74,7 +79,7 @@ to a new container size, call the <code>refresh</code> method.</p>
 
 window.Microfiche = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> {</span> <span class="hljs-keyword">this</span>.initialize(options); <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; };
 
-Microfiche.VERSION = <span class="hljs-string">'1.5.0'</span>;
+Microfiche.VERSION = <span class="hljs-string">'1.6.0'</span>;
 
 $.extend(Microfiche.prototype, {</pre></div></div>
             
@@ -107,6 +112,7 @@ $.extend(Microfiche.prototype, {</pre></div></div>
     dragThreshold   : <span class="hljs-number">25</span>,
     elasticity      : <span class="hljs-number">0.5</span>,
     swipeThreshold  : <span class="hljs-number">0.125</span>,
+    refreshOnResize : <span class="hljs-literal">false</span>,
     prevButtonLabel : <span class="hljs-string">'&amp;larr;'</span>,
     nextButtonLabel : <span class="hljs-string">'&amp;rarr;'</span>
   },</pre></div></div>
@@ -1292,6 +1298,73 @@ redraw the controls if needed.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-56">&#182;</a>
               </div>
+              <p>Refresh microfiche automatically on window resize</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  refreshOnResize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(delay)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <p>Overwrite previous settings</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.options.refreshOnResize = delay;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.resizeHandler) <span class="hljs-keyword">this</span>.clearResizeHandler();
+
+    <span class="hljs-keyword">if</span> (delay === <span class="hljs-literal">false</span>) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span> (delay === <span class="hljs-literal">true</span>) delay = <span class="hljs-number">250</span>;
+
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
+               timeout;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <p>Debounce so microfiche will only refresh once for each time
+a visitor resizes the window</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    self.resizeHandler = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+      <span class="hljs-keyword">if</span> (timeout) clearTimeout(timeout);
+
+      timeout = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        self.clearResizeHandler();
+        self.refresh();
+      }, delay);
+    };
+
+    $(window).on(<span class="hljs-string">'resize'</span>, self.resizeHandler);
+  },
+
+  clearResizeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    $(window).off(<span class="hljs-string">'resize'</span>, <span class="hljs-keyword">this</span>.resizeHandler);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-59">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-59">&#182;</a>
+              </div>
               <p>Run given commands, for example:</p>
 <pre><code>microfiche.run({ slideByPages: <span class="hljs-number">1</span> });
 </code></pre>
@@ -1309,11 +1382,11 @@ redraw the controls if needed.</p>
         </li>
         
         
-        <li id="section-57">
+        <li id="section-60">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-57">&#182;</a>
+                <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
               <h2 id="webkit-optimization">WebKit Optimization</h2>
 <p>A bit of feature detection for webkit transition support.</p>
@@ -1325,11 +1398,11 @@ redraw the controls if needed.</p>
         </li>
         
         
-        <li id="section-58">
+        <li id="section-61">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-58">&#182;</a>
+                <a class="pilcrow" href="#section-61">&#182;</a>
               </div>
               <p>If we have webkit transition support, then override <code>prepareFilm</code>
 and <code>transition</code> to take advantage of hardware acceleration.</p>
@@ -1362,11 +1435,11 @@ and <code>transition</code> to take advantage of hardware acceleration.</p>
         </li>
         
         
-        <li id="section-59">
+        <li id="section-62">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-59">&#182;</a>
+                <a class="pilcrow" href="#section-62">&#182;</a>
               </div>
               <h2 id="jquery-fn-microfiche">jQuery.fn.microfiche</h2>
 <p>Creates microfiche elements and sends them commands.</p>

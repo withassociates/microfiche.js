@@ -1,6 +1,6 @@
 {
   "name": "microfiche",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A carousel library made With Associates, focusing on performance, simplicity and touch.",
   "main": "microfiche.js",
   "directories": {
