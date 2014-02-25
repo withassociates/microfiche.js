@@ -32,15 +32,6 @@
 //
 //     $('.my-slideshow').microfiche({ bullets: false });
 //
-// ### refreshOnResize
-//
-// If not false, microfiche will refresh automatically on page resize,
-// ensuring that the buttons are properly formatted and the right
-// number of bullets are displayed. refreshOnResize takes as an argument
-// the debounce threshold in ms. This option is false by default.
-//
-//    $('.my-slideshow').microfiche({ refreshOnResize: 250 });
-//
 // ## Commands
 //
 // The following commands can be run on a microfiche'd element at any point,
@@ -88,6 +79,14 @@
 // to a new container size, call the `refresh` method.
 //
 //     $('.my-slideshow').microfiche({ refresh: true });
+//
+// ### refreshOnResize
+//
+// Automatically refresh microfiche filmstrip and controls on window 
+// resize event. Set `true` to refresh with a 250ms debounce, or specify 
+// a custom debounce rate in ms. The default value is false.
+//
+//    $('.my-slideshow').microfiche({ refreshOnResize: 100 });
 //
 
 (function() {
@@ -673,6 +672,7 @@ $.extend(Microfiche.prototype, {
   // Refresh microfiche automatically on window resize
   refreshOnResize: function(delay) {
     if(delay === false) return;
+    if(delay === true) delay = 250;
     var self = this,
                timeout;
 

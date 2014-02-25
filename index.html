@@ -208,9 +208,6 @@
       </script>
     </div>
 
-    <script>prettyPrint()</script>
-
-
     <h3>Refresh</h3>
 
     <p>To refresh an existing Microfiche’s controls and content to adjust to a new container size,
@@ -234,15 +231,21 @@
 
     <h3>RefreshOnResize</h3>
 
-    <p>To have Microfiche automatically refresh when a <code>resize</code> event is fired (ex. the browser window is resized), set a debounce rate in ms for <code>refreshOnResize</code>.</p>
+    <p>To have Microfiche automatically refresh when a window <code>resize</code> event is fired, set a debounce rate in ms for <code>refreshOnResize</code>. A value of <code>true</code> indicates a 250ms debounce.</p>
 
     <p><pre class="prettyprint">
-$('#refreshonresize').microfiche({ 
-  refreshOnResize: 250
-});
+var r = $('#refreshonresize');
+r.microfiche({ refreshOnResize: false });   // no refresh (default) 
+r.microfiche({ refreshOnResize: true });    // 250ms debounce
+r.microfiche({ refreshOnResize: 0 });       // instant refresh 
+r.microfiche({ refreshOnResize: 100 });     // 100ms debounce 
     </pre></p>
 
     <p>Resize your browser window until it's narrower than the example carousel below to see the carousel refresh.</p>
+
+    <p><pre class="prettyprint">
+$('#refreshonresize').microfiche({ refreshOnResize: true });
+    </pre></p>
 
   </div> <!-- .body-subcontainer -->
 
@@ -359,5 +362,8 @@ $('#refreshonresize').microfiche({
     OTHER DEALINGS IN THE SOFTWARE.</p>
 
   </div> <!-- .body-subcontainer -->
+
+  <script>prettyPrint()</script>
+
 </body>
 </html>
