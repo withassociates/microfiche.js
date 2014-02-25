@@ -80,6 +80,14 @@
 //
 //     $('.my-slideshow').microfiche({ refresh: true });
 //
+// ### refreshOnResize
+//
+// Automatically refresh microfiche filmstrip and controls on window 
+// resize event. Set `true` to refresh with a 250ms debounce, or specify 
+// a custom debounce rate in ms. The default value is false.
+//
+//    $('.my-slideshow').microfiche({ refreshOnResize: 100 });
+//
 
 (function() {
 
@@ -107,6 +115,7 @@ $.extend(Microfiche.prototype, {
     dragThreshold   : 25,
     elasticity      : 0.5,
     swipeThreshold  : 0.125,
+    refreshOnResize : false,
     prevButtonLabel : '&larr;',
     nextButtonLabel : '&rarr;'
   },
@@ -658,6 +667,37 @@ $.extend(Microfiche.prototype, {
     this.el.empty();
     this.el.off();
     this.el.removeData('microfiche');
+  },
+
+  // Refresh microfiche automatically on window resize
+  refreshOnResize: function(delay) {
+
+    // Overwrite previous settings
+    this.options.refreshOnResize = delay;
+    if(this.resizeHandler) this.clearResizeHandler();
+    
+    if(delay === false) return;
+    if(delay === true) delay = 250;
+
+    var self = this,
+               timeout;
+
+    // Debounce so microfiche will only refresh once for each time
+    // a visitor resizes the window
+    self.resizeHandler = function() {
+      if(timeout) clearTimeout(timeout);
+
+      timeout = setTimeout(function() {
+        self.clearResizeHandler();
+        self.refresh();
+      }, delay);
+    };
+
+    $(window).on('resize', self.resizeHandler);
+  },
+
+  clearResizeHandler: function() {
+    $(window).off('resize', this.resizeHandler);
   },
 
   // Run given commands, for example:
