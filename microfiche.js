@@ -671,23 +671,33 @@ $.extend(Microfiche.prototype, {
 
   // Refresh microfiche automatically on window resize
   refreshOnResize: function(delay) {
+
+    // Overwrite previous settings
+    this.options.refreshOnResize = delay;
+    if(this.resizeHandler) this.clearResizeHandler();
+    
     if(delay === false) return;
     if(delay === true) delay = 250;
+
     var self = this,
                timeout;
 
-    // debounce so microfiche will only refresh once for each time
+    // Debounce so microfiche will only refresh once for each time
     // a visitor resizes the window
-    function handler() {
+    self.resizeHandler = function() {
       if(timeout) clearTimeout(timeout);
 
       timeout = setTimeout(function() {
-        $(window).off('resize', handler);
+        self.clearResizeHandler();
         self.refresh();
       }, delay);
     };
 
-    $(window).on('resize', handler);
+    $(window).on('resize', self.resizeHandler);
+  },
+
+  clearResizeHandler: function() {
+    $(window).off('resize', this.resizeHandler);
   },
 
   // Run given commands, for example:
