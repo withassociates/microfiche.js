@@ -660,8 +660,15 @@ $.extend(Microfiche.prototype, {
   // useful for refreshing microfiche on page or container element resize, as it will
   // redraw the controls if needed.
   refresh: function() {
-    var options = this.el.data('microfiche').options;
-    var contents = this.el.data('microfiche').initialContents;
+    var options = this.el.data('microfiche').options,
+        contents;
+
+    // If contents have changed, use current contents instead of initialContents
+    if(this.el.find('.microfiche-screen').length === 0) {
+      contents = this.el.html();
+    } else {
+      contents = this.el.data('microfiche').initialContents;
+    }
 
     this.destroy();
 
