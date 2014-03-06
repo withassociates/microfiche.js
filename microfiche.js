@@ -647,6 +647,14 @@ $.extend(Microfiche.prototype, {
     });
   },
 
+  // Destroy the microfiche instance and clear related events
+  destroy: function() {
+    this.el.empty();
+    this.el.off();
+    this.clearResizeHandler();
+    this.el.removeData('microfiche');
+  },
+
   // Refresh the microfiche instance by deleting the contents and associated data,
   // then restoring the original contents, and re-initializing them. This is particularly
   // useful for refreshing microfiche on page or container element resize, as it will
@@ -655,18 +663,12 @@ $.extend(Microfiche.prototype, {
     var options = this.el.data('microfiche').options;
     var contents = this.el.data('microfiche').initialContents;
 
-    this.cleanContainerForRefresh();
+    this.destroy();
 
     this.el.append(contents);
     new Microfiche($.extend({ el: this.el }, options));
 
     return this.el;
-  },
-
-  cleanContainerForRefresh: function() {
-    this.el.empty();
-    this.el.off();
-    this.el.removeData('microfiche');
   },
 
   // Refresh microfiche automatically on window resize
@@ -687,7 +689,6 @@ $.extend(Microfiche.prototype, {
       if (timeout) clearTimeout(timeout);
 
       timeout = setTimeout(function() {
-        self.clearResizeHandler();
         self.refresh();
       }, delay);
     };
