@@ -660,8 +660,10 @@ $.extend(Microfiche.prototype, {
   // useful for refreshing microfiche on page or container element resize, as it will
   // redraw the controls if needed.
   refresh: function() {
-    var options = this.el.data('microfiche').options;
-    var contents = this.el.data('microfiche').initialContents;
+    var options = this.el.data('microfiche').options,
+        contents;
+
+    contents = this.getContents();
 
     this.destroy();
 
@@ -669,6 +671,25 @@ $.extend(Microfiche.prototype, {
     new Microfiche($.extend({ el: this.el }, options));
 
     return this.el;
+  },
+
+  getContents: function() {
+    if(this.contentsChanged()) {
+      return this.el.html();
+    } else {
+      return this.el.data('microfiche').initialContents;
+    }
+  },
+
+  // Have the contents changed?
+  contentsChanged: function() {
+    return this.el.find('.microfiche-screen').length === 0;
+  },
+
+  cleanContainerForRefresh: function() {
+    this.el.empty();
+    this.el.off();
+    this.el.removeData('microfiche');
   },
 
   // Refresh microfiche automatically on window resize
