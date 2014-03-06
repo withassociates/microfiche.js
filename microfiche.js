@@ -663,12 +663,7 @@ $.extend(Microfiche.prototype, {
     var options = this.el.data('microfiche').options,
         contents;
 
-    // If contents have changed, use current contents instead of initialContents
-    if(this.el.find('.microfiche-screen').length === 0) {
-      contents = this.el.html();
-    } else {
-      contents = this.el.data('microfiche').initialContents;
-    }
+    contents = this.getContents();
 
     this.destroy();
 
@@ -676,6 +671,25 @@ $.extend(Microfiche.prototype, {
     new Microfiche($.extend({ el: this.el }, options));
 
     return this.el;
+  },
+
+  getContents: function() {
+    if(this.contentsChanged()) {
+      return this.el.html();
+    } else {
+      return this.el.data('microfiche').initialContents;
+    }
+  },
+
+  // Have the contents changed?
+  contentsChanged: function() {
+    return this.el.find('.microfiche-screen').length === 0;
+  },
+
+  cleanContainerForRefresh: function() {
+    this.el.empty();
+    this.el.off();
+    this.el.removeData('microfiche');
   },
 
   // Refresh microfiche automatically on window resize
