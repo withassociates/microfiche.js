@@ -647,7 +647,7 @@ $.extend(Microfiche.prototype, {
     });
   },
 
-  // Destroy the microfiche instance and clear its contents
+  // Destroy the microfiche instance and clear related events
   destroy: function() {
     this.el.empty();
     this.el.off();
