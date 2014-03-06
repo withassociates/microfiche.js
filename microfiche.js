@@ -1,4 +1,4 @@
-// # Microfiche.js v1.6.0
+// # Microfiche.js v1.7.0
 //
 // ## Usage
 //
@@ -88,12 +88,19 @@
 //
 //    $('.my-slideshow').microfiche({ refreshOnResize: 100 });
 //
+// ### destroy
+//
+// Destroys the microfiche instance and clear related events
+//
+//    $('my-slideshow').microfiche({ destroy: true });
+//    // or
+//    $('my-slideshow').data('microfiche').destroy();
 
 (function() {
 
 window.Microfiche = function(options) { this.initialize(options); return this; };
 
-Microfiche.VERSION = '1.6.0';
+Microfiche.VERSION = '1.7.0';
 
 $.extend(Microfiche.prototype, {
 
