@@ -113,6 +113,5 @@ hr {
 
 .body-subcontainer.responsive-width-demo {
   width: auto;
-  max-width: 980px;
   min-width: 315px;
 }
