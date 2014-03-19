@@ -157,6 +157,7 @@ $.extend(Microfiche.prototype, {
 
     if (this.film.width() <= this.screen.width()) {
       this.noScrollAlign(this.options.noScrollAlign);
+      this.refreshOnResize(this.options.refreshOnResize);
       return;
     }
 
