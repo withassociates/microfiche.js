@@ -1,4 +1,4 @@
-// # Microfiche.js v1.7.0
+// # Microfiche.js v1.8.0
 //
 // ## Usage
 //
@@ -108,7 +108,7 @@
 
 window.Microfiche = function(options) { this.initialize(options); return this; };
 
-Microfiche.VERSION = '1.7.0';
+Microfiche.VERSION = '1.8.0';
 
 $.extend(Microfiche.prototype, {
 

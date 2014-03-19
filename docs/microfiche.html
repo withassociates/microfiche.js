@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>Microfiche.js v1.7.0</title>
+  <title>Microfiche.js v1.8.0</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -21,7 +21,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="microfiche-js-v1-7-0">Microfiche.js v1.7.0</h1>
+              <h1 id="microfiche-js-v1-8-0">Microfiche.js v1.8.0</h1>
 <h2 id="usage">Usage</h2>
 <pre><code>$(<span class="hljs-string">'.my-slideshow'</span>).microfiche();
 $(<span class="hljs-string">'.my-slideshow'</span>).microfiche({ cyclic: <span class="hljs-literal">true</span>, button: <span class="hljs-literal">false</span> });
@@ -76,6 +76,10 @@ a custom debounce rate in ms. The default value is false.</p>
 <p>   $(‘my-slideshow’).microfiche({ destroy: true });
    // or
    $(‘my-slideshow’).data(‘microfiche’).destroy();</p>
+<h3 id="noscrollalign">noScrollAlign</h3>
+<p>Defines left, right, or center filmstrip alignment in the event that
+all items are visible on screen and no scrolling is required.</p>
+<p>   $(‘.my-slideshow’).microfiche({ noScrollAlign: ‘left’ });</p>
 
             </div>
             
@@ -84,7 +88,7 @@ a custom debounce rate in ms. The default value is false.</p>
 
 window.Microfiche = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> {</span> <span class="hljs-keyword">this</span>.initialize(options); <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; };
 
-Microfiche.VERSION = <span class="hljs-string">'1.7.0'</span>;
+Microfiche.VERSION = <span class="hljs-string">'1.8.0'</span>;
 
 $.extend(Microfiche.prototype, {</pre></div></div>
             
@@ -119,7 +123,8 @@ $.extend(Microfiche.prototype, {</pre></div></div>
     swipeThreshold  : <span class="hljs-number">0.125</span>,
     refreshOnResize : <span class="hljs-literal">false</span>,
     prevButtonLabel : <span class="hljs-string">'&amp;larr;'</span>,
-    nextButtonLabel : <span class="hljs-string">'&amp;rarr;'</span>
+    nextButtonLabel : <span class="hljs-string">'&amp;rarr;'</span>,
+    noScrollAlign   : <span class="hljs-string">'left'</span>
   },</pre></div></div>
             
         </li>
@@ -175,7 +180,11 @@ we keep a tab on the current destination.</p>
     <span class="hljs-keyword">this</span>.createScreen();
     <span class="hljs-keyword">this</span>.calibrate();
 
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.film.width() &lt;= <span class="hljs-keyword">this</span>.screen.width()) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.film.width() &lt;= <span class="hljs-keyword">this</span>.screen.width()) {
+      <span class="hljs-keyword">this</span>.noScrollAlign(<span class="hljs-keyword">this</span>.options.noScrollAlign);
+      <span class="hljs-keyword">this</span>.refreshOnResize(<span class="hljs-keyword">this</span>.options.refreshOnResize);
+      <span class="hljs-keyword">return</span>;
+    }
 
     <span class="hljs-keyword">this</span>.createControls();
     <span class="hljs-keyword">this</span>.enableTouch();
@@ -1298,9 +1307,7 @@ redraw the controls if needed.</p>
             
             <div class="content"><div class='highlight'><pre>  refresh: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
     <span class="hljs-keyword">var</span> options = <span class="hljs-keyword">this</span>.el.data(<span class="hljs-string">'microfiche'</span>).options,
-        contents;
-
-    contents = <span class="hljs-keyword">this</span>.getContents();
+        contents = <span class="hljs-keyword">this</span>.getContents();
 
     <span class="hljs-keyword">this</span>.destroy();
 
@@ -1333,12 +1340,6 @@ redraw the controls if needed.</p>
             
             <div class="content"><div class='highlight'><pre>  contentsChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.el.find(<span class="hljs-string">'.microfiche-screen'</span>).length === <span class="hljs-number">0</span>;
-  },
-
-  cleanContainerForRefresh: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    <span class="hljs-keyword">this</span>.el.empty();
-    <span class="hljs-keyword">this</span>.el.off();
-    <span class="hljs-keyword">this</span>.el.removeData(<span class="hljs-string">'microfiche'</span>);
   },</pre></div></div>
             
         </li>
@@ -1405,6 +1406,36 @@ a visitor resizes the window</p>
 
   clearResizeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
     $(window).off(<span class="hljs-string">'resize'</span>, <span class="hljs-keyword">this</span>.resizeHandler);
+  },
+
+  noScrollAlign: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(alignment)</span> {</span>
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.film.width() &gt; <span class="hljs-keyword">this</span>.screen.width()) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">switch</span>(alignment) {
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'center'</span>:
+        <span class="hljs-keyword">this</span>.film.css({ 
+          left: <span class="hljs-string">'50%'</span>,
+          marginLeft: (<span class="hljs-keyword">this</span>.film.width() / <span class="hljs-number">2</span> * -<span class="hljs-number">1</span>) + <span class="hljs-string">'px'</span>, 
+          right: <span class="hljs-string">'auto'</span>
+        });
+        <span class="hljs-keyword">break</span>;
+
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'right'</span>:
+        <span class="hljs-keyword">this</span>.film.css({ 
+          left: <span class="hljs-string">'auto'</span>,
+          marginLeft: <span class="hljs-string">'auto'</span>,
+          right: <span class="hljs-number">0</span> 
+        });
+        <span class="hljs-keyword">break</span>;
+
+      <span class="hljs-keyword">default</span>:
+        <span class="hljs-keyword">this</span>.film.css({ 
+          left: <span class="hljs-number">0</span>,
+          marginLeft: <span class="hljs-string">'auto'</span>,
+          right: <span class="hljs-string">'auto'</span> 
+        });
+    }
+
   },</pre></div></div>
             
         </li>

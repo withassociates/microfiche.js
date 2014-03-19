@@ -1,3 +1,8 @@
+*v1.8.0 (Mar 19, 2014)*
+
+* Add noScrollAlign setting (thanks to @bbakersmith)
+* Fix refreshOnResize bug (see https://github.com/withassociates/microfiche.js/pull/47)
+
 *v1.7.0 (Mar 6, 2014)*
 
 * Add destroy (thanks to @bbakersmith)
