@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/withassociates/microfiche.js.png?label=ready&title=Ready)](https://waffle.io/withassociates/microfiche.js)
 # Microfiche.js
 
 A carousel library made With Associates, focusing on performance, simplicity
