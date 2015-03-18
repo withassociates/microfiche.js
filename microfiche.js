@@ -714,6 +714,7 @@ $.extend(Microfiche.prototype, {
     if (delay === true) delay = 250;
 
     var self = this,
+        oldWindowWidth = 0,
                timeout;
 
     // Debounce so microfiche will only refresh once for each time
@@ -726,7 +727,17 @@ $.extend(Microfiche.prototype, {
       }, delay);
     };
 
-    $(window).on('resize', self.resizeHandler);
+    $(window).on('resize', function() {
+      // iOS scroll events are sometimes triggered as resize.
+      // If the window's width is not changed by the resize, it must
+      // be a scroll, so don't refresh.
+      var currentWindowWidth = $(window).width();
+
+      if ($(window).width() !== oldWindowWidth) {
+        oldWindowWidth = currentWindowWidth;
+        self.resizeHandler();
+      }
+    });
   },
 
   clearResizeHandler: function() {
