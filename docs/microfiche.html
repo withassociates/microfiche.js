@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>Microfiche.js v1.8.0</title>
+  <title>Microfiche.js v1.8.1</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -21,7 +21,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="microfiche-js-v1-8-0">Microfiche.js v1.8.0</h1>
+              <h1 id="microfiche-js-v1-8-1">Microfiche.js v1.8.1</h1>
 <h2 id="usage">Usage</h2>
 <pre><code>$(<span class="hljs-string">'.my-slideshow'</span>).microfiche();
 $(<span class="hljs-string">'.my-slideshow'</span>).microfiche({ cyclic: <span class="hljs-literal">true</span>, button: <span class="hljs-literal">false</span> });
@@ -84,11 +84,11 @@ all items are visible on screen and no scrolling is required.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
 
-window.Microfiche = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> {</span> <span class="hljs-keyword">this</span>.initialize(options); <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; };
+<span class="hljs-built_in">window</span>.Microfiche = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{ <span class="hljs-keyword">this</span>.initialize(options); <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; };
 
-Microfiche.VERSION = <span class="hljs-string">'1.8.0'</span>;
+Microfiche.VERSION = <span class="hljs-string">'1.8.1'</span>;
 
 $.extend(Microfiche.prototype, {</pre></div></div>
             
@@ -169,7 +169,7 @@ we keep a tab on the current destination.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  initialize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  initialize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{
     <span class="hljs-keyword">this</span>.options = $.extend({}, <span class="hljs-keyword">this</span>.options, options);
     <span class="hljs-keyword">this</span>.el = $(options.el);
 
@@ -211,7 +211,7 @@ nicely along the horizontal.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  createFilm: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  createFilm: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.film = $(<span class="hljs-string">'&lt;div class="microfiche-film"&gt;'</span>).
     css({ position: <span class="hljs-string">'absolute'</span> });
     <span class="hljs-keyword">this</span>.el.children().appendTo(<span class="hljs-keyword">this</span>.film).css({ float: <span class="hljs-string">'left'</span> });
@@ -232,7 +232,7 @@ appended to the screen. Screen manually takes its height from film.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  createScreen: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  createScreen: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.screen = $(<span class="hljs-string">'&lt;div class="microfiche-screen"&gt;'</span>).
     css({ position: <span class="hljs-string">'relative'</span>, overflow: <span class="hljs-string">'hidden'</span> }).
     appendTo(<span class="hljs-keyword">this</span>.el).
@@ -252,7 +252,7 @@ appended to the screen. Screen manually takes its height from film.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  prepareCyclic: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  prepareCyclic: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.options.cyclic) <span class="hljs-keyword">return</span>;
 
     <span class="hljs-keyword">var</span> cloneL = <span class="hljs-keyword">this</span>.film.clone(),
@@ -277,7 +277,7 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  calibrate: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  calibrate: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.screen.width(<span class="hljs-number">100000</span>);
 
     <span class="hljs-keyword">var</span> w = <span class="hljs-keyword">this</span>.film.width(),
@@ -300,11 +300,11 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  createControls: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  createControls: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
 
     <span class="hljs-keyword">this</span>.controls = $(<span class="hljs-string">'&lt;span class="microfiche-controls" /&gt;'</span>).appendTo(<span class="hljs-keyword">this</span>.el);
-    <span class="hljs-keyword">this</span>.controls.on(<span class="hljs-string">'click'</span>, <span class="hljs-string">'a, button'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> {</span> self.didClickControl(e) });
+    <span class="hljs-keyword">this</span>.controls.on(<span class="hljs-string">'click'</span>, <span class="hljs-string">'a, button'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{ self.didClickControl(e) });
 
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.bullets) <span class="hljs-keyword">this</span>.createBullets();
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.buttons) <span class="hljs-keyword">this</span>.createButtons();
@@ -325,7 +325,7 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  createBullets: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  createBullets: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">var</span> container = $(<span class="hljs-string">'&lt;span class="microfiche-bullets" /&gt;'</span>).appendTo(<span class="hljs-keyword">this</span>.controls);
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">this</span>.totalPageCount(); i++) {
       $(<span class="hljs-string">'&lt;button&gt;'</span>)
@@ -351,7 +351,7 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  createButtons: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  createButtons: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     $(<span class="hljs-string">'&lt;button&gt;'</span>)
     .addClass(<span class="hljs-string">'microfiche-button microfiche-prev-button'</span>)
     .attr(<span class="hljs-string">'rel'</span>, <span class="hljs-string">'prev'</span>)
@@ -382,7 +382,7 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  enableTouch: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  enableTouch: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.options.swipe) <span class="hljs-keyword">return</span>;
 
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
@@ -391,9 +391,9 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
         thisTouchmove = <span class="hljs-keyword">this</span>.touchmove,
         thisTouchend = <span class="hljs-keyword">this</span>.touchend;
 
-    <span class="hljs-keyword">this</span>.touchstart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span> thisTouchstart.apply(self, <span class="hljs-built_in">arguments</span>) };
-    <span class="hljs-keyword">this</span>.touchmove = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span> thisTouchmove.apply(self, <span class="hljs-built_in">arguments</span>) };
-    <span class="hljs-keyword">this</span>.touchend = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span> thisTouchend.apply(self, <span class="hljs-built_in">arguments</span>) };
+    <span class="hljs-keyword">this</span>.touchstart = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ thisTouchstart.apply(self, <span class="hljs-built_in">arguments</span>) };
+    <span class="hljs-keyword">this</span>.touchmove = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ thisTouchmove.apply(self, <span class="hljs-built_in">arguments</span>) };
+    <span class="hljs-keyword">this</span>.touchend = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ thisTouchend.apply(self, <span class="hljs-built_in">arguments</span>) };
 
     <span class="hljs-keyword">this</span>.film.on(<span class="hljs-string">'touchstart'</span>, <span class="hljs-keyword">this</span>.touchstart);
   },</pre></div></div>
@@ -411,16 +411,16 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  enableKeyboard: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  enableKeyboard: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.options.keyboard) <span class="hljs-keyword">return</span>;
 
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
 
     <span class="hljs-keyword">this</span>.screen.attr(<span class="hljs-string">'data-microfiche-keyboard'</span>, <span class="hljs-literal">true</span>);
     <span class="hljs-keyword">var</span> thisOnkeydown = <span class="hljs-keyword">this</span>.onkeydown;
-    <span class="hljs-keyword">this</span>.onkeydown = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span> thisOnkeydown.apply(self, <span class="hljs-built_in">arguments</span>) };
+    <span class="hljs-keyword">this</span>.onkeydown = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ thisOnkeydown.apply(self, <span class="hljs-built_in">arguments</span>) };
 
-    $(document).on(<span class="hljs-string">'keydown'</span>, <span class="hljs-keyword">this</span>.onkeydown);
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'keydown'</span>, <span class="hljs-keyword">this</span>.onkeydown);
   },</pre></div></div>
             
         </li>
@@ -436,13 +436,13 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  enableClick: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  enableClick: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.options.clickToAdvance) <span class="hljs-keyword">return</span>;
 
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
 
     <span class="hljs-keyword">var</span> thisOnmousedown = <span class="hljs-keyword">this</span>.onmousedown;
-    <span class="hljs-keyword">this</span>.onmousedown = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span> thisOnmousedown.apply(self, <span class="hljs-built_in">arguments</span>) };
+    <span class="hljs-keyword">this</span>.onmousedown = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ thisOnmousedown.apply(self, <span class="hljs-built_in">arguments</span>) };
 
     <span class="hljs-keyword">this</span>.film.on(<span class="hljs-string">'mousedown'</span>, <span class="hljs-keyword">this</span>.onmousedown);
   },</pre></div></div>
@@ -473,7 +473,7 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  didClickControl: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  didClickControl: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
     e.preventDefault();
 
     <span class="hljs-keyword">var</span> control = $(e.target),
@@ -496,7 +496,7 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  touchstart: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  touchstart: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
     <span class="hljs-keyword">var</span> touches = e.originalEvent.targetTouches;
 
     <span class="hljs-keyword">if</span> (!touches || touches.length &gt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span>;
@@ -508,7 +508,7 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
       isDrag : <span class="hljs-literal">false</span>
     }
 
-    $(document).on(<span class="hljs-string">'touchmove'</span>, <span class="hljs-keyword">this</span>.touchmove).
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'touchmove'</span>, <span class="hljs-keyword">this</span>.touchmove).
                 on(<span class="hljs-string">'touchend'</span>, <span class="hljs-keyword">this</span>.touchend);
   },</pre></div></div>
             
@@ -530,7 +530,7 @@ details about position and velocity for good measure.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  touchmove: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  touchmove: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
     <span class="hljs-keyword">var</span> t = e.originalEvent.targetTouches[<span class="hljs-number">0</span>],
         dx = t.pageX - <span class="hljs-keyword">this</span>.touchState.ox,
         dy = t.pageY - <span class="hljs-keyword">this</span>.touchState.oy;
@@ -594,8 +594,8 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  touchend: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> {</span>
-    $(document).off(<span class="hljs-string">'touchmove'</span>, <span class="hljs-keyword">this</span>.touchmove).
+            <div class="content"><div class='highlight'><pre>  touchend: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
+    $(<span class="hljs-built_in">document</span>).off(<span class="hljs-string">'touchmove'</span>, <span class="hljs-keyword">this</span>.touchmove).
                 off(<span class="hljs-string">'touchend'</span>, <span class="hljs-keyword">this</span>.touchend);
 
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.touchState.isDrag) {
@@ -628,7 +628,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  onkeydown: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  onkeydown: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
     <span class="hljs-keyword">if</span> (e.keyCode !== <span class="hljs-number">37</span> &amp;&amp; e.keyCode !== <span class="hljs-number">39</span> || !<span class="hljs-keyword">this</span>.isCentral(<span class="hljs-string">'[data-microfiche-keyboard]'</span>)) <span class="hljs-keyword">return</span>;
     <span class="hljs-keyword">if</span> (e.keyCode === <span class="hljs-number">37</span>) <span class="hljs-keyword">this</span>.slideByPages(-<span class="hljs-number">1</span>);
     <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (e.keyCode === <span class="hljs-number">39</span>) <span class="hljs-keyword">this</span>.slideByPages(<span class="hljs-number">1</span>);
@@ -647,7 +647,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  onmousedown: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  onmousedown: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
     <span class="hljs-keyword">this</span>.slideByPages(<span class="hljs-number">1</span>);
   },</pre></div></div>
             
@@ -677,7 +677,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  updateControls: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  updateControls: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.bullets) <span class="hljs-keyword">this</span>.updateBullets();
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.buttons) <span class="hljs-keyword">this</span>.updateButtons();
   },</pre></div></div>
@@ -695,7 +695,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  updateBullets: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  updateBullets: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.controls.find(<span class="hljs-string">'.microfiche-bullet'</span>).removeClass(<span class="hljs-string">'selected'</span>);
     <span class="hljs-keyword">this</span>.controls.find(<span class="hljs-string">'[data-microfiche-page="'</span> + <span class="hljs-keyword">this</span>.currentPageIndex() + <span class="hljs-string">'"]'</span>).addClass(<span class="hljs-string">'selected'</span>);
   },</pre></div></div>
@@ -713,7 +713,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  updateButtons: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  updateButtons: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.cyclic) <span class="hljs-keyword">return</span>;
     <span class="hljs-keyword">this</span>.controls.find(<span class="hljs-string">'[rel="prev"]'</span>).attr(<span class="hljs-string">'disabled'</span>, <span class="hljs-keyword">this</span>.x &lt;= <span class="hljs-keyword">this</span>.min());
     <span class="hljs-keyword">this</span>.controls.find(<span class="hljs-string">'[rel="next"]'</span>).attr(<span class="hljs-string">'disabled'</span>, <span class="hljs-keyword">this</span>.x &gt;= <span class="hljs-keyword">this</span>.max());
@@ -745,7 +745,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  round: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  round: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x)</span> </span>{
     <span class="hljs-keyword">var</span> w = <span class="hljs-keyword">this</span>.screenWidth();
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.round(x / w) * w;
   },</pre></div></div>
@@ -763,7 +763,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  constrain: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, min, max)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  constrain: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, min, max)</span> </span>{
     <span class="hljs-keyword">if</span> (min === <span class="hljs-literal">undefined</span>) min = <span class="hljs-keyword">this</span>.min();
     <span class="hljs-keyword">if</span> (max === <span class="hljs-literal">undefined</span>) max = <span class="hljs-keyword">this</span>.max();
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.max(min, <span class="hljs-built_in">Math</span>.min(x, max));
@@ -782,7 +782,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  roundAndConstrain: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, min, max)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  roundAndConstrain: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x, min, max)</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.constrain(<span class="hljs-keyword">this</span>.round(x), min, max);
   },</pre></div></div>
             
@@ -799,7 +799,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  withinBounds: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  withinBounds: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x)</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.min() &lt;= x &amp;&amp; x &lt;= <span class="hljs-keyword">this</span>.max();
   },</pre></div></div>
             
@@ -816,7 +816,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  min: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  min: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
   },</pre></div></div>
             
@@ -834,7 +834,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  max: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  max: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.film.width() - <span class="hljs-keyword">this</span>.screenWidth();
   },</pre></div></div>
             
@@ -851,7 +851,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  currentPageIndex: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  currentPageIndex: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.round(<span class="hljs-keyword">this</span>.x / <span class="hljs-keyword">this</span>.screenWidth());
   },</pre></div></div>
             
@@ -868,7 +868,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  totalPageCount: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  totalPageCount: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.ceil(<span class="hljs-keyword">this</span>.film.width() / <span class="hljs-keyword">this</span>.screenWidth());
   },</pre></div></div>
             
@@ -885,7 +885,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  screenWidth: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  screenWidth: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.el.width();
   },</pre></div></div>
             
@@ -902,11 +902,11 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  isCentral: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(selector)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  isCentral: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(selector)</span> </span>{
 
-    <span class="hljs-keyword">var</span> closest = $($(selector || <span class="hljs-string">'.microfiche-screen'</span>).sort(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a,b)</span>{</span>
-      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.abs(<span class="hljs-number">1</span> - (($(window).scrollTop()+$(window).height()/<span class="hljs-number">2</span>-$(a).height()/<span class="hljs-number">2</span>) / $(a).offset().top)) - 
-             <span class="hljs-built_in">Math</span>.abs(<span class="hljs-number">1</span> - (($(window).scrollTop()+$(window).height()/<span class="hljs-number">2</span>-$(b).height()/<span class="hljs-number">2</span>) / $(b).offset().top))
+    <span class="hljs-keyword">var</span> closest = $($(selector || <span class="hljs-string">'.microfiche-screen'</span>).sort(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a,b)</span></span>{
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.abs(<span class="hljs-number">1</span> - (($(<span class="hljs-built_in">window</span>).scrollTop()+$(<span class="hljs-built_in">window</span>).height()/<span class="hljs-number">2</span>-$(a).height()/<span class="hljs-number">2</span>) / $(a).offset().top)) - 
+             <span class="hljs-built_in">Math</span>.abs(<span class="hljs-number">1</span> - (($(<span class="hljs-built_in">window</span>).scrollTop()+$(<span class="hljs-built_in">window</span>).height()/<span class="hljs-number">2</span>-$(b).height()/<span class="hljs-number">2</span>) / $(b).offset().top))
     })[<span class="hljs-number">0</span>]).parent().data(<span class="hljs-string">'microfiche'</span>);
 
     <span class="hljs-keyword">return</span> (closest === <span class="hljs-keyword">this</span>);
@@ -938,7 +938,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  jump: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  jump: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.el.trigger(<span class="hljs-string">'microfiche:willMove'</span>);
     <span class="hljs-keyword">this</span>.performJump();
     <span class="hljs-keyword">this</span>.updateControls();
@@ -958,7 +958,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  performJump: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  performJump: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.film.css({ left: -<span class="hljs-keyword">this</span>.x });
   },</pre></div></div>
             
@@ -975,18 +975,18 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  transition: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(duration)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  transition: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(duration)</span> </span>{
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
 
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.cyclic) <span class="hljs-keyword">this</span>.handleWrappingTransition();
 
     <span class="hljs-keyword">if</span> (duration == <span class="hljs-literal">null</span>) duration = <span class="hljs-keyword">this</span>.options.duration;
 
-    <span class="hljs-keyword">var</span> callback = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span> self.afterTransition() };
+    <span class="hljs-keyword">var</span> callback = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ self.afterTransition() };
 
     <span class="hljs-keyword">this</span>.el.trigger(<span class="hljs-string">'microfiche:willMove'</span>);
 
-    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
       self.performTransition(duration, callback);
     });
   },</pre></div></div>
@@ -1004,7 +1004,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  handleWrappingTransition: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  handleWrappingTransition: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.x &gt; <span class="hljs-keyword">this</span>.max()) {
       <span class="hljs-keyword">this</span>.x = <span class="hljs-keyword">this</span>.min() - <span class="hljs-keyword">this</span>.screenWidth();
       <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.touchState &amp;&amp; <span class="hljs-keyword">this</span>.touchState.dx) <span class="hljs-keyword">this</span>.x -= <span class="hljs-keyword">this</span>.touchState.dx;
@@ -1033,7 +1033,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  performTransition: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(duration, callback)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  performTransition: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(duration, callback)</span> </span>{
     <span class="hljs-keyword">this</span>.film.stop().animate({ left: -<span class="hljs-keyword">this</span>.x + <span class="hljs-string">'px'</span> }, duration, callback);
   },</pre></div></div>
             
@@ -1050,7 +1050,7 @@ knows about it, and animate into place.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  afterTransition: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  afterTransition: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">delete</span> <span class="hljs-keyword">this</span>.touchState;
     <span class="hljs-keyword">this</span>.el.trigger(<span class="hljs-string">'microfiche:didMove'</span>);
   },</pre></div></div>
@@ -1084,7 +1084,7 @@ a faster slide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  slideByPages: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n, vx)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  slideByPages: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n, vx)</span> </span>{
     <span class="hljs-keyword">var</span> ox = <span class="hljs-keyword">this</span>.x,
          w = <span class="hljs-keyword">this</span>.screenWidth();
 
@@ -1119,7 +1119,7 @@ a faster slide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  slideToPage: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(page)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  slideToPage: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(page)</span> </span>{
     <span class="hljs-keyword">this</span>.x = <span class="hljs-keyword">this</span>.constrain(page * <span class="hljs-keyword">this</span>.screenWidth());
     <span class="hljs-keyword">this</span>.updateControls();
     <span class="hljs-keyword">this</span>.transition();
@@ -1138,7 +1138,7 @@ a faster slide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  slideToPoint: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  slideToPoint: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x)</span> </span>{
     <span class="hljs-keyword">this</span>.x = <span class="hljs-keyword">this</span>.roundAndConstrain(x);
     <span class="hljs-keyword">this</span>.updateControls();
     <span class="hljs-keyword">this</span>.transition();
@@ -1157,7 +1157,7 @@ a faster slide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  jumpToPage: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(page)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  jumpToPage: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(page)</span> </span>{
     <span class="hljs-keyword">this</span>.x = <span class="hljs-keyword">this</span>.constrain(page * <span class="hljs-keyword">this</span>.screenWidth());
     <span class="hljs-keyword">this</span>.updateControls();
     <span class="hljs-keyword">this</span>.jump();
@@ -1176,7 +1176,7 @@ a faster slide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  jumpToPoint: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  jumpToPoint: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x)</span> </span>{
     <span class="hljs-keyword">this</span>.x = <span class="hljs-keyword">this</span>.roundAndConstrain(x);
     <span class="hljs-keyword">this</span>.updateControls();
     <span class="hljs-keyword">this</span>.jump();
@@ -1195,7 +1195,7 @@ a faster slide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  prev: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  prev: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.slideByPages(-<span class="hljs-number">1</span>);
   },</pre></div></div>
             
@@ -1212,7 +1212,7 @@ a faster slide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  next: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  next: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.slideByPages(<span class="hljs-number">1</span>);
   },</pre></div></div>
             
@@ -1229,7 +1229,7 @@ a faster slide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  autoplay: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  autoplay: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span> </span>{
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.autoplayTimeout) {
       clearInterval(<span class="hljs-keyword">this</span>.autoplayTimeout);
       <span class="hljs-keyword">delete</span> <span class="hljs-keyword">this</span>.autoplayTimeout;
@@ -1240,7 +1240,7 @@ a faster slide.</p>
     <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNaN</span>(n) || n &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;
 
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
-    <span class="hljs-keyword">this</span>.autoplayTimeout = setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+    <span class="hljs-keyword">this</span>.autoplayTimeout = setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
       <span class="hljs-keyword">if</span> (!self.pause) {
         self.next();
       }
@@ -1260,11 +1260,11 @@ a faster slide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  autopause: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  autopause: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
-    <span class="hljs-keyword">this</span>.el.hover(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+    <span class="hljs-keyword">this</span>.el.hover(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
       self.pause = <span class="hljs-literal">true</span>;
-    }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+    }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
       self.pause = <span class="hljs-literal">false</span>;
     });
   },</pre></div></div>
@@ -1282,7 +1282,7 @@ a faster slide.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>.el.empty();
     <span class="hljs-keyword">this</span>.el.off();
     <span class="hljs-keyword">this</span>.clearResizeHandler();
@@ -1305,7 +1305,7 @@ redraw the controls if needed.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  refresh: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  refresh: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">var</span> options = <span class="hljs-keyword">this</span>.el.data(<span class="hljs-string">'microfiche'</span>).options,
         contents = <span class="hljs-keyword">this</span>.getContents();
 
@@ -1317,7 +1317,7 @@ redraw the controls if needed.</p>
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.el;
   },
 
-  getContents: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  getContents: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.contentsChanged()) {
       <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.el.html();
     } <span class="hljs-keyword">else</span> {
@@ -1338,7 +1338,7 @@ redraw the controls if needed.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  contentsChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>  contentsChanged: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.el.find(<span class="hljs-string">'.microfiche-screen'</span>).length === <span class="hljs-number">0</span>;
   },</pre></div></div>
             
@@ -1355,7 +1355,7 @@ redraw the controls if needed.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  refreshOnResize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(delay)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>  refreshOnResize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(delay)</span> </span>{</pre></div></div>
             
         </li>
         
@@ -1377,6 +1377,7 @@ redraw the controls if needed.</p>
     <span class="hljs-keyword">if</span> (delay === <span class="hljs-literal">true</span>) delay = <span class="hljs-number">250</span>;
 
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
+        oldWindowWidth = <span class="hljs-number">0</span>,
                timeout;</pre></div></div>
             
         </li>
@@ -1393,22 +1394,45 @@ a visitor resizes the window</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    self.resizeHandler = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>    self.resizeHandler = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-keyword">if</span> (timeout) clearTimeout(timeout);
 
-      timeout = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+      timeout = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
         self.refresh();
       }, delay);
     };
 
-    $(window).on(<span class="hljs-string">'resize'</span>, self.resizeHandler);
+    $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'resize'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-61">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-61">&#182;</a>
+              </div>
+              <p>iOS scroll events are sometimes triggered as resize.
+If the window’s width is not changed by the resize, it must
+be a scroll, so don’t refresh.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> currentWindowWidth = $(<span class="hljs-built_in">window</span>).width();
+
+      <span class="hljs-keyword">if</span> ($(<span class="hljs-built_in">window</span>).width() !== oldWindowWidth) {
+        oldWindowWidth = currentWindowWidth;
+        self.resizeHandler();
+      }
+    });
   },
 
-  clearResizeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    $(window).off(<span class="hljs-string">'resize'</span>, <span class="hljs-keyword">this</span>.resizeHandler);
+  clearResizeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    $(<span class="hljs-built_in">window</span>).off(<span class="hljs-string">'resize'</span>, <span class="hljs-keyword">this</span>.resizeHandler);
   },
 
-  noScrollAlign: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(alignment)</span> {</span>
+  noScrollAlign: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(alignment)</span> </span>{
     <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.film.width() &gt; <span class="hljs-keyword">this</span>.screen.width()) <span class="hljs-keyword">return</span>;
 
     <span class="hljs-keyword">switch</span>(alignment) {
@@ -1441,18 +1465,18 @@ a visitor resizes the window</p>
         </li>
         
         
-        <li id="section-61">
+        <li id="section-62">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-61">&#182;</a>
+                <a class="pilcrow" href="#section-62">&#182;</a>
               </div>
               <p>Run given commands, for example:</p>
 <pre><code>microfiche.run({ slideByPages: <span class="hljs-number">1</span> });
 </code></pre>
             </div>
             
-            <div class="content"><div class='highlight'><pre>  run: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> {</span>
+            <div class="content"><div class='highlight'><pre>  run: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> options) {
       <span class="hljs-keyword">var</span> property = <span class="hljs-keyword">this</span>[key];
       <span class="hljs-keyword">if</span> ($.isFunction(property)) property.call(<span class="hljs-keyword">this</span>, options[key]);
@@ -1464,27 +1488,27 @@ a visitor resizes the window</p>
         </li>
         
         
-        <li id="section-62">
+        <li id="section-63">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-62">&#182;</a>
+                <a class="pilcrow" href="#section-63">&#182;</a>
               </div>
               <h2 id="webkit-optimization">WebKit Optimization</h2>
 <p>A bit of feature detection for webkit transition support.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">if</span> ((<span class="hljs-string">'WebKitCSSMatrix'</span> <span class="hljs-keyword">in</span> window &amp;&amp; <span class="hljs-string">'m11'</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">new</span> WebKitCSSMatrix())) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">if</span> ((<span class="hljs-string">'WebKitCSSMatrix'</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">window</span> &amp;&amp; <span class="hljs-string">'m11'</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">new</span> WebKitCSSMatrix())) {</pre></div></div>
             
         </li>
         
         
-        <li id="section-63">
+        <li id="section-64">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-63">&#182;</a>
+                <a class="pilcrow" href="#section-64">&#182;</a>
               </div>
               <p>If we have webkit transition support, then override <code>prepareFilm</code>
 and <code>transition</code> to take advantage of hardware acceleration.</p>
@@ -1493,18 +1517,18 @@ and <code>transition</code> to take advantage of hardware acceleration.</p>
             
             <div class="content"><div class='highlight'><pre>  $.extend(Microfiche.prototype, {
 
-    prepareFilm: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    prepareFilm: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-keyword">this</span>.film.css({ WebkitTransform: <span class="hljs-string">'translate3d(0px, 0px, 0px)'</span> });
     },
 
-    performTransition: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(duration, callback)</span> {</span>
+    performTransition: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(duration, callback)</span> </span>{
       <span class="hljs-keyword">this</span>.film.one(<span class="hljs-string">'webkitTransitionEnd'</span>, callback).css({
         WebkitTransition: <span class="hljs-string">'-webkit-transform '</span> + duration + <span class="hljs-string">'ms'</span>,
         WebkitTransform: <span class="hljs-string">'translate3d('</span> + -<span class="hljs-keyword">this</span>.x + <span class="hljs-string">'px, 0px, 0px)'</span>
       });
     },
 
-    performJump: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    performJump: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
       <span class="hljs-keyword">this</span>.film.css({
         WebkitTransition: <span class="hljs-string">'-webkit-transform 0ms'</span>,
         WebkitTransform: <span class="hljs-string">'translate3d('</span> + -<span class="hljs-keyword">this</span>.x + <span class="hljs-string">'px, 0px, 0px)'</span>
@@ -1517,19 +1541,19 @@ and <code>transition</code> to take advantage of hardware acceleration.</p>
         </li>
         
         
-        <li id="section-64">
+        <li id="section-65">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-64">&#182;</a>
+                <a class="pilcrow" href="#section-65">&#182;</a>
               </div>
               <h2 id="jquery-fn-microfiche">jQuery.fn.microfiche</h2>
 <p>Creates microfiche elements and sends them commands.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>jQuery.fn.microfiche = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> {</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+            <div class="content"><div class='highlight'><pre>jQuery.fn.microfiche = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">var</span> microfiche = $(<span class="hljs-keyword">this</span>).data(<span class="hljs-string">'microfiche'</span>);
 
     <span class="hljs-keyword">if</span> (microfiche) {
