@@ -582,7 +582,7 @@ $.extend(Microfiche.prototype, {
     var ox = this.x,
          w = this.screenWidth();
 
-    this.x = this.constrain((Math.round(this.x / w) + n) * w);
+    this.x = this.constrain(Math.round(((this.x / w) + n) * w));
 
     if (this.options.cyclic && this.x == ox) this.x += n * w;
 
