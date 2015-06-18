@@ -110,6 +110,8 @@ window.Microfiche = function(options) { this.initialize(options); return this; }
 
 Microfiche.VERSION = '1.8.2';
 
+CALIBRATE_FIRST_GUESS = 100000;
+
 $.extend(Microfiche.prototype, {
 
   // ## Default Options ##
@@ -153,7 +155,7 @@ $.extend(Microfiche.prototype, {
     this.el.data('microfiche', this);
     this.createFilm();
     this.createScreen();
-    this.calibrate();
+    this.calibrate(CALIBRATE_FIRST_GUESS);
 
     if (this.film.width() <= this.screen.width()) {
       this.noScrollAlign(this.options.noScrollAlign);
@@ -204,11 +206,15 @@ $.extend(Microfiche.prototype, {
 
   // This slightly strange process tries to ensure we don’t get any wrapping
   // in `this.film`, then fixes the dimensions of `this.film` and `this.screen`.
-  calibrate: function() {
-    this.screen.width(100000);
+  calibrate: function(width) {
+    this.screen.width(width);
 
     var w = this.film.width(),
         h = this.film.height();
+
+    if (w === width) {
+      return this.calibrate(width * 2);
+    }
 
     this.film.width(w).height(h);
     this.screen.width('auto').height(h);
