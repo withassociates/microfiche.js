@@ -133,7 +133,8 @@ $.extend(Microfiche.prototype, {
     refreshOnResize : false,
     prevButtonLabel : '&larr;',
     nextButtonLabel : '&rarr;',
-    noScrollAlign   : 'left'
+    noScrollAlign   : 'left',
+    slideByItem     : false
   },
 
   // Rather than relying on the literal position of `this.film`,
@@ -498,6 +499,11 @@ $.extend(Microfiche.prototype, {
   screenWidth: function() {
     return this.el.width();
   },
+  
+  // Returns the width of the item in container element.
+  itemWidth: function() {
+    return this.el.find('li').width();
+  },
 
   // Returns true if this microfiche instance is closest to the center of the screen
   isCentral: function(selector) {
@@ -582,7 +588,11 @@ $.extend(Microfiche.prototype, {
     var ox = this.x,
          w = this.screenWidth();
 
-    this.x = this.constrain(Math.round(((this.x / w) + n) * w));
+    if (this.options.slideByItem) {
+        (n > 0) ? this.x += this.itemWidth() : this.x -= this.itemWidth();
+    } else {
+        this.x = this.constrain(Math.round(((this.x / w) + n) * w));
+    }
 
     if (this.options.cyclic && this.x == ox) this.x += n * w;
 
