@@ -140,6 +140,10 @@ $.extend(Microfiche.prototype, {
   // Rather than relying on the literal position of `this.film`,
   // we keep a tab on the current destination.
   x: 0,
+  
+  // Rather than relying on the literal position of `li item`,
+  // we keep a tab on the current item.
+  currentItemNo: -1,
 
 
   // ## Setup ##
@@ -501,8 +505,8 @@ $.extend(Microfiche.prototype, {
   },
   
   // Returns the width of the item in container element.
-  itemWidth: function() {
-    return this.el.find('li').width();
+  itemWidth: function(n) {
+    return this.el.find('li').eq(n).width();
   },
 
   // Returns true if this microfiche instance is closest to the center of the screen
@@ -589,7 +593,7 @@ $.extend(Microfiche.prototype, {
          w = this.screenWidth();
 
     if (this.options.slideByItem) {
-        (n > 0) ? this.x += this.itemWidth() : this.x -= this.itemWidth();
+        (n > 0) ? this.x += this.itemWidth( this.currentItemNo++ ) : this.x -= this.itemWidth( this.currentItemNo-- );
     } else {
         this.x = this.constrain(Math.round(((this.x / w) + n) * w));
     }
