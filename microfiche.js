@@ -235,7 +235,9 @@ $.extend(Microfiche.prototype, {
   // Create page bullets.
   createBullets: function() {
     var container = $('<span class="microfiche-bullets" />').appendTo(this.controls);
-    for (var i = 0; i < this.totalPageCount(); i++) {
+    var totalBullets = (this.options.slideByItem) ? this.totalItems() : this.totalPageCount();
+
+    for (var i = 0; i < totalBullets; i++) {
       $('<button>')
       .addClass('microfiche-bullet')
       .attr('data-microfiche-page', i)
@@ -502,6 +504,11 @@ $.extend(Microfiche.prototype, {
   // Returns the width of the containing element.
   screenWidth: function() {
     return this.el.width();
+  },
+  
+  // Returns the number of items.
+  totalItems: function() {
+    return this.el.find('li').length;
   },
   
   // Returns the width of the item in container element.
