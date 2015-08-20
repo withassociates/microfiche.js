@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>Microfiche.js v1.8.2</title>
+  <title>Microfiche.js v1.8.3</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -21,7 +21,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="microfiche-js-v1-8-2">Microfiche.js v1.8.2</h1>
+              <h1 id="microfiche-js-v1-8-3">Microfiche.js v1.8.3</h1>
 <h2 id="usage">Usage</h2>
 <pre><code>$(<span class="hljs-string">'.my-slideshow'</span>).microfiche();
 $(<span class="hljs-string">'.my-slideshow'</span>).microfiche({ cyclic: <span class="hljs-literal">true</span>, button: <span class="hljs-literal">false</span> });
@@ -88,7 +88,9 @@ all items are visible on screen and no scrolling is required.</p>
 
 <span class="hljs-built_in">window</span>.Microfiche = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{ <span class="hljs-keyword">this</span>.initialize(options); <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; };
 
-Microfiche.VERSION = <span class="hljs-string">'1.8.2'</span>;
+Microfiche.VERSION = <span class="hljs-string">'1.8.3'</span>;
+
+CALIBRATE_FIRST_GUESS = <span class="hljs-number">100000</span>;
 
 $.extend(Microfiche.prototype, {</pre></div></div>
             
@@ -178,7 +180,7 @@ we keep a tab on the current destination.</p>
     <span class="hljs-keyword">this</span>.el.data(<span class="hljs-string">'microfiche'</span>, <span class="hljs-keyword">this</span>);
     <span class="hljs-keyword">this</span>.createFilm();
     <span class="hljs-keyword">this</span>.createScreen();
-    <span class="hljs-keyword">this</span>.calibrate();
+    <span class="hljs-keyword">this</span>.calibrate(CALIBRATE_FIRST_GUESS);
 
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.film.width() &lt;= <span class="hljs-keyword">this</span>.screen.width()) {
       <span class="hljs-keyword">this</span>.noScrollAlign(<span class="hljs-keyword">this</span>.options.noScrollAlign);
@@ -277,11 +279,15 @@ in <code>this.film</code>, then fixes the dimensions of <code>this.film</code> a
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  calibrate: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">this</span>.screen.width(<span class="hljs-number">100000</span>);
+            <div class="content"><div class='highlight'><pre>  calibrate: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(width)</span> </span>{
+    <span class="hljs-keyword">this</span>.screen.width(width);
 
     <span class="hljs-keyword">var</span> w = <span class="hljs-keyword">this</span>.film.width(),
         h = <span class="hljs-keyword">this</span>.film.height();
+
+    <span class="hljs-keyword">if</span> (w === width) {
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.calibrate(width * <span class="hljs-number">2</span>);
+    }
 
     <span class="hljs-keyword">this</span>.film.width(w).height(h);
     <span class="hljs-keyword">this</span>.screen.width(<span class="hljs-string">'auto'</span>).height(h);

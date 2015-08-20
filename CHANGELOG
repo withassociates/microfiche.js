@@ -1,3 +1,7 @@
+*v1.8.3 (Aug 20, 2015)*
+
+* Ensure very wide elements are calibrated correctly (thanks to @thomasmarshall see https://github.com/withassociates/microfiche.js/pull/59)
+
 *v1.8.2 (May 17, 2015)*
 
 * Fix rounding issue (thank to @adavies-github see https://github.com/withassociates/microfiche.js/pull/58)
