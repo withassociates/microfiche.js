@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>Microfiche.js v1.8.3</title>
+  <title>Microfiche.js v1.8.4</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -21,7 +21,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="microfiche-js-v1-8-3">Microfiche.js v1.8.3</h1>
+              <h1 id="microfiche-js-v1-8-4">Microfiche.js v1.8.4</h1>
 <h2 id="usage">Usage</h2>
 <pre><code>$(<span class="hljs-string">'.my-slideshow'</span>).microfiche();
 $(<span class="hljs-string">'.my-slideshow'</span>).microfiche({ cyclic: <span class="hljs-literal">true</span>, button: <span class="hljs-literal">false</span> });
@@ -88,7 +88,7 @@ all items are visible on screen and no scrolling is required.</p>
 
 <span class="hljs-built_in">window</span>.Microfiche = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{ <span class="hljs-keyword">this</span>.initialize(options); <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; };
 
-Microfiche.VERSION = <span class="hljs-string">'1.8.3'</span>;
+Microfiche.VERSION = <span class="hljs-string">'1.8.4'</span>;
 
 CALIBRATE_FIRST_GUESS = <span class="hljs-number">100000</span>;
 
@@ -1289,9 +1289,8 @@ a faster slide.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  destroy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">this</span>.clearListeners();
     <span class="hljs-keyword">this</span>.el.empty();
-    <span class="hljs-keyword">this</span>.el.off();
-    <span class="hljs-keyword">this</span>.clearResizeHandler();
     <span class="hljs-keyword">this</span>.el.removeData(<span class="hljs-string">'microfiche'</span>);
   },</pre></div></div>
             
@@ -1384,7 +1383,11 @@ redraw the controls if needed.</p>
 
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
         oldWindowWidth = <span class="hljs-number">0</span>,
-               timeout;</pre></div></div>
+        timeout;
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">resizeHandler</span><span class="hljs-params">()</span> </span>{
+      self.refresh();
+    }</pre></div></div>
             
         </li>
         
@@ -1395,20 +1398,20 @@ redraw the controls if needed.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-60">&#182;</a>
               </div>
-              <p>Debounce so microfiche will only refresh once for each time
-a visitor resizes the window</p>
+              <p>iOS scroll events are sometimes triggered as resize.
+If the window’s width is not changed by the resize, it must
+be a scroll, so don’t refresh.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    self.resizeHandler = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-      <span class="hljs-keyword">if</span> (timeout) clearTimeout(timeout);
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">widthAwareResizeHandler</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">var</span> currentWindowWidth = $(<span class="hljs-built_in">window</span>).width();
 
-      timeout = setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-        self.refresh();
-      }, delay);
-    };
-
-    $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'resize'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
+      <span class="hljs-keyword">if</span> (currentWindowWidth !== oldWindowWidth) {
+        oldWindowWidth = currentWindowWidth;
+        resizeHandler();
+      }
+    }</pre></div></div>
             
         </li>
         
@@ -1419,19 +1422,28 @@ a visitor resizes the window</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-61">&#182;</a>
               </div>
-              <p>iOS scroll events are sometimes triggered as resize.
-If the window’s width is not changed by the resize, it must
-be a scroll, so don’t refresh.</p>
+              <p>Debounce so microfiche will only refresh once for each time
+a visitor resizes the window</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> currentWindowWidth = $(<span class="hljs-built_in">window</span>).width();
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">debouncedResizeHandler</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">if</span> (timeout) clearTimeout(timeout);
+      timeout = setTimeout(widthAwareResizeHandler, delay);
+    }
 
-      <span class="hljs-keyword">if</span> ($(<span class="hljs-built_in">window</span>).width() !== oldWindowWidth) {
-        oldWindowWidth = currentWindowWidth;
-        self.resizeHandler();
-      }
-    });
+    <span class="hljs-keyword">this</span>.resizeHandler = debouncedResizeHandler;
+
+    $(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'resize'</span>, <span class="hljs-keyword">this</span>.resizeHandler);
+  },
+
+  clearListeners: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    $(<span class="hljs-built_in">document</span>)
+      .off(<span class="hljs-string">'keydown'</span>, <span class="hljs-keyword">this</span>.onkeydown)
+      .off(<span class="hljs-string">'touchmove'</span>, <span class="hljs-keyword">this</span>.touchmove)
+      .off(<span class="hljs-string">'touchend'</span>, <span class="hljs-keyword">this</span>.touchend);
+
+    <span class="hljs-keyword">this</span>.clearResizeHandler();
   },
 
   clearResizeHandler: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{

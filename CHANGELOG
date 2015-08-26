@@ -1,3 +1,7 @@
+*v1.8.4 (Aug 26, 2015)*
+
+* Fix event listener bookkeeping (thanks to @jgwhite see https://github.com/withassociates/microfiche.js/pull/61)
+
 *v1.8.3 (Aug 20, 2015)*
 
 * Ensure very wide elements are calibrated correctly (thanks to @thomasmarshall see https://github.com/withassociates/microfiche.js/pull/59)
