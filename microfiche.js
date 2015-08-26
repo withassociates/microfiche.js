@@ -675,9 +675,8 @@ $.extend(Microfiche.prototype, {
 
   // Destroy the microfiche instance and clear related events
   destroy: function() {
+    this.clearListeners();
     this.el.empty();
-    this.el.off();
-    this.clearResizeHandler();
     this.el.removeData('microfiche');
   },
 
@@ -721,29 +720,43 @@ $.extend(Microfiche.prototype, {
 
     var self = this,
         oldWindowWidth = 0,
-               timeout;
+        timeout;
+
+    function resizeHandler() {
+      self.refresh();
+    }
+
+    // iOS scroll events are sometimes triggered as resize.
+    // If the window's width is not changed by the resize, it must
+    // be a scroll, so don't refresh.
+    function widthAwareResizeHandler() {
+      var currentWindowWidth = $(window).width();
+
+      if (currentWindowWidth !== oldWindowWidth) {
+        oldWindowWidth = currentWindowWidth;
+        resizeHandler();
+      }
+    }
 
     // Debounce so microfiche will only refresh once for each time
     // a visitor resizes the window
-    self.resizeHandler = function() {
+    function debouncedResizeHandler() {
       if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(widthAwareResizeHandler, delay);
+    }
 
-      timeout = setTimeout(function() {
-        self.refresh();
-      }, delay);
-    };
+    this.resizeHandler = debouncedResizeHandler;
 
-    $(window).on('resize', function() {
-      // iOS scroll events are sometimes triggered as resize.
-      // If the window's width is not changed by the resize, it must
-      // be a scroll, so don't refresh.
-      var currentWindowWidth = $(window).width();
+    $(window).on('resize', this.resizeHandler);
+  },
 
-      if ($(window).width() !== oldWindowWidth) {
-        oldWindowWidth = currentWindowWidth;
-        self.resizeHandler();
-      }
-    });
+  clearListeners: function() {
+    $(document)
+      .off('keydown', this.onkeydown)
+      .off('touchmove', this.touchmove)
+      .off('touchend', this.touchend);
+
+    this.clearResizeHandler();
   },
 
   clearResizeHandler: function() {
