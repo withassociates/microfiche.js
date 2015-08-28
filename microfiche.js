@@ -135,12 +135,17 @@ $.extend(Microfiche.prototype, {
     refreshOnResize : false,
     prevButtonLabel : '&larr;',
     nextButtonLabel : '&rarr;',
-    noScrollAlign   : 'left'
+    noScrollAlign   : 'left',
+    slideByItem     : false
   },
 
   // Rather than relying on the literal position of `this.film`,
   // we keep a tab on the current destination.
   x: 0,
+  
+  // Rather than relying on the literal position of `li item`,
+  // we keep a tab on the current item.
+  currentItemNo: -1,
 
 
   // ## Setup ##
@@ -236,7 +241,9 @@ $.extend(Microfiche.prototype, {
   // Create page bullets.
   createBullets: function() {
     var container = $('<span class="microfiche-bullets" />').appendTo(this.controls);
-    for (var i = 0; i < this.totalPageCount(); i++) {
+    var totalBullets = (this.options.slideByItem) ? this.totalItems() : this.totalPageCount();
+
+    for (var i = 0; i < totalBullets; i++) {
       $('<button>')
       .addClass('microfiche-bullet')
       .attr('data-microfiche-page', i)
@@ -504,6 +511,16 @@ $.extend(Microfiche.prototype, {
   screenWidth: function() {
     return this.el.width();
   },
+  
+  // Returns the number of items.
+  totalItems: function() {
+    return this.el.find('li').length;
+  },
+  
+  // Returns the width of the item in container element.
+  itemWidth: function(n) {
+    return this.el.find('li').eq(n).width();
+  },
 
   // Returns true if this microfiche instance is closest to the center of the screen
   isCentral: function(selector) {
@@ -588,7 +605,11 @@ $.extend(Microfiche.prototype, {
     var ox = this.x,
          w = this.screenWidth();
 
-    this.x = this.constrain(Math.round(((this.x / w) + n) * w));
+    if (this.options.slideByItem) {
+        (n > 0) ? this.x += this.itemWidth( this.currentItemNo++ ) : this.x -= this.itemWidth( this.currentItemNo-- );
+    } else {
+        this.x = this.constrain(Math.round(((this.x / w) + n) * w));
+    }
 
     if (this.options.cyclic && this.x == ox) this.x += n * w;
 
